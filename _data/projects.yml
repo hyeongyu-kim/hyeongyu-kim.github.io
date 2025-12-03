@@ -2,23 +2,23 @@
 # uncomment the urls if you wish to display them, and add your own URL
 
 # jazznotes.io
-- project: Solving Domain Problems
-  role: Domain Adaptation & Domain Generalization & Test-Time Adaptation
+- project: Solving Domain Problems  
+  role: Domain Adaptation & Domain Generalization & Test-Time Adaptation  
   # duration: 2012 &mdash; Present
   # url: "#"
   description: COSMOS, SDC-UDA, Dimix, Buffer TTA
   
 # Springfield Community Outreach Group
-- project: Diffusion Models
-  role: MR image Reconstruction / Super resolution with Diffusion Models
+- project: Diffusion Models  
+  role: MR image Reconstruction / Super resolution with Diffusion Models  
   # duration: 2007 &mdash; Present
   # url: "#"
   description: Under review (IEEE-TMI), APT, ISMRMs
 
   
 # Springfield Community Outreach Group
-- project: Fourier Ptychography Reconstruction
-  role: Physics informed machine learning
+- project: Fourier Ptychography Reconstruction  
+  role: Physics informed machine learning  
   # duration: 2007 &mdash; Present
   # url: "#"
   description: Work in progress
