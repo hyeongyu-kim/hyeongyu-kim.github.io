@@ -13,12 +13,12 @@
 
 - text: |
     Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation    
-    Hyungseob Shin\*, **Hyeongyu Kim\* **, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang  
+    Hyungseob Shin\*, **Hyeongyu Kim&#42;**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang  
     CVPR (2023) (*equal contribution)
 
 - text: |
     Dimix: Disentangle-and-mix based domain generalizable medical image segmentation  
-    **Hyeongyu Kim\* **, Yejee Shin\*, Dosik Hwang  
+    **Hyeongyu Kim&#42;**, Yejee Shin\*, Dosik Hwang  
     MICCAI (2023) (*equal contribution)
 
 - text: |
@@ -33,5 +33,5 @@
     
 - text: |
     Buffer layers for Test-Time Adaptation  
-    **Hyeongyu Kim\* **, Geonhui Han\*, Dosik Hwang
+    **Hyeongyu Kim&#42;**, Geonhui Han\*, Dosik Hwang  
     Neurips (2025) (*equal contribution)
