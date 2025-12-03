@@ -14,7 +14,7 @@
 - text: |
     [Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation](https://openaccess.thecvf.com/content/CVPR2023/html/Shin_SDC-UDA_Volumetric_Unsupervised_Domain_Adaptation_Framework_for_Slice-Direction_Continuous_Cross-Modality_CVPR_2023_paper.html)  
     Hyungseob Shin\*, **Hyeongyu Kim&#42;**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang  
-    CVPR (2023) (*equal contribution)
+    CVPR (2023) (*equal contribution) [[Project Page]](https://github.com/hyeongyu-kim/SDC-UDA)
 
 - text: |
     [Dimix: Disentangle-and-mix based domain generalizable medical image segmentation](https://link.springer.com/chapter/10.1007/978-3-031-43898-1_24)  
@@ -34,7 +34,7 @@
 - text: |
     [Buffer layers for Test-Time Adaptation](https://openreview.net/pdf?id=sSZ9OM08KT)  
     **Hyeongyu Kim&#42;**, Geonhui Han\*, Dosik Hwang  
-    Neurips (2025) (*equal contribution)
+    Neurips (2025) (*equal contribution) [[Project Page]](https://github.com/hyeongyu-kim/Buffer_TTA)
 
 - text: |
     [Semi-supervised virtual staining using learned-illumination Fourier ptychography for high-speed label-free histopathology](https://iopscience.iop.org/article/10.1088/2515-7647/ae270f)  
