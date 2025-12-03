@@ -1,16 +1,18 @@
 # Degree
 
 - degree: Bachelor's Degree, School of Electrical and Electronic Engineering  
-  uni: Yonsei University  
-  year: "<br>2014 &mdash; 2020"
+  uni: |
+    Yonsei University  
+    2014 — 2020
   # awards:
   #   - award: Summa Cumme Laude graduate
   # summary: If you had any meaningful roles at college, feel free to write about them here
 
 
 - degree: Integrated Ph.D, School of Electrical and Electronic Engineering  
-  uni: Yonsei University  
-  year: "<br>2020 &mdash;"  
+  uni: |
+    Yonsei University  
+    2020 — 
   # awards:
   #   - award: Summa Cumme Laude graduate
   # summary: If you had any meaningful roles at college, feel free to write about them here
