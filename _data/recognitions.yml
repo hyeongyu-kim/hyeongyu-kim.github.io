@@ -1,10 +1,20 @@
 # Recognitions
-- award: Outstanding Achievement
-  organization: Springfield Young Professionals
-  year: 2010, 2014
-  summary: Awarded the Outstanding Achievement award for contributions made to the community and professional accomplishments.
+- award: Excellence Award, 2021 Medical Data AI Datathon
+  organization: Ministry of Science and ICT and the National Information society Agency, Korea
+  year: 2021
+  summary: [press](https://bk21ee.yonsei.ac.kr/bbs/board.php?bo_table=download&wr_id=152&page=20&ckattempt=1)
 
-- award: Most Likely To Succeed
-  organization: Springfield High School
-  year: 2004
-  summary: Voted Most Likely To Succeed by a panel of my high school peers.
+- award: Excellence Award, Hackathon of Development of AI-based Image Diagnosis using Medical Big Data 2021
+  organization: Ministry of Trade, Industry and Energy, Korea
+  year: 2021
+  summary: [press](https://bk21ee.yonsei.ac.kr/bbs/board.php?bo_table=download&wr_id=127&page=35&page=35)
+
+- award: 1st rank, Cross-Modality Domain Adaptation for Medical Image Segmentation (MICCAI CrossMoDA 2021 Challenge)
+  organization: MICCAI
+  year: 2021
+  summary: [press](https://news.unn.net/news/articleView.html?idxno=520429)
+  
+- award: 4th rank, MICCAI Challenge on Aorta Segmentation (SEG.A)
+  organization: MICCAI
+  year: 2024
+  # summary: [press](https://news.unn.net/news/articleView.html?idxno=520429)
