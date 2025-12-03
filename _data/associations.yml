@@ -2,12 +2,36 @@
 # comment out the urls if you do not wish to display them
 
 - text: |
-    COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation
-    Hyungseob Shin, **Hyeongyu Kim**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang
-    arXiv; 2022
+    COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation  
+    Hyungseob Shin\*, **Hyeongyu Kim\* **, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang  
+    arXiv (2022) (*equal contribution)
 
 - text: |
-    COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation
-    Hyungseob Shin, **Hyeongyu Kim**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang
-    arXiv; 2022
+    CrossMoDA 2021 challenge: Benchmark of cross-modality domain adaptation techniques for vestibular schwannoma and cochlea segmentation    
+    Reuben Dorent, Aaron Kujawa, ... , **Hyeongyu Kim**, ...  
+    Medical Image Analysis (2023)
 
+- text: |
+    Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation    
+    Hyungseob Shin\*, **Hyeongyu Kim\* **, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang  
+    CVPR (2023) (*equal contribution)
+
+- text: |
+    Dimix: Disentangle-and-mix based domain generalizable medical image segmentation  
+    **Hyeongyu Kim\* **, Yejee Shin\*, Dosik Hwang  
+    MICCAI (2023) (*equal contribution)
+
+- text: |
+    Anatomical Consistency and Adaptive Prior-informed Transformation for Multi-contrast MR Image Synthesis via Diffusion Model  
+    Yejee Shin, Yeeun Lee, Hanbyol Jang, Geonhui Son, **Hyeongyu Kim**, Dosik Hwang  
+    CVPR (2025)
+    
+- text: |
+    MinT: Magnetic resonance image unsupervised translation via decoupling anatomical structure and contrast  
+    Hanbyol Jang, **Hyeongyu Kim**, Sewon Kim, Dosik Hwang  
+    Computers in Biology and Medicine (2025)
+    
+- text: |
+    Buffer layers for Test-Time Adaptation  
+    **Hyeongyu Kim\* **, Geonhui Han\*, Dosik Hwang
+    Neurips (2025) (*equal contribution)
