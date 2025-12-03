@@ -2,36 +2,47 @@
 # comment out the urls if you do not wish to display them
 
 - text: |
-    COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation  
+    [COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation](https://arxiv.org/abs/2203.16557)  
     Hyungseob Shin\*, **Hyeongyu Kim&#42;**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang  
     arXiv (2022) (*equal contribution)
 
 - text: |
-    CrossMoDA 2021 challenge: Benchmark of cross-modality domain adaptation techniques for vestibular schwannoma and cochlea segmentation    
+    [CrossMoDA 2021 challenge: Benchmark of cross-modality domain adaptation techniques for vestibular schwannoma and cochlea segmentation](https://www.sciencedirect.com/science/article/pii/S1361841522002560)  
     Reuben Dorent, Aaron Kujawa, ... , **Hyeongyu Kim**, ...  
     Medical Image Analysis (2023)
 
 - text: |
-    Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation    
+    [Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation](https://openaccess.thecvf.com/content/CVPR2023/html/Shin_SDC-UDA_Volumetric_Unsupervised_Domain_Adaptation_Framework_for_Slice-Direction_Continuous_Cross-Modality_CVPR_2023_paper.html)  
     Hyungseob Shin\*, **Hyeongyu Kim&#42;**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang  
     CVPR (2023) (*equal contribution)
 
 - text: |
-    Dimix: Disentangle-and-mix based domain generalizable medical image segmentation  
+    [Dimix: Disentangle-and-mix based domain generalizable medical image segmentation](https://link.springer.com/chapter/10.1007/978-3-031-43898-1_24)  
     **Hyeongyu Kim&#42;**, Yejee Shin\*, Dosik Hwang  
     MICCAI (2023) (*equal contribution)
 
 - text: |
-    Anatomical Consistency and Adaptive Prior-informed Transformation for Multi-contrast MR Image Synthesis via Diffusion Model  
+    [Anatomical Consistency and Adaptive Prior-informed Transformation for Multi-contrast MR Image Synthesis via Diffusion Model](https://openaccess.thecvf.com/content/CVPR2025/html/Shin_Anatomical_Consistency_and_Adaptive_Prior-informed_Transformation_for_Multi-contrast_MR_Image_CVPR_2025_paper.html)  
     Yejee Shin, Yeeun Lee, Hanbyol Jang, Geonhui Son, **Hyeongyu Kim**, Dosik Hwang  
     CVPR (2025)
     
 - text: |
-    MinT: Magnetic resonance image unsupervised translation via decoupling anatomical structure and contrast  
+    [MinT: Magnetic resonance image unsupervised translation via decoupling anatomical structure and contrast](https://www.sciencedirect.com/science/article/abs/pii/S0010482525010418)  
     Hanbyol Jang, **Hyeongyu Kim**, Sewon Kim, Dosik Hwang  
     Computers in Biology and Medicine (2025)
     
 - text: |
-    Buffer layers for Test-Time Adaptation  
+    [Buffer layers for Test-Time Adaptation](https://openreview.net/pdf?id=sSZ9OM08KT)  
     **Hyeongyu Kim&#42;**, Geonhui Han\*, Dosik Hwang  
     Neurips (2025) (*equal contribution)
+
+- text: |
+    [Semi-supervised virtual staining using learned-illumination Fourier ptychography for high-speed label-free histopathology](https://iopscience.iop.org/article/10.1088/2515-7647/ae270f)  
+    Kyung Chul Lee, Hyesuk Chae, Jongho Kim, Lucas Kreiß, **Hyeongyu Kim**, Yong Guk Kang, Kevin C. Zhou, Amey Chaware, Kanghyun Kim, Shiqi Xu, Suki Kang, Geunbae Bang, Nam Hoon Cho, Dosik Hwang, Roarke Horstmeyer and Seung Ah Lee 
+    JPhys Photonics (2025)
+
+
+
+
+
+    
