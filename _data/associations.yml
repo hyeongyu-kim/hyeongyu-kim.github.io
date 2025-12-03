@@ -1,12 +1,13 @@
 # Associations
 # comment out the urls if you do not wish to display them
 
-- organization: PETA
-  author: Volunteer
-  year: 2001 &mdash; 2010
+- text: |
+    COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation
+    Hyungseob Shin, **Hyeongyu Kim**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang
+    arXiv; 2022
 
+- text: |
+    COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation
+    Hyungseob Shin, **Hyeongyu Kim**, Sewon Kim, Yohan Jun, Taejoon Eo, Dosik Hwang
+    arXiv; 2022
 
-- organization: Yale Amnesty International
-  author: Communications coordinator
-  year: 2002 &mdash; 2004
-  
