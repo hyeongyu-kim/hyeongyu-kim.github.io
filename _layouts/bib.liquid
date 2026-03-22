@@ -147,7 +147,11 @@
         </i>
       {% endif %}
     </div>
-
+    {% if entry.equal_contrib %}
+      <div class="author-note">
+        † {{ entry.equal_contrib }}
+      </div>
+    {% endif %}
     <!-- Journal/Book title and date -->
     {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
     {% assign thesis = 'thesis,mastersthesis,phdthesis' | split: ',' %}
