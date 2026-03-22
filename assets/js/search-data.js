@@ -79,7 +79,7 @@ ninja.data = [{
           title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
           description: "",
           section: "News",},{id: "news-our-paper-sdc-uda-has-been-accepted-at-cvpr-2023",
-          title: 'Our paper SDC-UDA has been accepted at CVPR 2023!',
+          title: 'Our paper **SDC-UDA** has been accepted at CVPR 2023!',
           description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',
