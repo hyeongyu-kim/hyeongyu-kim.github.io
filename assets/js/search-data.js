@@ -70,15 +70,7 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
-          description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
             },},{id: "news-our-paper-sdc-uda-has-been-accepted-at-cvpr-2023",
-          title: 'Our paper **SDC-UDA** has been accepted at CVPR 2023!',
-          description: "",
-          section: "News",},{id: "news-our-paper-sdc-uda-has-been-accepted-at-cvpr-2023",
           title: 'Our paper SDC-UDA has been accepted at CVPR 2023!',
           description: "",
           section: "News",},{id: "news-our-paper-buffer-tta-has-been-accepted-at-neurips-2025",
