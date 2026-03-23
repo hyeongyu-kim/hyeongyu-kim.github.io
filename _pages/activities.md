@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /Activities/
+permalink: /activities/
 title: Activities
 description: Challenges & Awards.
 nav: true
