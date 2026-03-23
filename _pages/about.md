@@ -1,6 +1,6 @@
 ---
-layout: About
-title: About
+layout: about
+title: about
 permalink: /
 subtitle: Ph.D. Candidate at Yonsei University, Seoul, South Korea.
 
