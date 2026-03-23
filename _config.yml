@@ -153,8 +153,8 @@ collections:
     output: true
   teachings:
     output: true
-  activities:
-    output: true
+  # activities:
+    # output: true
 
 # -----------------------------------------------------------------------------
 # Jekyll settings
