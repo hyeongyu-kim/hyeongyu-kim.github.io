@@ -21,7 +21,7 @@ ninja.data = [{
           description: "Challenges &amp; Awards.",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/activity/";
+            window.location.href = "/activities/";
           },
         },{id: "nav-repositories",
           title: "repositories",
