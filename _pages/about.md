@@ -1,6 +1,6 @@
 ---
-layout: About
-title: About
+layout: about
+title: about
 permalink: /
 subtitle: Ph.D. Candidate at Yonsei University, Seoul, South Korea.
 
@@ -9,9 +9,9 @@ profile:
   image: prof_pic.png
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>02-2123-7446</p>
-    <p>C516, 50 Yonsei-ro, Seodaemun-gu</p>
-    <p>Seoul, 03722</p>
+    <p> 02-2123-7446 </p>
+    <p> C516, 50 Yonsei-ro, Seodaemun-gu </p>
+    <p> Seoul, 03722 </p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
