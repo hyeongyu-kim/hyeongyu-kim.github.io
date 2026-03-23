@@ -1,6 +1,6 @@
 ---
-layout: about
-title: about
+layout: About
+title: About
 permalink: /
 subtitle: Ph.D. Candidate at Yonsei University, Seoul, South Korea.
 
@@ -9,8 +9,8 @@ profile:
   image: prof_pic.png
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 02-2123-7446</p>
-    <p>123 C516, 50 Yonsei-ro, Seodaemun-gu</p>
+    <p>02-2123-7446</p>
+    <p>C516, 50 Yonsei-ro, Seodaemun-gu</p>
     <p>Seoul, 03722</p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
@@ -29,6 +29,6 @@ latest_posts:
 
 I am a Ph.D. candidate at [MAI-LAB](https://mai-lab.net/), Yonsei University, working on deep learning and AI.
 
-My main research interests include Domain Adaptation, especially **Test-Time adaptation**, Deep learning on Fourier Ptychography, and MRI Reconstruction / Super-resolution.
+My main research interests include Domain Adaptation, especially **Test-Time Adaptation**, Deep learning on Fourier Ptychography, and MRI Reconstruction / Super-resolution.
 
 Feel free to reach out!
