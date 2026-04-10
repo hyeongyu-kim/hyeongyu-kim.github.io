@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-03-25'
+  last_updated: '2026-04-10'
 papers:
   Ot6fq-EAAAAJ:2osOgNQ5qMEC:
     citations: 77
@@ -22,11 +22,11 @@ papers:
     title: Position-encoded pixel-to-prototype contrastive learning for aortic vessel tree segmentation
     year: '2023'
   Ot6fq-EAAAAJ:UeHWp8X0CEIC:
-    citations: 13
+    citations: 14
     title: 'Dimix: Disentangle-and-mix based domain generalizable medical image segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:WF5omc3nYNoC:
-    citations: 2
+    citations: 4
     title: Buffer layers for Test-Time Adaptation
     year: '2025'
   Ot6fq-EAAAAJ:YsMSGLbcyi4C:
