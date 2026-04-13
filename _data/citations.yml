@@ -1,12 +1,12 @@
 metadata:
-  last_updated: '2026-04-10'
+  last_updated: '2026-04-13'
 papers:
   Ot6fq-EAAAAJ:2osOgNQ5qMEC:
-    citations: 77
+    citations: 78
     title: 'Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:9yKSN-GCB0IC:
-    citations: 119
+    citations: 120
     title: 'CrossMoDA 2021 challenge: Benchmark of cross-modality domain adaptation techniques for vestibular schwannoma and cochlea segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:IjCSPb-OGe4C:
