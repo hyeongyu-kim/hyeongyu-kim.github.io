@@ -1,12 +1,12 @@
 metadata:
-  last_updated: '2026-04-13'
+  last_updated: '2026-04-29'
 papers:
   Ot6fq-EAAAAJ:2osOgNQ5qMEC:
-    citations: 78
+    citations: 81
     title: 'Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:9yKSN-GCB0IC:
-    citations: 120
+    citations: 123
     title: 'CrossMoDA 2021 challenge: Benchmark of cross-modality domain adaptation techniques for vestibular schwannoma and cochlea segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:IjCSPb-OGe4C:
@@ -17,20 +17,28 @@ papers:
     citations: 2
     title: Anatomy-Matching based Multi-contrast MR Super-resolution
     year: '2024'
+  Ot6fq-EAAAAJ:Se3iqnhoufwC:
+    citations: 0
+    title: 'CD-Buffer: Complementary Dual-Buffer Framework for Test-Time Adaptation in Adverse Weather Object Detection'
+    year: '2026'
   Ot6fq-EAAAAJ:Tyk-4Ss8FVUC:
     citations: 1
     title: Position-encoded pixel-to-prototype contrastive learning for aortic vessel tree segmentation
     year: '2023'
   Ot6fq-EAAAAJ:UeHWp8X0CEIC:
-    citations: 14
+    citations: 15
     title: 'Dimix: Disentangle-and-mix based domain generalizable medical image segmentation'
     year: '2023'
+  Ot6fq-EAAAAJ:UebtZRa9Y70C:
+    citations: 0
+    title: 'AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation'
+    year: '2026'
   Ot6fq-EAAAAJ:WF5omc3nYNoC:
     citations: 4
     title: Buffer layers for Test-Time Adaptation
     year: '2025'
   Ot6fq-EAAAAJ:YsMSGLbcyi4C:
-    citations: 0
+    citations: 1
     title: 'MinT: Magnetic resonance image unsupervised translation via decoupling anatomical structure and contrast'
     year: '2025'
   Ot6fq-EAAAAJ:_FxGoFyzp5QC:
