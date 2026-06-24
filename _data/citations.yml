@@ -1,12 +1,12 @@
 metadata:
-  last_updated: '2026-06-08'
+  last_updated: '2026-06-24'
 papers:
   Ot6fq-EAAAAJ:2osOgNQ5qMEC:
-    citations: 86
+    citations: 85
     title: 'Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:9yKSN-GCB0IC:
-    citations: 131
+    citations: 132
     title: 'CrossMoDA 2021 challenge: Benchmark of cross-modality domain adaptation techniques for vestibular schwannoma and cochlea segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:IjCSPb-OGe4C:
@@ -50,7 +50,7 @@ papers:
     title: 'COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation based on target-aware domain translation and iterative self-training'
     year: '2022'
   Ot6fq-EAAAAJ:eQOLeE2rZwMC:
-    citations: 5
+    citations: 6
     title: Anatomical Consistency and Adaptive Prior-informed Transformation for Multi-contrast MR Image Synthesis via Diffusion Model
     year: '2025'
   Ot6fq-EAAAAJ:qjMakFHDy7sC:
