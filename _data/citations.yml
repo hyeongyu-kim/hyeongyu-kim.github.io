@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-06-24'
+  last_updated: '2026-07-03'
 papers:
   Ot6fq-EAAAAJ:2osOgNQ5qMEC:
     citations: 85
@@ -50,7 +50,7 @@ papers:
     title: 'COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation based on target-aware domain translation and iterative self-training'
     year: '2022'
   Ot6fq-EAAAAJ:eQOLeE2rZwMC:
-    citations: 6
+    citations: 7
     title: Anatomical Consistency and Adaptive Prior-informed Transformation for Multi-contrast MR Image Synthesis via Diffusion Model
     year: '2025'
   Ot6fq-EAAAAJ:qjMakFHDy7sC:
