@@ -1,12 +1,12 @@
 metadata:
-  last_updated: '2026-07-03'
+  last_updated: '2026-08-07'
 papers:
   Ot6fq-EAAAAJ:2osOgNQ5qMEC:
-    citations: 85
+    citations: 86
     title: 'Sdc-uda: Volumetric unsupervised domain adaptation framework for slice-direction continuous cross-modality medical image segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:9yKSN-GCB0IC:
-    citations: 132
+    citations: 133
     title: 'CrossMoDA 2021 challenge: Benchmark of cross-modality domain adaptation techniques for vestibular schwannoma and cochlea segmentation'
     year: '2023'
   Ot6fq-EAAAAJ:IjCSPb-OGe4C:
@@ -18,7 +18,7 @@ papers:
     title: Anatomy-Matching based Multi-contrast MR Super-resolution
     year: '2024'
   Ot6fq-EAAAAJ:Se3iqnhoufwC:
-    citations: 0
+    citations: 1
     title: 'CD-Buffer: Complementary Dual-Buffer Framework for Test-Time Adaptation in Adverse Weather Object Detection'
     year: '2026'
   Ot6fq-EAAAAJ:Tyk-4Ss8FVUC:
@@ -34,7 +34,7 @@ papers:
     title: 'AcTTA: Rethinking Test-Time Adaptation via Dynamic Activation'
     year: '2026'
   Ot6fq-EAAAAJ:WF5omc3nYNoC:
-    citations: 4
+    citations: 5
     title: Buffer layers for Test-Time Adaptation
     year: '2025'
   Ot6fq-EAAAAJ:YsMSGLbcyi4C:
@@ -50,7 +50,7 @@ papers:
     title: 'COSMOS: cross-modality unsupervised domain adaptation for 3D medical image segmentation based on target-aware domain translation and iterative self-training'
     year: '2022'
   Ot6fq-EAAAAJ:eQOLeE2rZwMC:
-    citations: 7
+    citations: 9
     title: Anatomical Consistency and Adaptive Prior-informed Transformation for Multi-contrast MR Image Synthesis via Diffusion Model
     year: '2025'
   Ot6fq-EAAAAJ:qjMakFHDy7sC:
@@ -66,7 +66,7 @@ papers:
     title: Deep residual network with data consistency for subsampled Fourier ptychographic microscopy
     year: '2022'
   Ot6fq-EAAAAJ:ufrVoPGSRksC:
-    citations: 1
+    citations: 2
     title: "Towards the automatic segmentation, modeling and meshing of the aortic vessel tree from multicenter acquisitions: An overview of the seg. a. 2023 segmentation of the aorta \u2026"
     year: '2025'
   Ot6fq-EAAAAJ:zYLM7Y9cAGgC:
