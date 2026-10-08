@@ -47,4 +47,34 @@ layout: default
       {% endfor %}
     </ol>
   </section>
+
+  <section class="editorial-section" aria-labelledby="explore-heading">
+    <div class="editorial-section-heading"><h2 id="explore-heading">Explore</h2></div>
+    <dl class="editorial-directory">
+      <div>
+        <dt>
+          <a href="{{ '/lab/' | relative_url }}">Interactive lab <span aria-hidden="true">↗</span></a>
+        </dt>
+        <dd>Adapt a digit classifier under shift, or step through a tiled matrix multiply.</dd>
+      </div>
+      <div>
+        <dt>
+          <a href="{{ '/notes/' | relative_url }}">Research notes <span aria-hidden="true">↗</span></a>
+        </dt>
+        <dd>Short explanations of adaptation, tensor programs, and memory reuse.</dd>
+      </div>
+      <div>
+        <dt>
+          <a href="{{ '/now/' | relative_url }}">Now <span aria-hidden="true">↗</span></a>
+        </dt>
+        <dd>Current work, interests, and reading.</dd>
+      </div>
+      <div>
+        <dt>
+          <a href="{{ '/contact/' | relative_url }}">Get in touch <span aria-hidden="true">↗</span></a>
+        </dt>
+        <dd>Email, profile links, and a QR contact card.</dd>
+      </div>
+    </dl>
+  </section>
 </article>

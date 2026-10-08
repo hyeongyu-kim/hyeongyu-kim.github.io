@@ -1,0 +1,8 @@
+Kim2026actta:
+  summary: "Adapt activation thresholds and gradient sensitivity at test time, while keeping the pretrained network weights fixed."
+  figure: /assets/img/publication_preview/2026_ACTTA.PNG
+  alt: "AcTTA activation and derivative curves for ReLU and GELU parameterizations."
+kim2025buffer:
+  summary: "Insert small, trainable Buffer layers into a frozen backbone to adapt to new domains without updating its original parameters."
+  figure: /assets/img/publication_preview/2025_BUFFER.png
+  alt: "Buffer layers inserted into a frozen backbone, compared with normalization updates and full fine-tuning."

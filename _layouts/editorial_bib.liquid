@@ -28,6 +28,15 @@
     {% if entry.equal_contrib %}
       <p class="editorial-paper-contribution">* Equal contribution</p>
     {% endif %}
+    {% assign feature = site.data.paper_features[entry.key] %}
+    {% if feature and page.layout == 'editorial' %}
+      <div class="paper-overview">
+        <p>{{ feature.summary }}</p>
+        <a href="{{ feature.figure | relative_url }}" aria-label="View the figure for {{ entry.title | escape }}">
+          <img src="{{ feature.figure | relative_url }}" alt="{{ feature.alt | escape }}" loading="lazy">
+        </a>
+      </div>
+    {% endif %}
     <div class="editorial-paper-links">
       {% if entry.html %}
         <a href="{{ entry.html }}"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Paper</a>

@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<article class="editorial-content">
+  <header class="editorial-page-heading">
+    {% if page.eyebrow %}
+      <p class="editorial-eyebrow">{{ page.eyebrow }}</p>
+    {% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}
+      <p>{{ page.subtitle }}</p>
+    {% endif %}
+    {% if page.updated %}
+      <p class="editorial-updated">Updated {{ page.updated | date: '%B %-d, %Y' }}</p>
+    {% endif %}
+  </header>
+  {{ content }}
+</article>
+{% if page.lab_script %}
+  <script type="module" src="{{ '/assets/js/research-lab.js' | relative_url | bust_file_cache }}"></script>
+{% endif %}
+{% if page.contact_script %}
+  <script type="module" src="{{ '/assets/js/contact-card.js' | relative_url | bust_file_cache }}"></script>
+{% endif %}

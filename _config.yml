@@ -67,9 +67,9 @@ max_width: 980px
 # -----------------------------------------------------------------------------
 # Display links to the page with a preview object on social media.
 # see https://schema.org/docs/faq.html for more information
-serve_og_meta: false # Include Open Graph meta tags in the HTML head
+serve_og_meta: true # Include Open Graph meta tags in the HTML head
 serve_schema_org: false # Include Schema.org in the HTML head
-og_image: # The site-wide (default for all links) Open Graph preview image
+og_image: /assets/contact/Hyeongyu_Kim_card.png # The site-wide Open Graph preview image
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
@@ -192,6 +192,9 @@ exclude:
   - purgecss.config.js
   - README.md
   - readme_preview/
+  - tests/
+  - _scripts/build_lab_assets.py
+  - _scripts/build_lab_offline.mjs
   - vendor
 keep_files:
   - CNAME
