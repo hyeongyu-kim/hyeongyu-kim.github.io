@@ -1,0 +1,150 @@
+---
+layout: default
+---
+{% assign resume = site.data.resume %}
+<article class="editorial-cv">
+  <header class="editorial-cv-header">
+    <p class="editorial-eyebrow">Curriculum vitae</p>
+    <h1>{{ resume.basics.name }}</h1>
+    <p>{{ resume.basics.label }}</p>
+    <div class="cv-downloads">
+      <a href="{{ page.cv_pdf | relative_url }}"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> Academic CV <span>(PDF)</span></a>
+      <a href="{{ page.resume_pdf | relative_url }}"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> One-page résumé <span>(PDF)</span></a>
+    </div>
+    {% include profile_links.liquid %}
+  </header>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-experience">
+    <h2 id="cv-experience">Experience</h2>
+    <div>
+      {% for role in resume.work %}
+        <div class="cv-entry">
+          <div class="cv-entry-heading">
+            <h3>{{ role.name }}</h3>
+            <p>{{ role.dateLabel }}</p>
+          </div>
+          <p class="cv-entry-role">{{ role.position }}</p>
+          <ul>
+            {% for item in role.highlights %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-education">
+    <h2 id="cv-education">Education</h2>
+    <div>
+      {% for degree in resume.education %}
+        <div class="cv-entry">
+          <div class="cv-entry-heading">
+            <h3>{{ degree.institution }}</h3>
+            <p>{{ degree.dateLabel }}</p>
+          </div>
+          <p class="cv-entry-role">{{ degree.studyType }} in {{ degree.area }}</p>
+          {% if degree.summary %}
+            <p>{{ degree.summary }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-interests">
+    <h2 id="cv-interests">Research interests</h2>
+    <div>
+      {% for interest in resume.interests %}
+        <p>
+          <strong>{{ interest.name }}</strong><br>
+          {{ interest.keywords | join: ', ' }}
+        </p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="editorial-section" aria-labelledby="cv-publications">
+    <div class="editorial-section-heading">
+      <h2 id="cv-publications">Selected publications</h2>
+      <a href="{{ '/publications/' | relative_url }}">Full publication list <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="editorial-papers">{% bibliography --group_by none --template editorial_bib --query @*[selected=true]* %}</div>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-projects">
+    <h2 id="cv-projects">Industry &amp; clinical projects</h2>
+    <div>
+      {% for project in resume.projects %}
+        <div class="cv-entry">
+          <div class="cv-entry-heading">
+            <h3>{{ project.name }}</h3>
+            <p>{{ project.dateLabel }}</p>
+          </div>
+          <p class="cv-entry-role">{{ project.entity }}</p>
+          <p>{{ project.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-honors">
+    <h2 id="cv-honors">Honors &amp; scholarships</h2>
+    <div>
+      <ul class="cv-dated-list">
+        {% for award in resume.awards %}
+          <li>
+            <span>{{ award.date | slice: 0, 4 }}</span>
+            <div>
+              <strong>{{ award.title }}</strong><br>
+              {{ award.awarder }}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-patents">
+    <h2 id="cv-patents">Patent applications</h2>
+    <div>
+      <ul class="cv-dated-list">
+        {% for patent in resume.patents %}
+          <li>
+            <span>{{ patent.year }}</span>
+            <div>
+              {{ patent.title -}}
+              <br>
+              <span class="cv-entry-role">{{ patent.number }} · Application, South Korea</span>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-skills">
+    <h2 id="cv-skills">Technical skills</h2>
+    <dl class="cv-skills">
+      {% for skill in resume.skills %}
+        <dt>{{ skill.name }}</dt>
+        <dd>{{ skill.keywords | join: ', ' }}</dd>
+      {% endfor %}
+    </dl>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-teaching">
+    <h2 id="cv-teaching">Teaching</h2>
+    <div>
+      {% for role in resume.teaching %}
+        <div class="cv-entry">
+          <div class="cv-entry-heading">
+            <h3>{{ role.course }}</h3>
+            <p>{{ role.dateLabel }}</p>
+          </div>
+          <p>{{ role.position }} · {{ role.institution }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+</article>

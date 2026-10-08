@@ -1,0 +1,50 @@
+---
+layout: default
+---
+<article class="editorial-home">
+  <section class="editorial-intro" aria-labelledby="profile-name">
+    <div class="editorial-bio">
+      <p class="editorial-eyebrow">Test-time adaptation · Medical imaging</p>
+      <h1 id="profile-name">{{ site.title }}</h1>
+      <p class="editorial-affiliation">Compiler Engineer · Hyundai Motor Company</p>
+      <div class="editorial-prose">{{ content }}</div>
+      {% include profile_links.liquid %}
+    </div>
+    <figure class="editorial-portrait">
+      <img
+        src="{{ page.profile.image | prepend: '/assets/img/' | relative_url }}"
+        width="340"
+        height="372"
+        alt="Portrait of Hyeongyu Kim"
+        fetchpriority="high"
+      >
+      <figcaption>Ph.D., Yonsei University</figcaption>
+    </figure>
+  </section>
+
+  <section class="editorial-section" aria-labelledby="selected-heading">
+    <div class="editorial-section-heading">
+      <h2 id="selected-heading">Selected publications</h2>
+      <a href="{{ '/publications/' | relative_url }}">All publications <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="editorial-papers">
+      {% bibliography --group_by none --template editorial_bib --query @*[selected=true]* %}
+    </div>
+  </section>
+
+  <section class="editorial-section" aria-labelledby="updates-heading">
+    <div class="editorial-section-heading">
+      <h2 id="updates-heading">Recent updates</h2>
+      <a href="{{ '/news/' | relative_url }}">Archive <span aria-hidden="true">↗</span></a>
+    </div>
+    <ol class="editorial-updates">
+      {% assign recent_news = site.news | sort: 'date' | reverse %}
+      {% for item in recent_news limit: 4 %}
+        <li>
+          <time datetime="{{ item.date | date: '%Y-%m' }}">{{ item.date | date: '%b %Y' }}</time>
+          <div>{{ item.content | markdownify }}</div>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+</article>
