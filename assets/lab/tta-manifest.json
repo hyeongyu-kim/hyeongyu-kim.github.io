@@ -1,0 +1,565 @@
+{
+  "schema": 1,
+  "classes": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "channels": 16,
+  "inspectableImages": 4,
+  "trainableParameters": {
+    "source": 0,
+    "tent": 1568,
+    "buffer": 10252,
+    "actta": 288
+  },
+  "sourceParameters": 272474,
+  "cleanSubset": {
+    "accuracy": 0.92578125,
+    "ece": 0.049291729112155666,
+    "confidence": 0.9598396533401683,
+    "entropy": 0.11429423764882021
+  },
+  "protocol": {
+    "seed": 27,
+    "optimizer": "Adam",
+    "learningRate": 0.001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "weightDecay": 0,
+    "objective": "mean prediction entropy; no labels",
+    "acTtaBeta": 1,
+    "normalizationMean": [
+      0.4914,
+      0.4822,
+      0.4465
+    ],
+    "normalizationStd": [
+      0.2023,
+      0.1994,
+      0.201
+    ],
+    "data": {
+      "clean": "https://huggingface.co/datasets/uoft-cs/cifar10/resolve/main/plain_text/test-00000-of-00001.parquet",
+      "corruptions": "https://zenodo.org/records/2535967/files/CIFAR-10-C.tar?download=1",
+      "checkpointSha256": "4118986f0df73003d572b0e397f0ac7b3f60af1f31aff3d2da164536e36f6ec8",
+      "subsetSha256": {
+        "jpeg_compression-1": "a2a28056c89736ca53071e26f95b86f2b24704210e89feaafe63d113bfa61e2a",
+        "jpeg_compression-3": "97d672287a0a7051f91d9b702baeef9c9d610171dc22bc4a0e0d45604cb0780b",
+        "jpeg_compression-5": "2f7b27b38691b8a413fca1da1358455b9f2a2b42f2df75692792654842da4390",
+        "defocus_blur-1": "77a59df1fea71aae7638c47763e5743460f3f1bfacceb2b9181665bdc9d48261",
+        "defocus_blur-3": "d53083c406ef5c740224dd9febde3473c2f0928bc54abcc0eb800449a0945115",
+        "defocus_blur-5": "ee1e8dfc34e815c2e8002a06eb25525a576afd8990547941180173f0fabf392b",
+        "brightness-1": "085708684fec70a697c9e09d2e732e3047bf66ac56f3ca9a9f1cc0ae5b1faf55",
+        "brightness-3": "23ee9532246f19fe23ba4d7a316d6face040848a5e33bc0f29ff17bd3ebbcafa",
+        "brightness-5": "cf673aece6d898216e951fc5f2356c9290aabf74f09838db079f5d435e65ced2",
+        "gaussian_noise-1": "c7314f2446e6181cca29bc757d67e26775ace53d5db4218714b8c4a44d6602e3",
+        "gaussian_noise-3": "67012ff9ac45408f09d69cb2c47d4d8a3eaa1f3938da41b402e119b04f80d365",
+        "gaussian_noise-5": "b5248f6900f197113739b0c964f000a06615bb8e72a55671359527edea0877d1"
+      }
+    }
+  },
+  "traces": [
+    {
+      "id": "batch-4-clean-0",
+      "file": "batch-4-clean-0.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 371795,
+      "sha256": "399d99c514bbf63c73bac3d997b69d5c7fcfeb8a948689e1b53ae43ff2ad1949",
+      "domain": "clean",
+      "severity": 0
+    },
+    {
+      "id": "batch-16-clean-0",
+      "file": "batch-16-clean-0.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 400500,
+      "sha256": "9abeadb01492d1de4fdda4359c7ef2e4b884a29ac4e4716f7cce90c8770be9e5",
+      "domain": "clean",
+      "severity": 0
+    },
+    {
+      "id": "batch-64-clean-0",
+      "file": "batch-64-clean-0.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 523738,
+      "sha256": "6ddf5a8c63b742bff408c757a187e64edf1b49c499e5dc7038549a1142ed0e3b",
+      "domain": "clean",
+      "severity": 0
+    },
+    {
+      "id": "batch-4-gaussian_noise-1",
+      "file": "batch-4-gaussian_noise-1.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 465233,
+      "sha256": "75f247b549980fd976fe72563f8ea3c70fbc95dc40c8d066674a2611c090db6d",
+      "domain": "gaussian_noise",
+      "severity": 1
+    },
+    {
+      "id": "batch-4-gaussian_noise-3",
+      "file": "batch-4-gaussian_noise-3.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 485601,
+      "sha256": "c22a1f559816d3c9058c5cfb266e540e9a706eacc54fbc433f79e28271e5bb99",
+      "domain": "gaussian_noise",
+      "severity": 3
+    },
+    {
+      "id": "batch-4-gaussian_noise-5",
+      "file": "batch-4-gaussian_noise-5.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 496002,
+      "sha256": "c8b89c00ed2dc932e26ddd14bfebfdeda6f7f8f13e0614372a884c5c74119c86",
+      "domain": "gaussian_noise",
+      "severity": 5
+    },
+    {
+      "id": "batch-4-brightness-1",
+      "file": "batch-4-brightness-1.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 447834,
+      "sha256": "a6484560c1258d9c9fc8b46337841dfe5530bf4c8e744617c6091ee01d684e8d",
+      "domain": "brightness",
+      "severity": 1
+    },
+    {
+      "id": "batch-4-brightness-3",
+      "file": "batch-4-brightness-3.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 442396,
+      "sha256": "f2dc8472abf90f33649c31a8fa126979794f0e48090b938f187aa78aea2e75b8",
+      "domain": "brightness",
+      "severity": 3
+    },
+    {
+      "id": "batch-4-brightness-5",
+      "file": "batch-4-brightness-5.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 430175,
+      "sha256": "f76fa5e6aab0176e67d5dc8459a1fb5993899a39d1129e6bfcc492ba6c62823f",
+      "domain": "brightness",
+      "severity": 5
+    },
+    {
+      "id": "batch-4-defocus_blur-1",
+      "file": "batch-4-defocus_blur-1.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 449241,
+      "sha256": "9840dad12608b085f72e67e21adf75ca411d670e2c1c25a2d5087983cae5e50b",
+      "domain": "defocus_blur",
+      "severity": 1
+    },
+    {
+      "id": "batch-4-defocus_blur-3",
+      "file": "batch-4-defocus_blur-3.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 439743,
+      "sha256": "a8cde3aa2a27dea20022563903ee6207e3cbd2aa94424ab9662e63dbfb2d3eea",
+      "domain": "defocus_blur",
+      "severity": 3
+    },
+    {
+      "id": "batch-4-defocus_blur-5",
+      "file": "batch-4-defocus_blur-5.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 425267,
+      "sha256": "07ecabd36d8d3dbb11f4c6b3207b961fe9727cc9997a249271db5b5a3b350598",
+      "domain": "defocus_blur",
+      "severity": 5
+    },
+    {
+      "id": "batch-4-jpeg_compression-1",
+      "file": "batch-4-jpeg_compression-1.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 456069,
+      "sha256": "d2e2033a94e27bb8989318936d1e95403197b356afdc890ab129659ad3f53849",
+      "domain": "jpeg_compression",
+      "severity": 1
+    },
+    {
+      "id": "batch-4-jpeg_compression-3",
+      "file": "batch-4-jpeg_compression-3.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 456920,
+      "sha256": "9afc71e9e7b65d040351c4c49ba4b89ddb49b4bebef66bb10b482d47596088f2",
+      "domain": "jpeg_compression",
+      "severity": 3
+    },
+    {
+      "id": "batch-4-jpeg_compression-5",
+      "file": "batch-4-jpeg_compression-5.json.gz",
+      "kind": "batch",
+      "batch": 4,
+      "frames": 9,
+      "bytes": 451102,
+      "sha256": "029404e7446fd3b0bcb1353d5930f51481e77b43a16e5a7c840c94449f04325b",
+      "domain": "jpeg_compression",
+      "severity": 5
+    },
+    {
+      "id": "stream-4-continual",
+      "file": "stream-4-continual.json.gz",
+      "kind": "stream",
+      "batch": 4,
+      "frames": 16,
+      "bytes": 757558,
+      "sha256": "d23d235d86968acb14e0f2034017153e079eff2326ad75bdd055a497e57fa675",
+      "policy": "continual"
+    },
+    {
+      "id": "stream-4-reset",
+      "file": "stream-4-reset.json.gz",
+      "kind": "stream",
+      "batch": 4,
+      "frames": 16,
+      "bytes": 698683,
+      "sha256": "bee0e76e3078153e634bf3d97b918bf6012f6dba4cf8b2bb99114c9d1ae22013",
+      "policy": "reset"
+    },
+    {
+      "id": "batch-16-gaussian_noise-1",
+      "file": "batch-16-gaussian_noise-1.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 508520,
+      "sha256": "6eb73d2d1cb1b05ea8a983d37e0bd9bd33c27904ff84a2e537478f554e51e8d4",
+      "domain": "gaussian_noise",
+      "severity": 1
+    },
+    {
+      "id": "batch-16-gaussian_noise-3",
+      "file": "batch-16-gaussian_noise-3.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 532510,
+      "sha256": "fcc2d65ddeedb48a9fd4901cb06380bd5f8fd00eeafa84138bc4c6671a136048",
+      "domain": "gaussian_noise",
+      "severity": 3
+    },
+    {
+      "id": "batch-16-gaussian_noise-5",
+      "file": "batch-16-gaussian_noise-5.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 541509,
+      "sha256": "264760f0cf4eebb7eb669c221b4d3f9094666c0e710d59e4ab6a3cfcb56b278c",
+      "domain": "gaussian_noise",
+      "severity": 5
+    },
+    {
+      "id": "batch-16-brightness-1",
+      "file": "batch-16-brightness-1.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 479757,
+      "sha256": "122cdd21b7cc6c6aaa3f1d092891628b756552a9d9bd9639423132f6f1f85e06",
+      "domain": "brightness",
+      "severity": 1
+    },
+    {
+      "id": "batch-16-brightness-3",
+      "file": "batch-16-brightness-3.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 470643,
+      "sha256": "ccbbd2e7d0795b51d3cba9043c508661bd49968a356e0c771b332ebee6a711fc",
+      "domain": "brightness",
+      "severity": 3
+    },
+    {
+      "id": "batch-16-brightness-5",
+      "file": "batch-16-brightness-5.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 463951,
+      "sha256": "bf64f6207aab015e0ec6f376e3859eb070ea15a14cd98f93242cc2568aac09c0",
+      "domain": "brightness",
+      "severity": 5
+    },
+    {
+      "id": "batch-16-defocus_blur-1",
+      "file": "batch-16-defocus_blur-1.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 477580,
+      "sha256": "a6cfc33c4f023818f5730338c7fdbdcdc8db69551130e9bf1cdbf4f44acd909e",
+      "domain": "defocus_blur",
+      "severity": 1
+    },
+    {
+      "id": "batch-16-defocus_blur-3",
+      "file": "batch-16-defocus_blur-3.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 472175,
+      "sha256": "1e40272ae96202632c67a937bdfa9f566e7185828ef88a5e43ff34def3d09061",
+      "domain": "defocus_blur",
+      "severity": 3
+    },
+    {
+      "id": "batch-16-defocus_blur-5",
+      "file": "batch-16-defocus_blur-5.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 470002,
+      "sha256": "262d8d59c48bd362a4280e23d4f31e779d290cd1e7448f1fd2f02321271c9863",
+      "domain": "defocus_blur",
+      "severity": 5
+    },
+    {
+      "id": "batch-16-jpeg_compression-1",
+      "file": "batch-16-jpeg_compression-1.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 493653,
+      "sha256": "bea0d16036afb8c422ad1739535010bec184ecf8e887251ce63f5c169f7e0113",
+      "domain": "jpeg_compression",
+      "severity": 1
+    },
+    {
+      "id": "batch-16-jpeg_compression-3",
+      "file": "batch-16-jpeg_compression-3.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 502234,
+      "sha256": "f442231f1b8896847d02423ca38d20e3a3e71a7ac3e1207a3ba2ec8950ac5376",
+      "domain": "jpeg_compression",
+      "severity": 3
+    },
+    {
+      "id": "batch-16-jpeg_compression-5",
+      "file": "batch-16-jpeg_compression-5.json.gz",
+      "kind": "batch",
+      "batch": 16,
+      "frames": 9,
+      "bytes": 495139,
+      "sha256": "019304ef824b98df67fb91b36292c6ad0e019638737caaadfc77f944a40e94c0",
+      "domain": "jpeg_compression",
+      "severity": 5
+    },
+    {
+      "id": "stream-16-continual",
+      "file": "stream-16-continual.json.gz",
+      "kind": "stream",
+      "batch": 16,
+      "frames": 16,
+      "bytes": 907483,
+      "sha256": "c58c3433b42d1ead76fceb82de2c27e34edd5d87b872cc1935151e1d4c08295b",
+      "policy": "continual"
+    },
+    {
+      "id": "stream-16-reset",
+      "file": "stream-16-reset.json.gz",
+      "kind": "stream",
+      "batch": 16,
+      "frames": 16,
+      "bytes": 815687,
+      "sha256": "2bbe5919e1a09b6430b2e9ee6f2bde031ac6e6b59a718b9432fac2edbfadc67e",
+      "policy": "reset"
+    },
+    {
+      "id": "batch-64-gaussian_noise-1",
+      "file": "batch-64-gaussian_noise-1.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 660898,
+      "sha256": "da9c42effb4b8964b2437e56207c50bdbccae59c505d61944e137156956a754f",
+      "domain": "gaussian_noise",
+      "severity": 1
+    },
+    {
+      "id": "batch-64-gaussian_noise-3",
+      "file": "batch-64-gaussian_noise-3.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 706126,
+      "sha256": "1a7df220121c9603f64375a4550214c4a22707d66ac8a2e91633de382db1e685",
+      "domain": "gaussian_noise",
+      "severity": 3
+    },
+    {
+      "id": "batch-64-gaussian_noise-5",
+      "file": "batch-64-gaussian_noise-5.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 716810,
+      "sha256": "5359b5c26b878add2fabe591fdc8061ce6d173917c3f0ba590b98540d2123eff",
+      "domain": "gaussian_noise",
+      "severity": 5
+    },
+    {
+      "id": "batch-64-brightness-1",
+      "file": "batch-64-brightness-1.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 603801,
+      "sha256": "d17e9576adc9406144352019fb6fb2d166ed30b18dd2f80d2245209b24f0ecf6",
+      "domain": "brightness",
+      "severity": 1
+    },
+    {
+      "id": "batch-64-brightness-3",
+      "file": "batch-64-brightness-3.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 596493,
+      "sha256": "d1f0fdd0efa917bdf4e19d77df6db59c8d45e0c7afafa5fce6e4bc3700e1ee34",
+      "domain": "brightness",
+      "severity": 3
+    },
+    {
+      "id": "batch-64-brightness-5",
+      "file": "batch-64-brightness-5.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 588961,
+      "sha256": "21c38afbe1db46de77365094c7753165af23376767271dc184ff63e8908cbcb6",
+      "domain": "brightness",
+      "severity": 5
+    },
+    {
+      "id": "batch-64-defocus_blur-1",
+      "file": "batch-64-defocus_blur-1.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 600383,
+      "sha256": "e814034562bd989d59818ce4bad66bdd0c8bf39ef742fdc894e642fa6d78629e",
+      "domain": "defocus_blur",
+      "severity": 1
+    },
+    {
+      "id": "batch-64-defocus_blur-3",
+      "file": "batch-64-defocus_blur-3.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 600162,
+      "sha256": "e649599daeb21ccb5d337549e3266c122b03db4ae2113866d677d4c85ff02109",
+      "domain": "defocus_blur",
+      "severity": 3
+    },
+    {
+      "id": "batch-64-defocus_blur-5",
+      "file": "batch-64-defocus_blur-5.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 616156,
+      "sha256": "2e2f0a13a18921f2c23ddfe6a97c040e4a8041570bdd8e258e14cb79cb8638e9",
+      "domain": "defocus_blur",
+      "severity": 5
+    },
+    {
+      "id": "batch-64-jpeg_compression-1",
+      "file": "batch-64-jpeg_compression-1.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 642879,
+      "sha256": "032c24fd5ecb6958e598cefe9d83c2e5051d3887a01b77fe8be8b86093256cea",
+      "domain": "jpeg_compression",
+      "severity": 1
+    },
+    {
+      "id": "batch-64-jpeg_compression-3",
+      "file": "batch-64-jpeg_compression-3.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 657801,
+      "sha256": "c81e6e93d68d85822c7321c420e11eee5820a662e0a02f5fc4caeb5c895b0cb8",
+      "domain": "jpeg_compression",
+      "severity": 3
+    },
+    {
+      "id": "batch-64-jpeg_compression-5",
+      "file": "batch-64-jpeg_compression-5.json.gz",
+      "kind": "batch",
+      "batch": 64,
+      "frames": 9,
+      "bytes": 661274,
+      "sha256": "a40e3cf9adc283770e04e4b70717d4db2c5498fc406522da8f6afd88936ed698",
+      "domain": "jpeg_compression",
+      "severity": 5
+    },
+    {
+      "id": "stream-64-continual",
+      "file": "stream-64-continual.json.gz",
+      "kind": "stream",
+      "batch": 64,
+      "frames": 16,
+      "bytes": 1372570,
+      "sha256": "d1685c2c0434e70aa95902d30db458af355c4f2680b92020c64d8f88149668e9",
+      "policy": "continual"
+    },
+    {
+      "id": "stream-64-reset",
+      "file": "stream-64-reset.json.gz",
+      "kind": "stream",
+      "batch": 64,
+      "frames": 16,
+      "bytes": 1220683,
+      "sha256": "ea7ad37bdbbc8851796c40ce9034d98813d1e72b766db2e94dcc7326222d7045",
+      "policy": "reset"
+    }
+  ],
+  "conditions": 45,
+  "frames": 447
+}
