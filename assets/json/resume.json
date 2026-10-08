@@ -1,221 +1,202 @@
 {
   "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
-    "image": "",
-    "email": "einstein@example.com",
-    "phone": "(912) 123-4567",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
+    "name": "Hyeongyu Kim",
+    "label": "Compiler Engineer, Compiler Team · Hyundai Motor Company",
+    "email": "khg4309@naver.com",
+    "url": "https://hyeongyu-kim.github.io/",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
-      "countryCode": "US",
-      "region": "California"
+      "countryCode": "KR",
+      "region": "South Korea"
     },
-    "profiles": []
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "hyeongyu-kim",
+        "url": "https://github.com/hyeongyu-kim"
+      },
+      {
+        "network": "Google Scholar",
+        "username": "Ot6fq-EAAAAJ",
+        "url": "https://scholar.google.com/citations?user=Ot6fq-EAAAAJ"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "hyeongyu-kim-27b01b289",
+        "url": "https://www.linkedin.com/in/hyeongyu-kim-27b01b289/"
+      }
+    ]
   },
   "work": [
     {
-      "name": "Institute for Advanced Study, Princeton University",
-      "position": "Professor of Theoretical Physics",
-      "location": "Princeton University, NJ",
-      "startDate": "1933-01-01",
-      "endDate": "1955-01-01",
-      "summary": "Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.",
-      "highlights": ["Relativity", "Description 2."]
+      "name": "Hyundai Motor Company",
+      "position": "Compiler Engineer, Compiler Team",
+      "startDate": "2026-08",
+      "dateLabel": "Aug. 2026 – Present",
+      "highlights": [
+        "Develop TVM-based compilation for custom-NPU deployment, including Relax/TIR lowering, tiling, scheduling, and memory mapping.",
+        "Work on hardware/software co-design to balance latency, bandwidth, throughput, and power."
+      ]
     },
     {
-      "name": "California Institute of Technology",
-      "position": "Visiting Professor",
-      "location": "Pasadena, California, US",
-      "startDate": "1933-01-01",
-      "endDate": "1933-01-01",
-      "summary": "",
-      "highlights": ["Description 1.", "Description 2."]
-    },
-    {
-      "name": "Kaiser Wilhelm Institute for Physics",
-      "position": "Director",
-      "location": "Berlin, Germany",
-      "startDate": "1917-01-01",
-      "endDate": "1933-01-01",
-      "summary": "",
-      "highlights": []
-    },
-    {
-      "name": "Karl-Ferdinand University",
-      "position": "Professor of Theoretical Physics",
-      "location": "Prague, Czechoslovakia",
-      "startDate": "1911-01-01",
-      "endDate": "1917-01-01",
-      "summary": "",
-      "highlights": []
-    },
-    {
-      "name": "University of Zurich",
-      "position": "Associate Professor of Theoretical Physics",
-      "location": "Zurich, Switzerland",
-      "startDate": "1909-01-01",
-      "endDate": "1911-01-01",
-      "summary": "",
-      "highlights": []
-    }
-  ],
-  "volunteer": [
-    {
-      "organization": "People's Climate March",
-      "location": "Zurich, Switzerland",
-      "position": "Lead Organizer",
-      "startDate": "2014-04-01",
-      "endDate": "2015-07-01",
-      "summary": "Lead organizer for the New York City branch of the People's Climate March, the largest climate march in history.",
-      "highlights": ["Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march.", "Men of the year 2014 by Time magazine"]
+      "name": "Medical Artificial Intelligence Lab, Yonsei University",
+      "position": "Doctoral Researcher · Advisor: Prof. Dosik Hwang",
+      "startDate": "2020-03",
+      "endDate": "2026-08",
+      "dateLabel": "Mar. 2020 – Aug. 2026",
+      "highlights": [
+        "Research on test-time adaptation, domain adaptation and generalization, and prediction under distribution shift.",
+        "Developed AcTTA, Buffer layers, and MIRA; co-developed CD-Buffer for adverse-weather object detection.",
+        "Worked on cross-modality 3D segmentation, multi-contrast MRI restoration, and diffusion-based image synthesis; member of the CrossMoDA 2021 winning team."
+      ]
     }
   ],
   "education": [
     {
-      "institution": "University of Zurich",
-      "location": "Zurich, Switzerland",
-      "url": "https://www.uzh.ch/",
-      "area": "Physics",
-      "studyType": "PhD",
-      "startDate": "1900-01-01",
-      "endDate": "1905-01-01",
-      "score": "",
-      "courses": ["Theory of Relativity"],
-      "highlights": ["Description 1.", "Description 2."]
+      "institution": "Yonsei University",
+      "area": "Electrical and Electronic Engineering",
+      "studyType": "Ph.D.",
+      "startDate": "2020-03",
+      "endDate": "2026-08",
+      "dateLabel": "Mar. 2020 – Aug. 2026",
+      "summary": "Advisor: Prof. Dosik Hwang. Degree awarded August 28, 2026."
     },
     {
-      "institution": "Eidgenössische Technische Hochschule",
-      "location": "Zurich, Switzerland",
-      "area": "Physics",
-      "studyType": "Federal teaching diploma",
-      "startDate": "1896-01-01",
-      "endDate": "1900-01-01",
-      "score": "",
-      "courses": [],
-      "highlights": ["Description 1.", "Description 2."]
-    }
-  ],
-  "awards": [
-    {
-      "title": "Nobel Prize in Physics",
-      "date": "1921-11-01",
-      "awarder": "Royal Swedish Academy of Sciences",
-      "url": "https://www.nobelprize.org/prizes/physics/1921/einstein/biographical/",
-      "summary": "The Nobel Prizes are five separate prizes that, according to Alfred Nobel's will of 1895, are awarded to 'those who, during the preceding year, have conferred the greatest benefit to humankind.'"
-    },
-    {
-      "title": "Max Planck Medal",
-      "date": "2029-01-01",
-      "awarder": "German Physical Society",
-      "summary": ""
-    }
-  ],
-  "certificates": [
-    {
-      "name": "Machine Learning",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "icon": "fa-solid fa-location-dot"
-    },
-    {
-      "name": "Quantum Computing",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "icon": "fa-solid fa-tag"
-    },
-    {
-      "name": "Quantum Information",
-      "date": "2018-01-01",
-      "issuer": "Stanford University",
-      "icon": "fa-solid fa-envelope"
-    }
-  ],
-  "publications": [
-    {
-      "name": "Zur Elektrodynamik bewegter Körper",
-      "publisher": "Annalen der Physik",
-      "releaseDate": "1905-06-30",
-      "url": "https://en.wikisource.org/wiki/Translation:On_the_Electrodynamics_of_Moving_Bodies",
-      "summary": "It concerned an interpretation of the Michelson–Morley experiment and the properties of light and time. Special relativity incorporates the principle that the speed of light is the same for all inertial observers regardless of the state of motion of the source."
-    },
-    {
-      "name": "Über einen die Erzeugung und Verwandlung des Lichtes betreffenden heuristischen Gesichtspunkt",
-      "publisher": "Annalen der Physik",
-      "releaseDate": "1905-03-18",
-      "url": "https://de.wikisource.org/wiki/Über_einen_die_Erzeugung_und_Verwandlung_des_Lichtes_betreffenden_heuristischen_Gesichtspunkt",
-      "summary": "In the second paper, he applied the quantum theory to light to explain the photoelectric effect. In particular, he used the idea of light quanta (photons) to explain experimental results, but stressed the importance of the experimental results. The importance of his work on the photoelectric effect earned him the Nobel Prize in Physics in 1921."
-    },
-    {
-      "name": "Die Grundlage der allgemeinen Relativitätstheorie",
-      "publisher": "Annalen der Physik",
-      "releaseDate": "1916-03-20",
-      "url": "https://de.wikisource.org/wiki/Die_Grundlage_der_allgemeinen_Relativitätstheorie",
-      "summary": "The publication of the theory of general relativity made him internationally famous. He was professor of physics at the universities of Zurich (1909–1911) and Prague (1911–1912), before he returned to ETH Zurich (1912–1914)."
-    }
-  ],
-  "skills": [
-    {
-      "name": "Physics",
-      "level": "Master",
-      "icon": "fa-solid fa-hashtag",
-      "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
-      ]
-    }
-  ],
-  "languages": [
-    {
-      "language": "German",
-      "fluency": "Native speaker",
-      "icon": ""
-    },
-    {
-      "language": "English",
-      "fluency": "Fluent",
-      "icon": ""
+      "institution": "Yonsei University",
+      "area": "Electrical and Electronic Engineering",
+      "studyType": "B.S.",
+      "startDate": "2014-03",
+      "endDate": "2020-02",
+      "dateLabel": "Mar. 2014 – Feb. 2020"
     }
   ],
   "interests": [
     {
-      "name": "Physics",
-      "icon": "fa-solid fa-tag",
-      "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
-      ]
-    }
-  ],
-  "references": [
-    {
-      "name": "Professor John Doe",
-      "icon": "fa-solid fa-laptop",
-      "reference": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum, diam quis convallis euismod, arcu mi ullamcorper lorem, a vestibulum nunc magna at sem. Sed in risus ac felis varius blandit."
+      "name": "Test-time learning",
+      "keywords": ["Test-time adaptation", "calibration", "unsupervised domain adaptation", "domain generalization"]
     },
     {
-      "name": "Professor Jane Smith",
-      "icon": "fa-solid fa-thumbtack",
-      "reference": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum, diam quis convallis euismod, arcu mi ullamcorper lorem, a vestibulum nunc magna at sem. Sed in risus ac felis varius blandit."
+      "name": "Medical imaging",
+      "keywords": ["3D segmentation", "multi-contrast MRI restoration and synthesis", "diffusion models", "flow matching"]
+    },
+    {
+      "name": "Reliable deployment",
+      "keywords": ["Prediction under distribution shift", "efficient inference", "hardware-aware model deployment"]
     }
   ],
   "projects": [
     {
-      "name": "Quantum Computing",
-      "summary": "Quantum computing is the use of quantum-mechanical phenomena such as superposition and entanglement to perform computation. Computers that perform quantum computations are known as quantum computers.",
-      "highlights": ["Quantum Teleportation", "Quantum Cryptography"],
-      "startDate": "2018-01-01",
-      "endDate": "2018-01-01"
+      "name": "Fetal Ultrasound Image Enhancement",
+      "entity": "Samsung Medison / Severance Hospital",
+      "dateLabel": "2025",
+      "description": "Developed diffusion- and flow-matching-based enhancement for denoising, super-resolution, and artifact suppression without high-resolution reference data."
+    },
+    {
+      "name": "MRI-based Alzheimer’s Disease Diagnosis",
+      "entity": "Samsung Electronics",
+      "dateLabel": "2023",
+      "description": "Developed a cyclic inference-based diagnostic algorithm using brain MRI; associated patent application DP-2023-0002."
+    },
+    {
+      "name": "Pediatric Chest X-ray Dataset & Disease Detection",
+      "entity": "Pediatric medical imaging data project",
+      "dateLabel": "2023",
+      "description": "Constructed a pediatric chest X-ray dataset and trained models for lung disease detection."
+    },
+    {
+      "name": "Automated Spinal Analysis",
+      "entity": "Rayence",
+      "dateLabel": "2021",
+      "description": "Developed vertebral segmentation and spinal curvature/Cobb angle analysis from X-ray imaging."
+    }
+  ],
+  "awards": [
+    {
+      "title": "4th Rank · Aorta Segmentation Challenge",
+      "date": "2024",
+      "awarder": "MICCAI 2024 Challenge"
+    },
+    {
+      "title": "Research Scholarship",
+      "date": "2024",
+      "awarder": "Hyundai Motor Group"
+    },
+    {
+      "title": "1st Rank · CrossMoDA 2021",
+      "date": "2021",
+      "awarder": "MICCAI Cross-Modality Domain Adaptation Challenge"
+    },
+    {
+      "title": "Excellence Award · AI-based Image Diagnosis Hackathon",
+      "date": "2021",
+      "awarder": "Ministry of Trade, Industry and Energy"
+    },
+    {
+      "title": "Excellence Award · Medical Data AI Datathon",
+      "date": "2021",
+      "awarder": "Ministry of Science and ICT / National Information Society Agency"
+    },
+    {
+      "title": "International Collaborative Research Scholarship",
+      "date": "2021",
+      "awarder": "Yonsei University"
+    },
+    {
+      "title": "Fellow Scholarship",
+      "date": "2020",
+      "awarder": "Yonsei University"
+    }
+  ],
+  "patents": [
+    {
+      "title": "Artificial neural network apparatus and test-time adaptation method for inference",
+      "year": "2025",
+      "number": "DP-2025-0773"
+    },
+    {
+      "title": "Isotropic MRI volume reconstruction apparatus and method",
+      "year": "2025",
+      "number": "DP-2024-1961"
+    },
+    {
+      "title": "Apparatus and method for generating multi-contrast magnetic resonance images",
+      "year": "2024",
+      "number": "DP-2024-0932"
+    },
+    {
+      "title": "Dementia diagnosis system and control method based on cyclic inference-driven artificial intelligence",
+      "year": "2023",
+      "number": "DP-2023-0002"
+    },
+    {
+      "title": "Domain-generalized segmentation model training method",
+      "year": "2023",
+      "number": "DP-2023-1013"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming",
+      "keywords": ["Python", "C/C++", "MATLAB"]
+    },
+    {
+      "name": "ML frameworks",
+      "keywords": ["PyTorch", "TensorFlow", "CUDA", "OpenCV"]
+    },
+    {
+      "name": "Compilers & tools",
+      "keywords": ["TVM (Relax, TIR)", "Git", "Docker", "Linux"]
+    },
+    {
+      "name": "Languages",
+      "keywords": ["Korean", "English"]
+    }
+  ],
+  "teaching": [
+    {
+      "course": "Introduction to Bioengineering for Electrical and Electronic Engineering",
+      "institution": "Yonsei University",
+      "position": "Teaching Assistant",
+      "dateLabel": "Mar. 2020 – Jun. 2020"
     }
   ]
 }

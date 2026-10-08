@@ -1,0 +1,43 @@
+---
+---
+<article class="editorial-paper" id="{{ entry.key }}">
+  <div class="editorial-paper-meta">
+    <span class="editorial-paper-venue">{{ entry.booktitle | default: entry.journal }}</span>
+    <span class="editorial-paper-year">{{ entry.year }}</span>
+    {% if entry.note -%}
+      <span class="editorial-paper-note">{{ entry.note }}</span>
+    {%- endif %}
+  </div>
+  <div class="editorial-paper-body">
+    <h3>{{ entry.title }}</h3>
+    <p class="editorial-paper-authors">
+      {% for author in entry.author_array %}
+        {% assign author_last_name = author.last | remove: '*' %}
+        {% if author.first == site.first_name and author_last_name == site.last_name %}
+          <strong>
+            {{- author.first }}
+            {{ author.last | replace: '*', '<sup>*</sup>' -}}
+          </strong>
+        {% else %}
+          {{ author.first }}
+          {{ author.last | replace: '*', '<sup>*</sup>' }}
+        {% endif %}
+        {% unless forloop.last %}, {% endunless %}
+      {% endfor %}
+    </p>
+    {% if entry.equal_contrib %}
+      <p class="editorial-paper-contribution">* Equal contribution</p>
+    {% endif %}
+    <div class="editorial-paper-links">
+      {% if entry.html %}
+        <a href="{{ entry.html }}"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Paper</a>
+      {% endif %}
+      {% if entry.website %}
+        <a href="{{ entry.website }}"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Project</a>
+      {% endif %}
+      {% if entry.code %}
+        <a href="{{ entry.code }}"><i class="fa-brands fa-github" aria-hidden="true"></i> Code</a>
+      {% endif %}
+    </div>
+  </div>
+</article>

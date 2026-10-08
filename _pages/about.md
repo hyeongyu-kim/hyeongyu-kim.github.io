@@ -1,34 +1,12 @@
 ---
-layout: about
-title: about
+layout: editorial
+title: About
 permalink: /
-subtitle: Ph.D. Candidate at Yonsei University, Seoul, South Korea.
-
+description: Hyeongyu Kim — test-time adaptation, medical imaging, and NPU compilation. Compiler Engineer at Hyundai Motor Company; Ph.D. from Yonsei University.
 profile:
-  align: right
-  image: prof_pic.png
-  image_circular: false # crops the image to make it circular
-  more_info: >
-    <p> 02-2123-7446 </p>
-    <p> C516, 50 Yonsei-ro, Seodaemun-gu </p>
-    <p> Seoul, 03722 </p>
-
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
-
-announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
-
-latest_posts:
-  enabled: false
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  image: portrait.jpg
 ---
 
-I am a Ph.D. candidate at [MAI-LAB](https://mai-lab.net/), Yonsei University, working on deep learning and AI.
+My research focuses on **test-time adaptation**: how models can adapt when the data they encounter differs from their training data. I also work on domain adaptation and generalization, and their applications to medical image segmentation and reconstruction.
 
-My main research interests include Domain Adaptation, especially **Test-Time Adaptation**, Deep learning on Fourier Ptychography, and MRI Reconstruction / Super-resolution.
-
-Feel free to reach out!
+I am a **Compiler Engineer in the Compiler Team at Hyundai Motor Company**, where I work on TVM-based compilation for custom NPUs. I received my Ph.D. in Electrical and Electronic Engineering from Yonsei University in August 2026, advised by Prof. Dosik Hwang at the [Medical Artificial Intelligence Lab](https://www.mai-lab.net/).

@@ -1,47 +1,28 @@
 ---
 layout: page
 permalink: /repositories/
-title: repositories
-description: Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.
+title: Code
+description: Research code and project repositories.
 nav: true
 nav_order: 4
 ---
 
-{% if site.data.repositories.github_users %}
+<ul class="editorial-code-list">
+  <li>
+    <h2>Buffer layers for Test-Time Adaptation</h2>
+    <p>Research code for our NeurIPS 2025 paper.</p>
+    <a href="https://github.com/hyeongyu-kim/Buffer_TTA"><i class="fa-brands fa-github" aria-hidden="true"></i> Buffer_TTA</a>
+  </li>
+  <li>
+    <h2>SDC-UDA</h2>
+    <p>Volumetric unsupervised domain adaptation for cross-modality medical image segmentation, CVPR 2023.</p>
+    <a href="https://github.com/hyeongyu-kim/SDC-UDA"><i class="fa-brands fa-github" aria-hidden="true"></i> SDC-UDA</a>
+  </li>
+  <li>
+    <h2>AcTTA</h2>
+    <p>Rethinking Test-Time Adaptation via Dynamic Activation, CVPR 2026.</p>
+    <a href="https://hyeongyu-kim.github.io/actta/">Project page <span aria-hidden="true">↗</span></a>
+  </li>
+</ul>
 
-## GitHub users
-
-<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% for user in site.data.repositories.github_users %}
-    {% include repository/repo_user.liquid username=user %}
-  {% endfor %}
-</div>
-
----
-
-{% if site.repo_trophies.enabled %}
-{% for user in site.data.repositories.github_users %}
-{% if site.data.repositories.github_users.size > 1 %}
-
-  <h4>{{ user }}</h4>
-  {% endif %}
-  <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% include repository/repo_trophies.liquid username=user %}
-  </div>
-
----
-
-{% endfor %}
-{% endif %}
-{% endif %}
-
-{% if site.data.repositories.github_repos %}
-
-## GitHub Repositories
-
-<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% for repo in site.data.repositories.github_repos %}
-    {% include repository/repo.liquid repository=repo %}
-  {% endfor %}
-</div>
-{% endif %}
+<p><a href="https://github.com/hyeongyu-kim"><i class="fa-brands fa-github" aria-hidden="true"></i> More on GitHub</a></p>
