@@ -681,10 +681,6 @@
         font-weight: 400;
         color: var(--global-text-color-light);
       }
-      .tile-controls {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 1rem;
-      }
       .lab-actions,
       .contact-downloads {
         display: flex;
@@ -846,62 +842,6 @@
       .lab-method p:first-of-type {
         margin-top: 1rem;
       }
-      .tile-matrices {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr auto 1fr;
-        gap: 0.9rem;
-        align-items: center;
-        padding: 0.8rem 0 1.5rem;
-      }
-      .tile-matrices figure {
-        margin: 0;
-        min-width: 0;
-      }
-      .tile-matrices canvas {
-        width: 100%;
-        height: auto;
-      }
-      .tile-matrices figcaption {
-        font-size: 0.8rem;
-        text-align: center;
-        margin-top: 0.45rem;
-      }
-      .matrix-operator {
-        font-family: Georgia, serif;
-        font-size: 1.4rem;
-        color: var(--global-text-color-light);
-      }
-      .tile-stats {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 1.5rem;
-        padding: 1rem 0 1.7rem;
-      }
-      .tile-stats span {
-        display: block;
-        font-size: 0.75rem;
-        color: var(--global-text-color-light);
-      }
-      .tile-stats strong {
-        display: block;
-        font-weight: 500;
-        font-size: 1.15rem;
-        margin-top: 0.4rem;
-        font-variant-numeric: tabular-nums;
-        color: var(--editorial-title-color);
-      }
-      .tile-code {
-        padding: 1.1rem;
-        border: 1px solid var(--global-divider-color);
-        background: rgba(0, 0, 0, 0);
-        font-size: 0.78rem;
-        line-height: 1.65;
-        overflow-x: auto;
-      }
-      .tile-code code {
-        background: none;
-        color: var(--global-text-color);
-      }
       .contact-email {
         display: flex;
         align-items: center;
@@ -966,12 +906,6 @@
           grid-column: 1/-1;
           max-width: 350px;
         }
-        .tile-controls {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-        .tile-stats {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
         .prediction-heading {
           font-size: 1.15rem;
         }
@@ -980,11 +914,11 @@
         .editorial-page-heading {
           margin-bottom: 1.8rem;
         }
-        .lab-controls:not(.tile-controls) {
+        .lab-controls {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 1rem;
         }
-        .lab-controls:not(.tile-controls) .range-control {
+        .lab-controls .range-control {
           grid-column: 1/-1;
           order: 3;
         }
@@ -993,15 +927,6 @@
         }
         .lab-section-title h2 {
           font-size: 1.4rem;
-        }
-        .tile-matrices {
-          gap: 0.25rem;
-        }
-        .tile-matrices .matrix-operator {
-          font-size: 1rem;
-        }
-        .tile-matrices figcaption {
-          font-size: 0.65rem;
         }
         .contact-email > a {
           font-size: 1.3rem;
@@ -1058,13 +983,13 @@
         <header class="editorial-page-heading">
           <p class="editorial-eyebrow">Research, in small experiments</p>
           <h1>Interactive lab</h1>
-          <p>Both experiments run locally. No connection is needed after saving this file.</p>
+          <p>The experiment runs locally. No connection is needed after saving this file.</p>
         </header>
         <p class="editorial-small-note">
           <a href="https://hyeongyu-kim.github.io/assets/lab/research-lab.html" download="Hyeongyu_Kim_Research_Lab.html"
             >Download an offline copy (HTML)</a
           >
-          · Open the saved file in a browser to use both experiments without a connection.
+          · Open the saved file in a browser to use the experiment without a connection.
         </p>
 
         <section
@@ -1074,7 +999,6 @@
           data-model-url="https://hyeongyu-kim.github.io/assets/lab/digits-model.json"
         >
           <div class="lab-section-title">
-            <span class="lab-number">01</span>
             <div>
               <h2 id="digit-title">A classifier meets a new domain</h2>
               <p>A small experiment with handwritten digits and test-time feature-statistic alignment.</p>
@@ -1192,111 +1116,6 @@
             </p>
           </details>
           <noscript><p>This experiment needs JavaScript. The model and test samples remain available from the download link.</p></noscript>
-        </section>
-
-        <section id="tile-lab" class="lab-section" aria-labelledby="tile-title">
-          <div class="lab-section-title">
-            <span class="lab-number">02</span>
-            <div>
-              <h2 id="tile-title">A matrix multiply, one tile at a time</h2>
-              <p>Change the tile shape and see what moves, what stays, and how much space it needs.</p>
-            </div>
-          </div>
-          <div class="lab-controls tile-controls">
-            <label
-              >M<select id="tile-m">
-                <option>64</option>
-                <option>96</option>
-                <option selected>128</option>
-                <option>192</option>
-                <option>256</option>
-              </select></label
-            >
-            <label
-              >N<select id="tile-n">
-                <option>64</option>
-                <option>96</option>
-                <option selected>128</option>
-                <option>192</option>
-                <option>256</option>
-              </select></label
-            >
-            <label
-              >K<select id="tile-k">
-                <option>64</option>
-                <option>96</option>
-                <option selected>128</option>
-                <option>192</option>
-                <option>256</option>
-              </select></label
-            >
-            <label
-              >Tile M<select id="tile-tm">
-                <option>8</option>
-                <option selected>16</option>
-                <option>32</option>
-                <option>64</option>
-              </select></label
-            >
-            <label
-              >Tile N<select id="tile-tn">
-                <option>8</option>
-                <option selected>16</option>
-                <option>32</option>
-                <option>64</option>
-              </select></label
-            >
-            <label
-              >Tile K<select id="tile-tk">
-                <option>8</option>
-                <option>16</option>
-                <option selected>32</option>
-                <option>64</option>
-              </select></label
-            >
-          </div>
-          <div class="tile-matrices">
-            <figure>
-              <canvas id="tile-a" width="240" height="220" role="img" aria-label="Active tile of matrix A"></canvas>
-              <figcaption>A · M × K</figcaption>
-            </figure>
-            <span class="matrix-operator" aria-hidden="true">×</span>
-            <figure>
-              <canvas id="tile-b" width="240" height="220" role="img" aria-label="Active tile of matrix B"></canvas>
-              <figcaption>B · K × N</figcaption>
-            </figure>
-            <span class="matrix-operator" aria-hidden="true">=</span>
-            <figure>
-              <canvas id="tile-c" width="240" height="220" role="img" aria-label="Output tile of matrix C"></canvas>
-              <figcaption>C · M × N</figcaption>
-            </figure>
-          </div>
-          <div class="lab-actions">
-            <button type="button" id="tile-step">Next tile</button><button type="button" id="tile-play" class="quiet-button">Play</button
-            ><button type="button" id="tile-reset" class="quiet-button">Reset tiles</button
-            ><span id="tile-position" class="lab-caption" aria-live="polite"></span>
-          </div>
-          <div class="tile-stats">
-            <div><span>Peak tile working set</span><strong id="tile-footprint">—</strong></div>
-            <div><span>Modeled data traffic</span><strong id="tile-traffic">—</strong></div>
-            <div><span>Tile operations</span><strong id="tile-operations">—</strong></div>
-            <div><span>Arithmetic operations</span><strong id="tile-flops">—</strong></div>
-          </div>
-          <p id="tile-ranges" class="lab-caption"></p>
-          <pre class="tile-code"><code id="tile-loop"></code></pre>
-          <details class="lab-method">
-            <summary>Memory model and assumptions</summary>
-            <p>
-              FP16 inputs, FP32 accumulators, and an output-stationary loop order. A C tile remains resident while all K tiles are accumulated, then
-              is written once. A and B have no reuse across output tiles. Edge tiles are counted at their actual size. The working set assumes one A
-              tile, one B tile, and one C accumulator tile, without double buffering.
-            </p>
-            <p>
-              These are arithmetic and memory counts for this loop sketch. Latency, bandwidth, bank conflicts, instruction scheduling, and
-              hardware-specific limits are outside this model.
-            </p>
-            <p><a href="https://hyeongyu-kim.github.io/notes/matmul-tiling/">Read the tiling note ↗</a></p>
-          </details>
         </section>
       </main>
     </div>
@@ -4906,52 +4725,11 @@
         return { accuracy: correct / count, confidence: confidence / count, ece };
       }
 
-      function tileMetrics({ m, n, k, tm, tn, tk }) {
-        const mt = Math.ceil(m / tm),
-          nt = Math.ceil(n / tn),
-          kt = Math.ceil(k / tk);
-        return {
-          mt,
-          nt,
-          kt,
-          operations: mt * nt * kt,
-          flops: 2 * m * n * k,
-          traffic: 2 * (m * k * nt + k * n * mt) + 4 * m * n,
-          footprint: 2 * Math.min(tm, m) * Math.min(tk, k) + 2 * Math.min(tk, k) * Math.min(tn, n) + 4 * Math.min(tm, m) * Math.min(tn, n),
-        };
-      }
-
-      function tilePosition(config, step) {
-        const metrics = tileMetrics(config);
-        const current = ((step % metrics.operations) + metrics.operations) % metrics.operations;
-        const ki = current % metrics.kt;
-        const ni = Math.floor(current / metrics.kt) % metrics.nt;
-        const mi = Math.floor(current / (metrics.kt * metrics.nt));
-        return {
-          m0: mi * config.tm,
-          m1: Math.min((mi + 1) * config.tm, config.m),
-          n0: ni * config.tn,
-          n1: Math.min((ni + 1) * config.tn, config.n),
-          k0: ki * config.tk,
-          k1: Math.min((ki + 1) * config.tk, config.k),
-        };
-      }
-
       const element = (id) => document.getElementById(id);
       const text = (id, value) => {
         element(id).textContent = value;
       };
       const percent = (value) => `${(value * 100).toFixed(1)}%`;
-      const colors = () => {
-        const style = getComputedStyle(document.documentElement);
-        return {
-          blue: style.getPropertyValue("--global-theme-color").trim(),
-          text: style.getPropertyValue("--global-text-color").trim(),
-          divider: style.getPropertyValue("--global-divider-color").trim(),
-          background: style.getPropertyValue("--global-bg-color").trim(),
-        };
-      };
-
       function drawDigit(canvas, pixels) {
         const context = canvas.getContext("2d");
         pixels.forEach((pixel, i) => {
@@ -5088,118 +4866,7 @@
         }
       }
 
-      function drawMatrix(canvas, rows, columns, tileRows, tileColumns, active) {
-        const context = canvas.getContext("2d");
-        const palette = colors();
-        const margin = 10,
-          width = canvas.width - margin * 2,
-          height = canvas.height - margin * 2;
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = palette.background;
-        context.fillRect(margin, margin, width, height);
-        context.globalAlpha = 0.22;
-        context.fillStyle = palette.blue;
-        context.fillRect(
-          margin + (active.c0 / columns) * width,
-          margin + (active.r0 / rows) * height,
-          ((active.c1 - active.c0) / columns) * width,
-          ((active.r1 - active.r0) / rows) * height
-        );
-        context.globalAlpha = 1;
-        context.strokeStyle = palette.divider;
-        context.lineWidth = 1;
-        context.beginPath();
-        for (let row = 0; row <= rows; row += tileRows) {
-          context.moveTo(margin, margin + (row / rows) * height);
-          context.lineTo(margin + width, margin + (row / rows) * height);
-        }
-        for (let column = 0; column <= columns; column += tileColumns) {
-          context.moveTo(margin + (column / columns) * width, margin);
-          context.lineTo(margin + (column / columns) * width, margin + height);
-        }
-        context.stroke();
-        context.strokeRect(margin, margin, width, height);
-        context.strokeStyle = palette.blue;
-        context.lineWidth = 2;
-        context.strokeRect(
-          margin + (active.c0 / columns) * width,
-          margin + (active.r0 / rows) * height,
-          ((active.c1 - active.c0) / columns) * width,
-          ((active.r1 - active.r0) / rows) * height
-        );
-        canvas.setAttribute(
-          "aria-label",
-          `Matrix: ${rows} rows, ${columns} columns; active rows ${active.r0} to ${active.r1 - 1}, columns ${active.c0} to ${active.c1 - 1}`
-        );
-      }
-
-      function setupTiles() {
-        if (!element("tile-lab")) return;
-        let step = 0,
-          timer;
-        const config = () => Object.fromEntries(["m", "n", "k", "tm", "tn", "tk"].map((key) => [key, Number(element(`tile-${key}`).value)]));
-        const kib = (value) => `${(value / 1024).toLocaleString(undefined, { maximumFractionDigits: 2 })} KiB`;
-        const stop = () => {
-          clearInterval(timer);
-          timer = undefined;
-          text("tile-play", "Play");
-        };
-        const render = () => {
-          const c = config(),
-            metric = tileMetrics(c),
-            position = tilePosition(c, step);
-          const { m0, m1, n0, n1, k0, k1 } = position;
-          drawMatrix(element("tile-a"), c.m, c.k, c.tm, c.tk, { r0: m0, r1: m1, c0: k0, c1: k1 });
-          drawMatrix(element("tile-b"), c.k, c.n, c.tk, c.tn, { r0: k0, r1: k1, c0: n0, c1: n1 });
-          drawMatrix(element("tile-c"), c.m, c.n, c.tm, c.tn, { r0: m0, r1: m1, c0: n0, c1: n1 });
-          text("tile-footprint", kib(metric.footprint));
-          text("tile-traffic", kib(metric.traffic));
-          text("tile-operations", metric.operations.toLocaleString());
-          text("tile-flops", metric.flops.toLocaleString());
-          text("tile-position", `Tile ${step + 1} / ${metric.operations}`);
-          text("tile-ranges", `Active ranges: M [${m0}, ${m1}), N [${n0}, ${n1}), K [${k0}, ${k1}). The C tile stays resident across K tiles.`);
-          text(
-            "tile-loop",
-            `# Output-stationary loop sketch, including edge tiles\nfor mo in range(0, ${c.m}, ${c.tm}):\n    for no in range(0, ${c.n}, ${c.tn}):\n        acc = zeros(min(${c.tm}, ${c.m} - mo), min(${c.tn}, ${c.n} - no))\n        for ko in range(0, ${c.k}, ${c.tk}):\n            acc += A[mo:mo+${c.tm}, ko:ko+${c.tk}] @ B[ko:ko+${c.tk}, no:no+${c.tn}]\n        C[mo:mo+${c.tm}, no:no+${c.tn}] = acc`
-          );
-        };
-        const advance = () => {
-          step = (step + 1) % tileMetrics(config()).operations;
-          render();
-        };
-        element("tile-step").addEventListener("click", () => {
-          stop();
-          advance();
-        });
-        element("tile-reset").addEventListener("click", () => {
-          stop();
-          step = 0;
-          render();
-        });
-        element("tile-play").addEventListener("click", () => {
-          if (timer) stop();
-          else {
-            text("tile-play", "Pause");
-            timer = setInterval(advance, 500);
-          }
-        });
-        ["m", "n", "k", "tm", "tn", "tk"].forEach((key) =>
-          element(`tile-${key}`).addEventListener("change", () => {
-            stop();
-            step = 0;
-            render();
-          })
-        );
-        document.addEventListener("visibilitychange", () => {
-          if (document.hidden) stop();
-        });
-        window.addEventListener("pagehide", stop);
-        new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-        render();
-      }
-
       setupDigits();
-      setupTiles();
 
       document.getElementById("offline-theme").addEventListener("click", function () {
         const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";

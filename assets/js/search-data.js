@@ -32,7 +32,7 @@ ninja.data = [{
           },
         },{id: "nav-interactive-lab",
           title: "Interactive lab",
-          description: "Interactive test-time adaptation and matrix-tiling experiments by Hyeongyu Kim.",
+          description: "An interactive test-time adaptation experiment by Hyeongyu Kim.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/lab/";
