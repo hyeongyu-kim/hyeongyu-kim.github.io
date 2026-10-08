@@ -222,10 +222,6 @@
     color: var(--global-text-color-light);
   }
 }
-.tile-controls {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 1rem;
-}
 .lab-actions,
 .contact-downloads {
   display: flex;
@@ -385,62 +381,6 @@
     margin-top: 1rem;
   }
 }
-.tile-matrices {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
-  gap: 0.9rem;
-  align-items: center;
-  padding: 0.8rem 0 1.5rem;
-  figure {
-    margin: 0;
-    min-width: 0;
-  }
-  canvas {
-    width: 100%;
-    height: auto;
-  }
-  figcaption {
-    font-size: 0.8rem;
-    text-align: center;
-    margin-top: 0.45rem;
-  }
-}
-.matrix-operator {
-  font-family: Georgia, serif;
-  font-size: 1.4rem;
-  color: var(--global-text-color-light);
-}
-.tile-stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5rem;
-  padding: 1rem 0 1.7rem;
-  span {
-    display: block;
-    font-size: 0.75rem;
-    color: var(--global-text-color-light);
-  }
-  strong {
-    display: block;
-    font-weight: 500;
-    font-size: 1.15rem;
-    margin-top: 0.4rem;
-    font-variant-numeric: tabular-nums;
-    color: var(--editorial-title-color);
-  }
-}
-.tile-code {
-  padding: 1.1rem;
-  border: 1px solid var(--global-divider-color);
-  background: transparent;
-  font-size: 0.78rem;
-  line-height: 1.65;
-  overflow-x: auto;
-  code {
-    background: none;
-    color: var(--global-text-color);
-  }
-}
 
 .contact-email {
   display: flex;
@@ -507,12 +447,6 @@
     grid-column: 1 / -1;
     max-width: 350px;
   }
-  .tile-controls {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .tile-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .prediction-heading {
     font-size: 1.15rem;
   }
@@ -521,7 +455,7 @@
   .editorial-page-heading {
     margin-bottom: 1.8rem;
   }
-  .lab-controls:not(.tile-controls) {
+  .lab-controls {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
     .range-control {
@@ -533,15 +467,6 @@
     gap: 0.75rem;
     h2 {
       font-size: 1.4rem;
-    }
-  }
-  .tile-matrices {
-    gap: 0.25rem;
-    .matrix-operator {
-      font-size: 1rem;
-    }
-    figcaption {
-      font-size: 0.65rem;
     }
   }
   .contact-email > a {
