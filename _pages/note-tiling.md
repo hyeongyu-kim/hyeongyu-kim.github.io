@@ -27,7 +27,7 @@ for mo in range(0, M, tile_m):
         write_C_tile(mo, no, accumulator)
 ```
 
-In the [tile experiment]({{ '/lab/#tile-lab' | relative_url }}), the highlighted C tile remains in place while the A and B tiles move along K. That motion is the loop order made visible.
+The C accumulator remains resident while the A and B tiles move along K. Only after the reduction finishes does the loop advance to the next output tile.
 
 ## What fits in local storage?
 
@@ -59,7 +59,7 @@ Increasing tile_m or tile_n can reduce repeated input reads, while increasing th
 
 A dimension of 96 with tile size 64 has one full tile and one partial tile. Count actual elements for the partial tile. Multiplying the full tile size by the number of tiles would overestimate both storage or traffic in some calculations.
 
-The lab counts edge ranges explicitly. It reports the largest resident tile and sums the modeled traffic across the actual matrix dimensions.
+For each edge tile, use its actual row, column, and reduction ranges when counting the resident footprint and data traffic.
 
 ## A memory count is not a latency estimate
 
@@ -68,4 +68,3 @@ These counts describe the loop and its reuse policy. Predicting hardware perform
 ## Reading
 
 - [Tensor program abstraction in Apache TVM](https://tvm.apache.org/docs/deep_dive/tensor_ir/index.html)
-- [Try the interactive tile experiment]({{ '/lab/#tile-lab' | relative_url }})

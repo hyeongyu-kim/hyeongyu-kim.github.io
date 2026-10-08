@@ -80,34 +80,3 @@ export function batchMetrics(probabilities, labels) {
   const ece = bins.reduce((sum, bin) => sum + (bin.count ? Math.abs(bin.correct - bin.confidence) / count : 0), 0);
   return { accuracy: correct / count, confidence: confidence / count, ece };
 }
-
-export function tileMetrics({ m, n, k, tm, tn, tk }) {
-  const mt = Math.ceil(m / tm),
-    nt = Math.ceil(n / tn),
-    kt = Math.ceil(k / tk);
-  return {
-    mt,
-    nt,
-    kt,
-    operations: mt * nt * kt,
-    flops: 2 * m * n * k,
-    traffic: 2 * (m * k * nt + k * n * mt) + 4 * m * n,
-    footprint: 2 * Math.min(tm, m) * Math.min(tk, k) + 2 * Math.min(tk, k) * Math.min(tn, n) + 4 * Math.min(tm, m) * Math.min(tn, n),
-  };
-}
-
-export function tilePosition(config, step) {
-  const metrics = tileMetrics(config);
-  const current = ((step % metrics.operations) + metrics.operations) % metrics.operations;
-  const ki = current % metrics.kt;
-  const ni = Math.floor(current / metrics.kt) % metrics.nt;
-  const mi = Math.floor(current / (metrics.kt * metrics.nt));
-  return {
-    m0: mi * config.tm,
-    m1: Math.min((mi + 1) * config.tm, config.m),
-    n0: ni * config.tn,
-    n1: Math.min((ni + 1) * config.tn, config.n),
-    k0: ki * config.tk,
-    k1: Math.min((ki + 1) * config.tk, config.k),
-  };
-}

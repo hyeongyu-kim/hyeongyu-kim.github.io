@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 const source = fs.readFileSync(new URL("../assets/js/lab-math.js", import.meta.url), "utf8");
-const { corruptDigits, firstLayer, alignFeatures, predictFeatures, batchMetrics, tileMetrics, tilePosition } = await import(
+const { corruptDigits, firstLayer, alignFeatures, predictFeatures, batchMetrics } = await import(
   `data:text/javascript,${encodeURIComponent(source)}`
 );
 const model = JSON.parse(fs.readFileSync(new URL("../assets/lab/digits-model.json", import.meta.url), "utf8"));
@@ -88,36 +88,4 @@ test("ECE handles confidence-one boundaries and an analytically known batch", ()
     ).ece,
     0
   );
-});
-
-test("tile accounting agrees with enumerated edge-tile reads and arithmetic", () => {
-  for (const config of [
-    { m: 128, n: 128, k: 128, tm: 16, tn: 16, tk: 32 },
-    { m: 96, n: 128, k: 96, tm: 64, tn: 32, tk: 64 },
-    { m: 7, n: 11, k: 9, tm: 4, tn: 5, tk: 3 },
-  ]) {
-    let traffic = 0,
-      arithmetic = 0,
-      count = 0,
-      peak = 0;
-    for (let m = 0; m < config.m; m += config.tm)
-      for (let n = 0; n < config.n; n += config.tn) {
-        const rows = Math.min(config.tm, config.m - m),
-          cols = Math.min(config.tn, config.n - n);
-        traffic += rows * cols * 4;
-        for (let k = 0; k < config.k; k += config.tk) {
-          const reduction = Math.min(config.tk, config.k - k);
-          traffic += 2 * rows * reduction + 2 * reduction * cols;
-          arithmetic += 2 * rows * cols * reduction;
-          peak = Math.max(peak, 2 * rows * reduction + 2 * reduction * cols + 4 * rows * cols);
-          const position = tilePosition(config, count++);
-          assert.deepEqual(position, { m0: m, m1: m + rows, n0: n, n1: n + cols, k0: k, k1: k + reduction });
-        }
-      }
-    const metric = tileMetrics(config);
-    assert.equal(metric.traffic, traffic);
-    assert.equal(metric.flops, arithmetic);
-    assert.equal(metric.operations, count);
-    assert.equal(metric.footprint, peak);
-  }
 });

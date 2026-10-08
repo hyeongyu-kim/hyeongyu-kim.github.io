@@ -17,4 +17,4 @@ nav_title: Notes
 {% endfor %}
 </ol>
 
-<p class="editorial-small-note">The <a href="{{ '/lab/' | relative_url }}">interactive lab</a> accompanies the adaptation and tiling notes.</p>
+<p class="editorial-small-note">The <a href="{{ '/lab/' | relative_url }}">interactive lab</a> accompanies the adaptation note.</p>
