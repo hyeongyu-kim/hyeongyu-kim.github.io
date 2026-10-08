@@ -30,9 +30,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/notes/";
           },
-        },{id: "nav-interactive-lab",
-          title: "Interactive lab",
-          description: "An interactive test-time adaptation experiment by Hyeongyu Kim.",
+        },{id: "nav-what-changes-at-test-time",
+          title: "What changes at test time?",
+          description: "Inspect real Tent, Buffer, and AcTTA updates on the same CIFAR-10-C inputs.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/lab/";
