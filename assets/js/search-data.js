@@ -23,6 +23,27 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
+        },{id: "nav-research-notes",
+          title: "Research notes",
+          description: "Notes on test-time adaptation, matrix tiling, and the Relax-to-TIR compiler pipeline.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/notes/";
+          },
+        },{id: "nav-interactive-lab",
+          title: "Interactive lab",
+          description: "Interactive test-time adaptation and matrix-tiling experiments by Hyeongyu Kim.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/lab/";
+          },
+        },{id: "nav-now",
+          title: "Now",
+          description: "Current work, research interests, and reading by Hyeongyu Kim.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/now/";
+          },
         },{id: "nav-cv",
           title: "CV",
           description: "Education, professional experience, research, and selected honors.",
