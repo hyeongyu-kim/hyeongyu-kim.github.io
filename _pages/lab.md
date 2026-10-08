@@ -18,7 +18,7 @@ lab_script: true
   <p class="lab-status" id="digit-status" role="status">Loading the digit experiment…</p>
   <div class="lab-controls">
     <label>Shift<select id="digit-shift"><option value="brightness">Brightness</option><option value="contrast">Contrast</option><option value="noise">Noise</option><option value="mixed">Mixed</option></select></label>
-    <label class="range-control">Severity <output id="digit-severity-value" for="digit-severity">3 / 5</output><input id="digit-severity" type="range" min="0" max="5" step="1" value="3"></label>
+    <label class="range-control" for="digit-severity">Severity <output id="digit-severity-value" for="digit-severity">3 / 5</output><input id="digit-severity" type="range" min="0" max="5" step="1" value="3"></label>
     <label>Batch size<select id="digit-batch"><option>16</option><option>32</option><option selected>64</option><option>128</option></select></label>
   </div>
   <div class="lab-actions"><button type="button" id="digit-adapt" disabled>Adapt this batch</button><button type="button" id="digit-next-batch" class="quiet-button" disabled>Next batch</button><button type="button" id="digit-reset" class="quiet-button" disabled>Reset</button></div>
