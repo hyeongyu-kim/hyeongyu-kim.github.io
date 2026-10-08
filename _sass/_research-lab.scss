@@ -491,3 +491,427 @@
     display: none;
   }
 }
+
+.tta-lab {
+  --tta-source: #757a76;
+  --tta-tent: #b38238;
+  --tta-buffer: #806593;
+  --tta-actta: #358270;
+  button,
+  select,
+  input {
+    font: inherit;
+  }
+  select {
+    padding: 0.4rem 0.5rem;
+    color: var(--global-text-color);
+    background: var(--global-bg-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 4px;
+    width: 100%;
+  }
+  button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+  figure {
+    margin: 0;
+  }
+  label {
+    color: var(--global-text-color-light);
+    font-size: 0.8rem;
+  }
+  h2,
+  h3 {
+    margin: 0;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  .tta-source {
+    --tta-method-color: var(--tta-source);
+  }
+  .tta-tent {
+    --tta-method-color: var(--tta-tent);
+  }
+  .tta-buffer {
+    --tta-method-color: var(--tta-buffer);
+  }
+  .tta-actta {
+    --tta-method-color: var(--tta-actta);
+  }
+}
+html[data-theme="dark"] .tta-lab {
+  --tta-source: #a1aca5;
+  --tta-tent: #d8b06b;
+  --tta-buffer: #b59acb;
+  --tta-actta: #78bdaa;
+}
+.tta-text-button {
+  display: inline;
+  color: var(--global-theme-color, #42624c);
+  background: none;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+.tta-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.2rem 0;
+  font-size: 0.8rem;
+  > span {
+    color: var(--global-text-color-light);
+    margin-right: 0.25rem;
+  }
+  button {
+    padding: 0.4rem 0.7rem;
+  }
+}
+.lab-controls.tta-controls {
+  display: grid;
+  grid-template-columns: 1.55fr 1.25fr 0.65fr 0.65fr;
+  gap: 1rem;
+  margin: 1.5rem 0 0.75rem;
+  label {
+    display: grid;
+    gap: 0.35rem;
+  }
+}
+.tta-reset-policy {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.lab-controls.tta-controls.tta-stream-controls {
+  grid-template-columns: 1fr 1fr;
+}
+.tta-input-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin: 1.8rem 0 1.3rem;
+  img {
+    display: block;
+    width: 116px;
+    height: 116px;
+    image-rendering: pixelated;
+    border-radius: 3px;
+  }
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+  }
+}
+.tta-input-context {
+  max-width: 330px;
+  margin-left: 0.6rem;
+  > p:first-child {
+    margin: 0 0 0.5rem;
+    font-size: 0.9rem;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    select {
+      width: auto;
+    }
+  }
+  .lab-caption {
+    margin: 0.6rem 0 0;
+  }
+}
+.lab-actions.tta-actions {
+  align-items: center;
+  output {
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+    margin-left: auto;
+  }
+}
+.tta-scrubber {
+  display: grid;
+  grid-template-columns: 175px 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin: 0.8rem 0 2rem;
+  input {
+    width: 100%;
+    accent-color: var(--tta-actta);
+  }
+}
+.tta-method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+.tta-method {
+  padding: 1rem 0 0.7rem;
+  border-top: 3px solid var(--tta-method-color);
+  h2 {
+    font-size: 1.4rem;
+  }
+  .tta-kicker {
+    font-size: 0.7rem;
+    color: var(--tta-method-color);
+    margin: 0 0 0.4rem;
+    letter-spacing: 0.03em;
+  }
+  .tta-target {
+    font-size: 0.77rem;
+    line-height: 1.7;
+    color: var(--global-text-color-light);
+    margin: 0.7rem 0 1.1rem;
+  }
+  .tta-prediction {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  .lab-caption {
+    margin: 0.15rem 0 0.8rem;
+  }
+}
+.tta-probabilities {
+  min-height: 88px;
+  > div {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    font-size: 0.71rem;
+    padding: 3px 0 5px;
+    margin-bottom: 6px;
+    > i {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--tta-method-color);
+    }
+  }
+}
+.tta-parameter-count {
+  font-size: 0.69rem;
+  color: var(--global-text-color-light);
+  margin: 0.8rem 0 0;
+  strong {
+    color: var(--global-text-color);
+    font-weight: 500;
+  }
+}
+.tta-bn-note {
+  margin: 0.8rem 0 1.1rem;
+  max-width: 800px;
+}
+.tta-results {
+  overflow-x: auto;
+  table {
+    width: 100%;
+    min-width: 500px;
+    font-size: 0.82rem;
+  }
+  th:not(:first-child),
+  td {
+    text-align: right;
+  }
+  caption {
+    font-size: 0.75rem;
+  }
+}
+.tta-inspection,
+.tta-history {
+  margin-top: 3rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid var(--global-divider-color);
+}
+.tta-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+  .editorial-eyebrow {
+    margin-bottom: 0.5rem;
+  }
+  > label {
+    width: 180px;
+    flex-shrink: 0;
+    select {
+      margin-top: 0.4rem;
+    }
+  }
+}
+.tta-inspection-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  label {
+    display: grid;
+    gap: 0.4rem;
+  }
+  select {
+    min-width: 60px;
+  }
+}
+.tta-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 1.3rem 0;
+  figure {
+    text-align: center;
+  }
+  figcaption {
+    font-size: 0.84rem;
+    color: var(--tta-method-color);
+    margin-bottom: 0.65rem;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    max-width: 176px;
+    margin: auto;
+  }
+}
+.tta-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.tta-detail {
+  padding-top: 1rem;
+  border-top: 2px solid var(--tta-method-color);
+  h3 {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: 1.22rem;
+  }
+  > .lab-caption {
+    min-height: 3.5rem;
+    margin: 0.55rem 0 1rem;
+  }
+  > canvas:not(#tta-residual-map) {
+    width: 100%;
+    display: block;
+  }
+}
+#tta-residual-map {
+  display: block;
+  width: 150px;
+  margin: 0 auto;
+}
+.tta-values {
+  font-size: 0.7rem;
+  line-height: 1.8;
+  color: var(--global-text-color-light);
+  font-variant-numeric: tabular-nums;
+  margin: 0.7rem 0;
+  overflow-wrap: anywhere;
+}
+.tta-curve-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.65rem 0;
+  label {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.73rem;
+  }
+  input {
+    accent-color: var(--tta-actta);
+  }
+}
+.tta-legend {
+  display: flex;
+  gap: 1.4rem;
+  font-size: 0.8rem;
+  margin: 0.7rem 0;
+  span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  span:before {
+    content: "";
+    display: inline-block;
+    width: 17px;
+    height: 3px;
+    background: var(--tta-method-color);
+  }
+}
+#tta-history-plot {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+.tta-paper-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+@media (max-width: 700px) {
+  .lab-controls.tta-controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+  .tta-method-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+  }
+  .tta-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .tta-detail > .lab-caption {
+    min-height: 0;
+  }
+  .tta-section-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tta-inspection-controls {
+    justify-content: flex-start;
+  }
+  .tta-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .tta-input-strip {
+    flex-wrap: wrap;
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  .tta-input-context {
+    margin-left: 0;
+  }
+  .lab-actions.tta-actions {
+    flex-wrap: wrap;
+    output {
+      width: 100%;
+      margin: 0.3rem 0 0;
+    }
+  }
+  .tta-scrubber {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+  .tta-legend {
+    flex-wrap: wrap;
+    gap: 0.7rem 1rem;
+  }
+}

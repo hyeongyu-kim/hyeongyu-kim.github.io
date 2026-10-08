@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "test:lab": "node --test tests/lab-math.test.mjs"
+    "test:lab": "node --test tests/lab-math.test.mjs tests/tta-replay.test.mjs"
   },
   "devDependencies": {
     "@shopify/prettier-plugin-liquid": "^1.10.0",
-    "prettier": "^3.8.0"
+    "prettier": "^3.8.0",
+    "sass": "^1.105.1"
   }
 }

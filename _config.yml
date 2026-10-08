@@ -195,6 +195,10 @@ exclude:
   - tests/
   - _scripts/build_lab_assets.py
   - _scripts/build_lab_offline.mjs
+  - _scripts/build_tta_replay.py
+  - _scripts/fetch_tta_data.py
+  - _scripts/tta_resnet.py
+  - _scripts/README_tta.md
   - vendor
 keep_files:
   - CNAME
