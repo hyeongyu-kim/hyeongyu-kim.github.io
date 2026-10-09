@@ -7,47 +7,48 @@ on:
       - _scripts/record_tta_condition.py
 permissions:
   contents: read
+  actions: read
 jobs:
-  prepare:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: python -m pip install numpy==2.3.5 Pillow==12.3.0 pyarrow==25.0.1 gdown==6.4.2
-      - run: python _scripts/fetch_tta_data.py --mirror
-      - run: |
-          mkdir tta-prepared
-          cp ../tta-data/*.npy ../tta-data/Standard.pt ../tta-data/provenance.json tta-prepared/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: tta-prepared-data
-          path: tta-prepared/*
-          retention-days: 1
   record:
-    needs: prepare
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     strategy:
       fail-fast: false
-      max-parallel: 13
+      max-parallel: 16
       matrix:
         condition:
-          - batch-128-gaussian_noise-3
-          - batch-128-gaussian_noise-5
-          - batch-128-brightness-1
-          - batch-128-brightness-3
-          - batch-128-brightness-5
-          - batch-128-defocus_blur-1
-          - batch-128-defocus_blur-3
-          - batch-128-defocus_blur-5
-          - batch-128-jpeg_compression-1
-          - batch-128-jpeg_compression-3
-          - batch-128-jpeg_compression-5
-          - stream-128-continual
-          - stream-128-reset
+          - batch-128-clean-0
+          - batch-128-gaussian_noise-1
+          - batch-4-clean-0
+          - batch-4-gaussian_noise-1
+          - batch-4-gaussian_noise-3
+          - batch-4-gaussian_noise-5
+          - batch-4-brightness-1
+          - batch-4-brightness-3
+          - batch-4-brightness-5
+          - batch-4-defocus_blur-1
+          - batch-4-defocus_blur-3
+          - batch-4-defocus_blur-5
+          - batch-4-jpeg_compression-1
+          - batch-4-jpeg_compression-3
+          - batch-4-jpeg_compression-5
+          - stream-4-continual
+          - stream-4-reset
+          - batch-16-clean-0
+          - batch-16-gaussian_noise-1
+          - batch-16-gaussian_noise-3
+          - batch-16-gaussian_noise-5
+          - batch-16-brightness-1
+          - batch-16-brightness-3
+          - batch-16-brightness-5
+          - batch-16-defocus_blur-1
+          - batch-16-defocus_blur-3
+          - batch-16-defocus_blur-5
+          - batch-16-jpeg_compression-1
+          - batch-16-jpeg_compression-3
+          - batch-16-jpeg_compression-5
+          - stream-16-continual
+          - stream-16-reset
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -59,6 +60,10 @@ jobs:
         with:
           name: tta-prepared-data
           path: tta-prepared
+          github-token: ${{ github.token }}
+          run-id: 37906297709
+      - if: matrix.condition == 'batch-128-clean-0'
+        run: python tests/tta-adapters.test.py
       - run: >-
           python _scripts/record_tta_condition.py
           --condition '${{ matrix.condition }}'
@@ -93,7 +98,8 @@ jobs:
           python - <<'PY'
           import hashlib,json,pathlib,shutil
           root=pathlib.Path('tta-merged')
-          receipts=[]
+          receipts=json.loads(pathlib.Path('assets/lab/tta-worker-receipts.json').read_text())
+          new_receipts=[]
           for receipt_file in sorted(root.glob('*-receipt.json')):
               receipt=json.loads(receipt_file.read_text())
               source=root/receipt['file']
@@ -101,12 +107,15 @@ jobs:
               assert receipt['recordingProtocolSha256']=='23d9e031a103355bf30f96c062a60c553919d68180e0754b852a6468b2ef92f8'
               assert receipt['recorderSourceSha256']=='cedd79bb8796c8b229356df1c753991cd346c3dda44759aeded9f5855d522a6d'
               shutil.copyfile(source,pathlib.Path('assets/lab/tta')/receipt['file'])
-              receipts.append(receipt)
-          assert len(receipts)==13
+              new_receipts.append(receipt)
+          assert len(new_receipts)==32
+          receipts.extend(new_receipts)
+          receipts.sort(key=lambda r:r['condition'])
+          assert len(receipts)==45 and len({r['condition'] for r in receipts})==45
           pathlib.Path('assets/lab/tta-worker-receipts.json').write_text(json.dumps(receipts,indent=2)+'\n')
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/lab/tta/batch-128-*.json.gz assets/lab/tta/stream-128-*.json.gz assets/lab/tta-worker-receipts.json
+          git add assets/lab/tta/batch-*.json.gz assets/lab/tta/stream-*.json.gz assets/lab/tta-worker-receipts.json
           git commit -m 'chore: record remaining WRN conditions from pinned public implementations'
           git push origin HEAD:${{ github.ref_name }}

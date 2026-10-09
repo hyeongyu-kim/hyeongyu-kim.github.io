@@ -27,8 +27,8 @@ def main():
     parser.add_argument('--output', required=True)
     parser.add_argument('--data-dir', default=str(replay.DATA))
     args = parser.parse_args()
-    if not re.fullmatch(r'(batch-128-(gaussian_noise|brightness|defocus_blur|jpeg_compression)-[135]|stream-128-(continual|reset))', args.condition):
-        parser.error('Only the declared batch-128 remainder is supported')
+    if not re.fullmatch(r'(batch-(4|16|128)-((gaussian_noise|brightness|defocus_blur|jpeg_compression)-[135]|clean-0)|stream-(4|16|128)-(continual|reset))', args.condition):
+        parser.error('Only the declared 45-condition protocol is supported')
     if not re.fullmatch('[a-f0-9]{64}', args.protocol_sha):
         parser.error('Expected a canonical protocol SHA-256')
     recorder_sha = hashlib.sha256(pathlib.Path(replay.__file__).read_bytes()).hexdigest()
