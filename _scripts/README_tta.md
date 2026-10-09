@@ -4,11 +4,11 @@ The Lab replays measured PyTorch updates on CIFAR-10/C. It uses the public AcTTA
 
 ## Setup and record
 
-Use Python 3.12, `torch==2.5.1+cpu`, NumPy, Pillow, PyArrow, and gdown. From the repository root:
+Use Python 3.12 and the recorded dependency versions. From the repository root:
 
 ```bash
 python -m pip install torch==2.5.1+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install numpy Pillow pyarrow gdown
+python -m pip install numpy==2.3.5 Pillow==12.3.0 pyarrow==25.0.1 gdown==6.4.2
 python _scripts/fetch_tta_data.py --mirror
 python tests/tta-adapters.test.py
 python _scripts/build_tta_replay.py --resume
@@ -18,6 +18,8 @@ node _scripts/build_lab_offline.mjs
 ```
 
 `--resume` reuses a trace only if its recording-protocol hash matches the current recorder, model, input provenance, runtime, and settings. It does not reuse the former ResNet-20 recordings. Keep the manifest and its trace files together when publishing.
+
+The published set retains all 45 conditions recorded on CPU GitHub Actions workers with `_scripts/record_tta_condition.py` and the unchanged recorder. Each worker runs all four arms on the same machine, verifies checkpoint and input hashes, and pins the math-library versions. `assets/lab/tta-worker-receipts.json` records each condition's recorder hash, runtime, and output checksum. The common protocol identifier matches an independently rebuilt local profile; minor CPU floating-point differences remain possible. The commands above reproduce the full protocol locally without Actions. No condition is selected based on its outcome.
 
 ## Pinned public implementations
 
@@ -66,7 +68,7 @@ The recorder's combined inspection/update forward is tested for exact parameter-
 
 ## Display and integrity
 
-Accuracy, confidence, entropy in nats, and ECE with ten equal-width bins are independently recoverable from all stored probability vectors. The UI inspects four images and **channels 0–15** at `block1.layer.0.relu1` (16 actual channels) and `block1.layer.1.relu1` (160 actual channels). Buffer maps show the activation plus its correction at the matching site. The displayed BN and activation vectors cover those same channels.
+Accuracy, confidence, entropy in nats, and ECE with ten equal-width bins are independently recoverable from all stored probability vectors. Accuracy also shows the number of correct images and the percentage-point change from one image. The learning-change caption compares one-batch states with update zero, when target-batch BN is already active; stream states compare with the same batch's pre-update prediction. The UI inspects four images and **channels 0–15** at `block1.layer.0.relu1` (16 actual channels) and `block1.layer.1.relu1` (160 actual channels). Buffer maps show the activation plus its correction at the matching site. The displayed BN and activation vectors cover those same channels.
 
 Maps are pooled to 8×8 and quantized on a fixed signed scale shared across methods and steps within the trace. Buffer residuals have a separate fixed scale. Parameters and probabilities retain decimal precision. Map bytes use lossless XOR against the Source reference; reconstruction is checked while recording.
 

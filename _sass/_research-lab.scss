@@ -727,6 +727,13 @@ html[data-theme="dark"] .tta-lab {
   caption {
     font-size: 0.75rem;
   }
+  .tta-score-count {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.7rem;
+    color: var(--global-text-color-light);
+    white-space: nowrap;
+  }
 }
 .tta-inspection,
 .tta-history {

@@ -323,13 +323,27 @@ async function initializeTta() {
         row.append(label, value, track);
         bars.append(row);
       });
-      for (const metric of ["accuracy", "ece", "entropy"])
-        get(method + "-" + metric).textContent = metric === "entropy" ? state.metrics[metric].toFixed(3) : percent(state.metrics[metric]);
+      for (const metric of ["accuracy", "ece", "entropy"]) {
+        const cell = get(method + "-" + metric);
+        cell.textContent = metric === "entropy" ? state.metrics[metric].toFixed(3) : percent(state.metrics[metric]);
+        if (metric === "accuracy") {
+          const count = document.createElement("small");
+          count.className = "tta-score-count";
+          count.textContent = Math.round(state.metrics.accuracy * trace.batch) + " / " + trace.batch + " correct";
+          cell.append(count);
+        }
+      }
     });
-    const source = f.methods.source.metrics;
-    const changes = methods.slice(1).map((m) => names[m] + " " + signed((f.methods[m].metrics.accuracy - source.accuracy) * 100) + " pp");
+    get("sample-resolution").textContent =
+      "One image changes accuracy by " + (100 / trace.batch).toFixed(2) + " percentage points. These scores describe this batch.";
+    const baseline = stream ? f.online : trace.frames[0].methods;
+    const changes = methods
+      .slice(1)
+      .map((m) => names[m] + " " + signed((f.methods[m].metrics.accuracy - baseline[m].metrics.accuracy) * 100) + " pp");
     get("reading").textContent =
-      "Current post-update accuracy change from Source: " + changes.join(" · ") + ". Lower entropy alone does not establish a better prediction.";
+      (stream ? "Accuracy change from this batch's one update: " : "Accuracy change from update 0 (with batch BN already active): ") +
+      changes.join(" · ") +
+      ". Lower entropy alone does not establish a better prediction.";
     drawInternals();
     drawHistory();
   }
