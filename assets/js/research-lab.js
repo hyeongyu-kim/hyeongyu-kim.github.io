@@ -54,7 +54,9 @@ async function initializeTta() {
     let bytes;
     if (embedded) bytes = Uint8Array.from(atob(embedded.files[meta.id]), (c) => c.charCodeAt(0));
     else {
-      const response = await fetch(new URL(meta.file, new URL(root.dataset.traceRoot, location.href)), { credentials: "omit" });
+      const url = new URL(meta.file, new URL(root.dataset.traceRoot, location.href));
+      url.searchParams.set("sha256", meta.sha256);
+      const response = await fetch(url, { credentials: "omit" });
       if (!response.ok) throw new Error("This recorded experiment could not be loaded.");
       bytes = new Uint8Array(await response.arrayBuffer());
     }
@@ -405,7 +407,7 @@ async function initializeTta() {
     const button = get("offline");
     button.disabled = true;
     try {
-      const response = await fetch(root.dataset.offlineShell, { credentials: "omit" });
+      const response = await fetch(root.dataset.offlineShell, { credentials: "omit", cache: "no-store" });
       if (!response.ok) throw new Error("The offline copy could not be prepared.");
       const shell = await response.text(),
         files = {};
@@ -429,12 +431,16 @@ async function initializeTta() {
   }
   async function boot() {
     try {
-      if (embedded) manifest = embedded.manifest;
+      let loaded;
+      if (embedded) loaded = embedded.manifest;
       else {
-        const r = await fetch(root.dataset.manifestUrl, { credentials: "omit" });
+        const r = await fetch(root.dataset.manifestUrl, { credentials: "omit", cache: "no-store" });
         if (!r.ok) throw new Error("The run manifest could not be loaded.");
-        manifest = await r.json();
+        loaded = await r.json();
       }
+      if (loaded.schema !== 2 || loaded.model !== "RobustBench Standard WRN-28-10" || !loaded.batches.includes(128))
+        throw new Error("The current WRN recordings are not available yet. Please use Retry loading.");
+      manifest = loaded;
       for (const id of ["mode", "batch", "corruption", "severity", "policy", "preset-shift", "preset-small", "preset-return", "offline"])
         get(id).disabled = false;
       methods.forEach((m) => {
