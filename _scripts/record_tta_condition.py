@@ -25,6 +25,7 @@ def main():
     parser.add_argument('--protocol-sha', required=True)
     parser.add_argument('--recorder-sha', required=True)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--data-dir', default=str(replay.DATA))
     args = parser.parse_args()
     if not re.fullmatch(r'(batch-128-(gaussian_noise|brightness|defocus_blur|jpeg_compression)-[135]|stream-128-(continual|reset))', args.condition):
         parser.error('Only the declared batch-128 remainder is supported')
@@ -35,6 +36,7 @@ def main():
         raise AssertionError('CI recorder differs from the native source')
     if (torch.__version__, np.__version__) != ('2.5.1+cpu', '2.3.5'):
         raise AssertionError('Unexpected worker math-library versions')
+    replay.DATA = pathlib.Path(args.data_dir)
     provenance = json.loads((replay.DATA / 'provenance.json').read_text())
     replay.clean = np.load(replay.DATA / 'clean.npy')
     replay.labels = np.load(replay.DATA / 'labels.npy')
