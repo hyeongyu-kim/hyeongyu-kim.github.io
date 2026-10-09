@@ -31,6 +31,22 @@ function recompute(p, labels) {
   const ece = bins.reduce((sum, bin) => sum + Math.abs(bin.reduce((value, [c, hit]) => value + hit - c, 0)) / p.length, 0);
   return { accuracy: correct / p.length, confidence: confidence / p.length, entropy: entropy / p.length, ece };
 }
+test("recordings declare pinned public models and batch-dependent method rates", () => {
+  assert.equal(manifest.schema, 2);
+  assert.equal(manifest.model, "RobustBench Standard WRN-28-10");
+  assert.equal(manifest.sourceParameters, 36479194);
+  assert.deepEqual(manifest.batches, [4, 16, 128]);
+  assert.deepEqual(manifest.trainableParameters, { source: 0, tent: 17952, buffer: 9221171, actta: 3408 });
+  assert.equal(manifest.implementation.actta.commit, "6bd3b9ab090240ec67038257c5fd9d8f11a283fc");
+  assert.equal(manifest.implementation.buffer.commit, "b266f3c7904aa760b21618ebe5fba0fcd864bc16");
+  assert.deepEqual(manifest.implementation.actta.prefixes, ["block1"]);
+  assert.deepEqual(manifest.implementation.buffer.stages, [true, true, false]);
+  assert.deepEqual(manifest.protocol.learningRatesByBatch["4"], { tent: 0.0001, buffer: 0.001, actta: 0.001 });
+  assert.deepEqual(manifest.protocol.learningRatesByBatch["128"], { tent: 0.001, buffer: 0.001, actta: 0.01 });
+  assert.equal(manifest.protocol.data.checkpointSha256, "6ed1c75dad63e8ebdbef365020dd1a7eee5e79cf8a1438bd3bdc3b9c7aab3d44");
+  assert.equal(new Set(traces.map((t) => t.recordingProtocolSha256)).size, 1);
+  assert.ok(traces.every((t) => manifest.batches.includes(t.batch) && /^[a-f0-9]{64}$/.test(t.recordingProtocolSha256)));
+});
 test("all 447 states independently recover their full-batch scores", () => {
   assert.equal(manifest.conditions, 45);
   assert.equal(manifest.frames, 447);

@@ -358,6 +358,15 @@ async function initializeTta() {
       const loaded = await readTrace(meta);
       if (token !== request) return;
       trace = loaded;
+      const rates = manifest.protocol.learningRatesByBatch[String(b)];
+      get("protocol-caption").textContent =
+        "Same WRN checkpoint, inputs, and entropy objective · Adam LR: Tent " +
+        rates.tent +
+        " · Buffer " +
+        rates.buffer +
+        " · AcTTA " +
+        rates.actta +
+        ". Labels are used only for evaluation.";
       position = Math.min(start, trace.frames.length - 1);
       enableFrame(true);
       render();
@@ -463,9 +472,9 @@ async function initializeTta() {
     }, 850);
   });
   for (const [id, batch, mode, start] of [
-    ["shift", 16, "batch", 0],
+    ["shift", 128, "batch", 0],
     ["small", 4, "batch", 0],
-    ["return", 16, "stream", 12],
+    ["return", 128, "stream", 12],
   ])
     get("preset-" + id).addEventListener("click", () => {
       get("mode").value = mode;

@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "file": "activation.py",
+      "repository": "hyeongyu-kim/actta",
+      "commit": "6bd3b9ab090240ec67038257c5fd9d8f11a283fc",
+      "source": "actta/activation.py",
+      "sha256": "868aa76341c77ec2e4a4e66c4dd869cffb3ae2040a2f8c5ef4d67effecb7a0cc"
+    },
+    {
+      "file": "adaptation.py",
+      "repository": "hyeongyu-kim/actta",
+      "commit": "6bd3b9ab090240ec67038257c5fd9d8f11a283fc",
+      "source": "actta/adaptation.py",
+      "sha256": "e7ba91c783d6b05dd6be1e414d05d0ffd5a0f65c43614868754c1b524310c287"
+    },
+    {
+      "file": "wide_resnet.py",
+      "repository": "hyeongyu-kim/actta",
+      "commit": "6bd3b9ab090240ec67038257c5fd9d8f11a283fc",
+      "source": "vendor/wide_resnet.py",
+      "sha256": "e3904c6e8893f1e11b7a315e61bf371cc29e8927f08163029db4e618e058d0e6"
+    },
+    {
+      "file": "ACTTA_LICENSE",
+      "repository": "hyeongyu-kim/actta",
+      "commit": "6bd3b9ab090240ec67038257c5fd9d8f11a283fc",
+      "source": "LICENSE",
+      "sha256": "a48e1f2d43fbd002007738cf16341f6e0c176a0b4e4c1d35d0dfbdb914c783b9"
+    },
+    {
+      "file": "ROBUSTBENCH_LICENSE",
+      "repository": "hyeongyu-kim/actta",
+      "commit": "6bd3b9ab090240ec67038257c5fd9d8f11a283fc",
+      "source": "vendor/ROBUSTBENCH_LICENSE",
+      "sha256": "b001aaaa1b5dafecda30513aad5641cc6dd564a80e88c5f9760ed8ac44347245"
+    },
+    {
+      "file": "buffer.py",
+      "repository": "hyeongyu-kim/Buffer_TTA",
+      "commit": "b266f3c7904aa760b21618ebe5fba0fcd864bc16",
+      "source": "models/custom_standard.py",
+      "upstreamSha256": "cb59a176b5f2ecab8c964175dea2d17948c7699ed6d670552187306a7137f20d",
+      "sha256": "d54554e9f29cc40531ebf6c4cee1d98021c1581505e910bb0ff0d8c364a47617",
+      "changes": "Provenance docstring added; unused load_partial_weights helper functions omitted. Model classes unchanged."
+    }
+  ]
+}

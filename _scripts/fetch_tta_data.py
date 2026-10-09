@@ -13,7 +13,7 @@ import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DEST = ROOT.parent / "tta-data"
 DEST.mkdir(exist_ok=True)
-COUNT = 256
+COUNT = 512
 CLEAN = "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
 CORRUPT = "https://zenodo.org/records/2535967/files/CIFAR-10-C.tar?download=1"
 DOMAINS = ["gaussian_noise", "brightness", "defocus_blur", "jpeg_compression"]
@@ -111,9 +111,14 @@ while needed:
             print("Verified", stem, flush=True)
     offset += 512 + ((size + 511) // 512) * 512
 
-weights = download("https://github.com/chenyaofo/pytorch-cifar-models/releases/download/resnet/cifar10_resnet20-4118986f.pt", DEST / "resnet20.pt")
-weight_hash = hashlib.sha256(weights).hexdigest()
-if not weight_hash.startswith("4118986f"):
+checkpoint = DEST / "Standard.pt"
+if not checkpoint.exists():
+    import gdown
+    gdown.download(id="1t98aEuzeTL8P7Kpd5DIrCoCL21BNZUhC", output=str(checkpoint), quiet=False)
+weight_hash = hashlib.sha256(checkpoint.read_bytes()).hexdigest()
+if weight_hash != "6ed1c75dad63e8ebdbef365020dd1a7eee5e79cf8a1438bd3bdc3b9c7aab3d44":
     raise RuntimeError("Source checkpoint checksum mismatch")
-(DEST / "provenance.json").write_text(json.dumps({"clean": CLEAN, "corruptions": CORRUPT, "checkpointSha256": weight_hash, "subsetSha256": provenance}, indent=2))
+(DEST / "provenance.json").write_text(json.dumps({"clean": CLEAN, "corruptions": CORRUPT, "samples": COUNT,
+    "checkpoint": "RobustBench CIFAR-10/corruptions/Standard.pt", "checkpointGoogleDriveId": "1t98aEuzeTL8P7Kpd5DIrCoCL21BNZUhC",
+    "checkpointSha256": weight_hash, "subsetSha256": provenance}, indent=2))
 print("Data and checkpoint ready", flush=True)

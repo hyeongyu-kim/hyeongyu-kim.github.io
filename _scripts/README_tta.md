@@ -1,49 +1,75 @@
-# Reproducing the TTA comparison
+# Reproducing the public-code TTA comparison
 
-The Lab replays measured PyTorch updates on CIFAR-10/C. It does not fit a substitute browser model or synthesize scores. A small manifest loads first; only the selected experiment is downloaded. Save an offline copy includes all 45 recorded experiments in one self-contained HTML file.
+The Lab replays measured PyTorch updates on CIFAR-10/C. It uses the public AcTTA activation and entropy adapter, the public Buffer WRN model, and one shared RobustBench Standard WRN-28-10 checkpoint. The browser reads stored predictions and internal states. Save an offline copy includes all 45 recorded experiments.
 
 ## Setup and record
 
-Use Python 3.12, `torch==2.5.1+cpu`, NumPy, Pillow, and PyArrow. From the repository root:
+Use Python 3.12, `torch==2.5.1+cpu`, NumPy, Pillow, PyArrow, and gdown. From the repository root:
 
 ```bash
 python -m pip install torch==2.5.1+cpu --index-url https://download.pytorch.org/whl/cpu
-python -m pip install numpy Pillow pyarrow
+python -m pip install numpy Pillow pyarrow gdown
 python _scripts/fetch_tta_data.py --mirror
-python _scripts/build_tta_replay.py
 python tests/tta-adapters.test.py
+python _scripts/build_tta_replay.py --resume
 npm ci
 npm run test:lab
 node _scripts/build_lab_offline.mjs
 ```
 
-The fetcher writes to `../tta-data/`. Without `--mirror`, it uses the original CIFAR-10 Python archive and verifies MD5 `c58f30108f718f92721af3b95e74349a`. The mirror option verifies the complete uoft-cs test Parquet SHA-256 `841389e6f2d64f28bf17310e430aebac20ec3ba611a3c5e231dc93c645ce84de`. Both preserve original test order. Corrupted labels are checked against the selected clean labels before recording.
+`--resume` reuses a trace only if its recording-protocol hash matches the current recorder, model, input provenance, runtime, and settings. It does not reuse the former ResNet-20 recordings. Keep the manifest and its trace files together when publishing.
 
-Corruptions are read by verified byte ranges from the original [CIFAR-10-C archive](https://zenodo.org/records/2535967): Gaussian noise, brightness, defocus blur, and JPEG compression, at severities 1, 3, and 5. Array shape, dtype, and layout are validated. Slice SHA-256 checksums and the complete checkpoint hash are recorded in the manifest. The source checkpoint must start with SHA-256 `4118986f` and is loaded with `weights_only=True`.
+## Pinned public implementations
 
-The model code is vendored from [chenyaofo/pytorch-cifar-models](https://github.com/chenyaofo/pytorch-cifar-models), commit `786c16252c0fc58ee9adac063f8337cc4a7a497a`, with its BSD-3-Clause notice retained. Model: CIFAR-10 ResNet-20 (272,474 source parameters).
+- [AcTTA](https://github.com/hyeongyu-kim/actta/tree/6bd3b9ab090240ec67038257c5fd9d8f11a283fc): `actta/activation.py`, `actta/adaptation.py`, and `vendor/wide_resnet.py` are copied unchanged to `_scripts/tta_vendor/`. MIT and RobustBench notices are retained. Configuration: `configs/cifar10_wrn28_bs128.yaml` and the batch-size rules in `docs/REPRODUCIBILITY.md`.
+- [Buffer](https://github.com/hyeongyu-kim/Buffer_TTA/tree/b266f3c7904aa760b21618ebe5fba0fcd864bc16): the model classes from `models/custom_standard.py` are unchanged; unused checkpoint helper functions are omitted. Its default `conf.py` uses stages `[True, True, False]`, alpha `1e-5`, frozen BN affine, and Adam LR `0.001`. Source weights are loaded by matching names; only added Buffer weights may be missing.
+- `_scripts/tta_vendor/provenance.json` records upstream file hashes and local copies. The run manifest links both commits.
 
-## Controlled interventions
+The model is WRN-28-10: **36,479,194 source parameters**. The [RobustBench CIFAR-10 corruption Standard checkpoint](https://github.com/RobustBench/robustbench/blob/master/robustbench/model_zoo/cifar10.py) is `Standard.pt`, Google Drive ID `1t98aEuzeTL8P7Kpd5DIrCoCL21BNZUhC`. Its complete SHA-256 is `6ed1c75dad63e8ebdbef365020dd1a7eee5e79cf8a1438bd3bdc3b9c7aab3d44`, matching the AcTTA release's measured CIFAR-10 runs. This checksum is verified before loading the original checkpoint, which includes training metadata. All arms consume RGB tensors in `[0,1]`, with no extra normalization.
+
+## Data
+
+The fetcher writes to `../tta-data/`. It preserves the first **512** original test indices. Without `--mirror`, it verifies the original CIFAR-10 archive MD5 `c58f30108f718f92721af3b95e74349a`. The Parquet mirror verifies complete SHA-256 `841389e6f2d64f28bf17310e430aebac20ec3ba611a3c5e231dc93c645ce84de`. Corrupted labels must match the selected clean labels.
+
+Verified byte ranges from the original [CIFAR-10-C archive](https://zenodo.org/records/2535967) provide Gaussian noise, brightness, defocus blur, and JPEG compression, at severities 1, 3, and 5. Array shape, dtype, layout, HTTP range, and lengths are checked; subset hashes are stored in the manifest.
+
+## Parameters and placements
 
 | Arm | Updated parameters | Placement | Count |
 | --- | --- | --- | ---: |
 | Source | None | Stored source BN statistics | 0 |
-| Tent | BN gamma and beta | All BN layers | 1,568 |
-| Buffer | New convolutions, mixing coefficients, residual alpha | Stem and stage-one shared activation modules | 10,252 |
-| AcTTA | Per-channel center and positive/negative response | Stem, stage one, first stage-two block | 288 |
+| Tent | BN gamma and beta | Every BN layer | 17,952 |
+| Buffer | Added convolutions, mixing scales, and alphas | After initial conv; after both ReLUs in stages 1 and 2 | 9,221,171 |
+| AcTTA | Channel-wise `shift_gsL`, `pos_gsL`, `neg_gsL` | All eight independent ReLUs in stage 1 | 3,408 |
 
-All adaptive arms use current-batch BN statistics, including before their first gradient update. Their step-zero difference from Source is therefore not a learned change. Every update minimizes mean prediction entropy with Adam: learning rate 0.001, betas `(0.9, 0.999)`, epsilon `1e-8`, no weight decay, seed 27. Labels are used only to evaluate recorded probabilities. All ineligible backbone parameters are checked for bitwise equality after each update.
+Buffer has **17 independent branches**, including its initial branch. There is no shared Buffer parameter between activation sites. AcTTA uses the released `replace_activations(..., prefixes=["block1"])`; beta is a fixed buffer at 1. Zero activation vectors exactly recover ReLU. The classifier and original convolution weights remain frozen in every adaptive arm.
 
-Buffer follows its [public residual branch](https://github.com/hyeongyu-kim/Buffer_TTA/blob/main/models/custom_standard.py): ReLU followed by alpha times a learned mixture of 1×1 and 3×3 convolutions. Alpha starts at `1e-5`; both mixing coefficients start at 0.5 and remain trainable. AcTTA follows [Eq. 1](https://arxiv.org/html/2603.26096v1), with a ReLU base and fixed beta=1. Its zero initialization exactly recovers ReLU. Shared activations within a residual block share parameters. Inspected maps capture the first invocation only.
+All adaptive arms use target-batch BN statistics, including update zero. Source uses the checkpoint's stored statistics. This initial difference is not an entropy update. BN affine values remain frozen in Buffer and AcTTA. Frozen model parameters are checked bitwise after every update.
 
-The 39 one-batch conditions cover clean inputs plus four corruptions at three severities, for B=4/16/64, and updates 0–8. Evaluation uses the same batch after its recorded update; these numbers are not unseen-data generalization estimates.
+The shared objective is unlabeled mean prediction entropy. Adam uses betas `(0.9, 0.999)`, epsilon `1e-8`, zero weight decay, and seed 1. **Learning rates follow each method's public configuration**, rather than forcing one common value:
 
-Six stream conditions cover B=4/16/64 with continual and reset policies. Each phase contains four batches: clean → noise severity 3 → defocus blur severity 5 → clean. Returning clean inputs reuse the original indices. Each incoming batch gets one update. History uses predictions before its update; the images, internal state, and table use post-update diagnostics. Reset restores both parameters and optimizer state. CSV export explicitly distinguishes the measurements.
+| Batch | Tent LR | Buffer LR | AcTTA LR | Scope |
+| --- | ---: | ---: | ---: | --- |
+| 4 | 0.0001 | 0.001 | 0.001 | Public small-batch rates |
+| 16 | 0.001 | 0.001 | 0.01 | Explicit demo override using public batch-128 rates |
+| 128 | 0.001 | 0.001 | 0.01 | Public main CIFAR-10 rates |
 
-## Measurements and files
+Runtime is CPU float32, channels-last tensors, and eight PyTorch threads. Arms are recorded sequentially, and nonreentrant gradient checkpointing recomputes residual blocks during backward to stay within memory limits. BN running state is disabled; there is no dropout. Checkpointed updates are tested against the public adapter for exact parameter parity. The release's measured environment uses PyTorch 2.2.1 CUDA on an RTX A6000. Runtime, order, and subset differences are declared; this is not a bitwise reproduction of those full runs. Labels only compute evaluation metrics.
 
-Accuracy, confidence, entropy in nats, and ECE with ten equal-width bins are independently recoverable from all B stored probability vectors. Four images, two layers, and 16 channels are inspectable. Feature maps are average-pooled to 8×8 and display-quantized on one signed scale shared across methods and steps within a trace. Buffer residuals use their own fixed scale. Parameters and probabilities retain decimal precision. Quantized map bytes use lossless XOR against a measured Source reference; reconstruction is checked during recording.
+## Replay protocol
 
-Each experiment lives in `assets/lab/tta/*.json.gz`; `assets/lab/tta-manifest.json` lists hashes, sizes, counts, source provenance, and the optimizer protocol. The generated `assets/lab/research-lab.html` is a small standalone shell. Clicking Save an offline copy on the live page embeds the exact same measured gzip files; the saved HTML works without a server or connection.
+The **39 one-batch conditions** cover clean inputs plus four corruptions at three severities, for B=4/16/128 and updates 0–8. Predictions and internals show the same batch after that many updates. These are adaptation diagnostics, not held-out generalization estimates.
 
-This common ResNet-20 configuration demonstrates the update mechanisms. It does not reproduce the papers' full architectures, tuning, or benchmarks, and it does not establish a general method ranking.
+The **six streams** cover the same batch sizes with continual and reset policies. Four batches per phase follow clean → noise severity 3 → blur severity 5 → clean. The final clean phase reuses original indices. Each incoming batch gets one update. History uses predictions from the adaptation forward **before** its optimizer step, matching the public online adapter. Images, internals, and the table show the post-update diagnostic. Reset restores both model and optimizer. CSV explicitly labels pre/post measurements.
+
+The recorder's combined inspection/update forward is tested for exact parameter-update and prediction parity with the released `EntropyAdapter`, for both Tent and AcTTA. Buffer with alpha zero is tested for exact output parity with the identical checkpoint backbone using target-batch BN.
+
+## Display and integrity
+
+Accuracy, confidence, entropy in nats, and ECE with ten equal-width bins are independently recoverable from all stored probability vectors. The UI inspects four images and **channels 0–15** at `block1.layer.0.relu1` (16 actual channels) and `block1.layer.1.relu1` (160 actual channels). Buffer maps show the activation plus its correction at the matching site. The displayed BN and activation vectors cover those same channels.
+
+Maps are pooled to 8×8 and quantized on a fixed signed scale shared across methods and steps within the trace. Buffer residuals have a separate fixed scale. Parameters and probabilities retain decimal precision. Map bytes use lossless XOR against the Source reference; reconstruction is checked while recording.
+
+`assets/lab/tta/*.json.gz` holds the experiments. `assets/lab/tta-manifest.json` lists hashes, sizes, counts, source commits, model/input provenance, and optimizer settings. The small standalone shell is `assets/lab/research-lab.html`. The offline download embeds the same exact gzip files.
+
+The public modules, model, and placements are now used directly. Fixed-order subsets, 0–8 repeated-batch updates, four selected corruptions, and one seed **remain a mechanism demonstration**. Full AcTTA results use shuffled 15-corruption, 10,000-image-per-corruption benchmarks and are available separately in the [release results](https://github.com/hyeongyu-kim/actta/blob/main/docs/RESULTS.md). No outcomes are selected or modified to favor a method.
