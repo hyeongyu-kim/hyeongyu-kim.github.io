@@ -39,7 +39,7 @@ test("a confidence observation compares measured mean confidence and correct cou
 test("mixed outcomes retain the losing method in the short reading", () => {
   const story = read(noisy, 8);
   assert.equal(story.kind, "gain");
-  assert.equal(story.headline, "Three fixes. Mixed fortunes.");
+  assert.equal(story.headline, "TTA updates. Mixed fortunes.");
   assert.match(story.body, /Buffer has 1 fewer correct/);
   assert.match(story.body, /102\/128 to 103\/128/);
 });

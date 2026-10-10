@@ -1065,15 +1065,13 @@ html[data-theme="dark"] .tta-lab {
   font-size: 0.68rem;
   color: var(--global-text-color-light);
 }
-.tta-probability-details {
-  font-size: 0.7rem;
-  > summary {
-    cursor: pointer;
-    color: var(--tta-method-color);
-    min-height: 30px;
-  }
-  &[open] > summary {
+.tta-probability-expanded {
+  margin-top: 0.7rem;
+  .tta-cell-label {
+    display: block;
     margin-bottom: 0.4rem;
+    font-size: 0.7rem;
+    color: var(--tta-method-color);
   }
 }
 .tta-probabilities {
@@ -1311,7 +1309,7 @@ html[data-theme="dark"] .tta-lab {
   margin: 0 0 1rem;
   font-size: 0.75rem;
 }
-// A concrete surprise first; measurements and internals stay one click away.
+// The input surprise leads into learned updates and visible measurements.
 .tta-scene {
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
@@ -1460,6 +1458,30 @@ html[data-theme="dark"] .tta-lab {
     font-size: 0.75rem;
   }
 }
+.tta-update-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem 1.5rem;
+  margin-bottom: 1rem;
+  h2 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  .lab-caption {
+    margin: 0.4rem 0 0;
+    font-size: 0.73rem;
+  }
+}
+.tta-update-phase {
+  flex-shrink: 0;
+  padding: 0.4rem 0.65rem;
+  border-radius: 6px;
+  background: var(--tta-soft);
+  color: var(--global-text-color);
+  font-size: 0.73rem;
+  font-variant-numeric: tabular-nums;
+}
 .tta-repairs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1476,7 +1498,8 @@ html[data-theme="dark"] .tta-lab {
   background: var(--tta-surface);
   > header,
   .tta-repair-sketch,
-  .tta-repair-target {
+  .tta-repair-target,
+  .tta-update-readout {
     grid-column: 1 / -1;
   }
   > header {
@@ -1495,9 +1518,27 @@ html[data-theme="dark"] .tta-lab {
     }
   }
   .tta-repair-target {
-    margin: 0 0 0.65rem;
+    margin: 0 0 0.45rem;
     font-size: 0.75rem;
     color: var(--global-text-color-light);
+  }
+}
+.tta-update-readout {
+  margin-bottom: 0.65rem;
+  .tta-update-values {
+    min-height: 2.6em;
+    margin: 0;
+    color: var(--tta-method-color);
+    font-size: 0.79rem;
+    font-weight: 550;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.5;
+  }
+  > span {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--global-text-color-light);
+    font-size: 0.7rem;
   }
 }
 .tta-repair-sketch {
@@ -1638,6 +1679,59 @@ html[data-theme="dark"] .tta-lab {
     color: var(--global-text-color-light);
   }
 }
+.tta-outcomes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.6rem;
+  margin: 1.8rem 0 0;
+}
+.tta-outcome-panel {
+  min-width: 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--global-divider-color);
+  .tta-section-heading {
+    min-height: 68px;
+    margin: 0 0 0.8rem;
+    h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    > label {
+      width: 155px;
+      font-size: 0.72rem;
+      flex-shrink: 0;
+    }
+    select {
+      padding: 0.45rem 0.4rem;
+      font-size: 0.74rem;
+    }
+  }
+  .tta-results {
+    margin-top: 0;
+    table {
+      font-size: 0.8rem;
+    }
+    caption {
+      font-size: 0.72rem;
+    }
+    thead th {
+      font-size: 0.82rem;
+    }
+    tbody tr:first-child td {
+      font-size: 1.15rem;
+    }
+    .tta-score-count {
+      font-size: 0.67rem;
+    }
+  }
+  #tta-history-plot {
+    height: 230px;
+  }
+}
+.tta-map-explainer {
+  margin-top: 0.75rem;
+  font-size: 0.73rem;
+}
 .tta-hood-body {
   padding: 0.4rem 0 1rem;
   .tta-comparison {
@@ -1658,6 +1752,16 @@ html[data-theme="dark"] .tta-lab {
   }
 }
 @media (max-width: 850px) {
+  .tta-update-heading {
+    flex-wrap: wrap;
+  }
+  .tta-outcomes {
+    grid-template-columns: 1fr;
+    gap: 1.3rem;
+  }
+  .tta-outcome-panel .tta-section-heading {
+    min-height: 0;
+  }
   .tta-scene {
     gap: 1.5rem;
   }
@@ -1712,7 +1816,8 @@ html[data-theme="dark"] .tta-lab {
     gap: 0 1rem;
     > header,
     .tta-repair-sketch,
-    .tta-repair-target {
+    .tta-repair-target,
+    .tta-update-readout {
       grid-column: 1 / -1;
     }
     .tta-repair-sketch {

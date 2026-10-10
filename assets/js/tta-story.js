@@ -20,7 +20,8 @@ export function adaptationReading({ frame, baseline, classes, sample, batch, pos
   if (!stream && position === 0) {
     kind = "starting";
     headline = "Batch statistics get a head start.";
-    body = "The adapters start with this batch’s BN statistics. Source keeps its stored statistics. No learned update yet; try Next update.";
+    body =
+      "The adapters start with this batch’s BN statistics. Source keeps its stored statistics. No learned update yet; try Next TTA update to change the trainable parameters without labels.";
   } else if (stream && frame.domain === "clean" && position >= 12 && !reset) {
     kind = "return";
     headline = "Back home. The updates came along.";
@@ -33,7 +34,7 @@ export function adaptationReading({ frame, baseline, classes, sample, batch, pos
   } else if (predictions.every((prediction) => prediction.label !== truth)) {
     kind = "miss";
     const unanimous = predictions.every((prediction) => prediction.label === predictions[0].label && prediction.confidence >= 0.95);
-    headline = unanimous ? "Unanimous. Confident. Wrong." : "Three fixes. This one still fools them.";
+    headline = unanimous ? "Unanimous. Confident. Wrong." : "Adapted. Still fooled.";
     body = unanimous
       ? "All three adapters say “" +
         classes[predictions[0].label] +
@@ -59,7 +60,7 @@ export function adaptationReading({ frame, baseline, classes, sample, batch, pos
       kind = "gain";
       const losses = changes.filter(({ delta }) => delta < 0);
       headline = losses.length
-        ? "Three fixes. Mixed fortunes."
+        ? "TTA updates. Mixed fortunes."
         : "Small tweaks. " + gain.delta + " more " + (gain.delta === 1 ? "image" : "images") + " right.";
       body =
         names[gain.method] +
@@ -109,7 +110,7 @@ export function adaptationReading({ frame, baseline, classes, sample, batch, pos
       kind = "steady";
       headline = "Small changes. Same score.";
       body =
-        "The adapters have updated, but their whole-batch correct-image counts are unchanged at this step. Open the hood to inspect the changes.";
+        "The adapters have updated, but their whole-batch correct-image counts are unchanged at this step. Check the parameter readouts above for the learned changes.";
     }
   }
   return {

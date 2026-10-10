@@ -44,7 +44,7 @@ async function initializeTta() {
   function stop() {
     clearInterval(timer);
     timer = null;
-    get("play").textContent = "Replay";
+    get("play").textContent = "Replay updates";
     root.dataset.playing = "false";
   }
   function enableFrame(value) {
@@ -215,10 +215,12 @@ async function initializeTta() {
       [5, 4]
     );
     get("affine-values").textContent = "Channel " + channel + " · Δγ " + signed(dg[channel]) + " (solid) · Δβ " + signed(db[channel]) + " (dashed)";
+    get("tent-update").textContent = "Δγ " + signed(dg[channel]) + " · Δβ " + signed(db[channel]);
     drawMap(get("residual-map"), mapBytes(states.buffer, null, true), trace.residualScales[layer], "Buffer signed correction, " + description);
     get("residual-scale").textContent = "Own scale: ±" + trace.residualScales[layer].toPrecision(3);
     get("buffer-values").textContent =
       "α " + states.buffer.alpha.toPrecision(4) + " · s₁ " + number(states.buffer.scale1) + " · s₃ " + number(states.buffer.scale2);
+    get("buffer-update").textContent = get("buffer-values").textContent;
     const a = states.actta,
       center = a.center[channel],
       positive = a.positive[channel],
@@ -265,6 +267,8 @@ async function initializeTta() {
         description
     );
     get("actta-values").textContent = "c " + signed(center) + " · λ+ " + signed(positive) + " · λ− " + signed(negative);
+    get("actta-update").textContent = get("actta-values").textContent;
+    get("update-inspection").textContent = "Parameter readouts: " + get("layer").selectedOptions[0].textContent + " · channel " + channel + ".";
     const sketch = [],
       reference = [];
     for (let i = 0; i <= 64; i++) {
@@ -338,7 +342,7 @@ async function initializeTta() {
     plot.ctx.stroke();
     plot.ctx.setLineDash([]);
     get("history-caption").textContent = stream
-      ? "Online predictions before each incoming batch's update. The table above is a post-update diagnostic."
+      ? "Online predictions before each incoming batch's update. The score table shows that batch after its update."
       : "The full, same batch evaluated after each recorded update. This is not an unseen-data test.";
   }
   function render() {
@@ -354,10 +358,15 @@ async function initializeTta() {
     get("noise").disabled = stream;
     get("noise").value = f.domain === "clean" ? 0 : [0, 1, 3, 5].indexOf(f.severity);
     get("noise").setAttribute("aria-valuetext", f.domain === "clean" ? "Clean images" : "Gaussian noise, severity " + f.severity);
-    get("position").textContent = stream ? "Incoming batch " + (position + 1) + " / 16 · one update per batch" : "Update " + position + " / 8";
+    get("position").textContent = stream ? "Batch " + (position + 1) + " / 16 · TTA update applied" : "TTA update " + position + " / 8";
+    get("update-phase").textContent = stream
+      ? "After this batch’s TTA update"
+      : position === 0
+        ? "Before the first learned update"
+        : "After TTA update " + position;
     get("scrub").max = trace.frames.length - 1;
     get("scrub").value = position;
-    get("step").textContent = stream ? "Next batch" : "Next update";
+    get("step").textContent = stream ? "Next batch + update" : "Next TTA update";
     get("step").disabled = position === trace.frames.length - 1;
     get("table-caption").textContent =
       "Current batch (" +
@@ -624,10 +633,9 @@ async function initializeTta() {
     drawInternals();
     drawHistory();
   };
-  for (const id of ["hood", "history"])
-    get(id).addEventListener("toggle", () => {
-      if (get(id).open) refreshPlots();
-    });
+  get("hood").addEventListener("toggle", () => {
+    if (get("hood").open) refreshPlots();
+  });
   if (typeof ResizeObserver !== "undefined") {
     const plotObserver = new ResizeObserver(refreshPlots);
     for (const id of ["affine-plot", "activation-plot", "history-plot"]) plotObserver.observe(get(id));
