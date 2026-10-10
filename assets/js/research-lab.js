@@ -241,13 +241,27 @@ async function initializeTta() {
       min - padding,
       max + padding,
       3,
-      difference ? "Change from ReLU" : slope ? "Local slope" : "Activation output",
+      slope ? (difference ? "Slope change from ReLU" : "Local slope") : difference ? "Change from ReLU" : "Activation output",
       "Input x",
       -3,
       { ticks: [-3, -1.5, 0, 1.5, 3] }
     );
     line(curve, base, curve.p.muted, [6, 5]);
     line(curve, values, color("actta"));
+    get("curve-legend").textContent = difference
+      ? slope
+        ? "Dashed: zero slope change"
+        : "Dashed: zero change"
+      : slope
+        ? "Dashed: ReLU slope"
+        : "Dashed: original ReLU";
+    get("activation-plot").setAttribute(
+      "aria-label",
+      (slope ? "AcTTA local slope" : "AcTTA activation response") +
+        (difference ? " minus the original ReLU" : " compared with the original ReLU") +
+        (slope ? " slope, " : ", ") +
+        description
+    );
     get("actta-values").textContent = "c " + signed(center) + " · λ+ " + signed(positive) + " · λ− " + signed(negative);
   }
   function drawHistory() {
@@ -324,7 +338,10 @@ async function initializeTta() {
     get("step").textContent = stream ? "Next batch" : "Next update";
     get("step").disabled = position === trace.frames.length - 1;
     get("table-caption").textContent =
-      "Current batch (" + trace.batch + " images), " + (stream ? "after its one update" : "after " + position + " updates");
+      "Current batch (" +
+      trace.batch +
+      " images), " +
+      (stream ? "after its one update" : "after " + position + (position === 1 ? " update" : " updates"));
     methods.forEach((method) => {
       const state = f.methods[method],
         p = state.probabilities[sample];
