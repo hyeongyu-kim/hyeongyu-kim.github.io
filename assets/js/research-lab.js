@@ -1,4 +1,5 @@
 import { activationValue, activationSlope, experimentCsv } from "./tta-math.js";
+import { adaptationReading } from "./tta-story.js";
 
 // Replay measured PyTorch outputs. No substitute classifier or invented scores.
 async function initializeTta() {
@@ -43,10 +44,11 @@ async function initializeTta() {
   function stop() {
     clearInterval(timer);
     timer = null;
-    get("play").textContent = "Play";
+    get("play").textContent = "Replay";
+    root.dataset.playing = "false";
   }
   function enableFrame(value) {
-    for (const id of ["step", "play", "reset", "scrub", "sample", "layer", "channel", "metric", "slope", "difference", "export"])
+    for (const id of ["step", "play", "reset", "scrub", "sample", "noise", "layer", "channel", "metric", "slope", "difference", "export"])
       get(id).disabled = !value;
   }
   async function packedTrace(meta) {
@@ -263,6 +265,22 @@ async function initializeTta() {
         description
     );
     get("actta-values").textContent = "c " + signed(center) + " · λ+ " + signed(positive) + " · λ− " + signed(negative);
+    const sketch = [],
+      reference = [];
+    for (let i = 0; i <= 64; i++) {
+      const x = -2 + (4 * i) / 64;
+      sketch.push(activationValue(x, center, positive, negative));
+      reference.push(Math.max(0, x));
+    }
+    const low = Math.min(0, ...sketch),
+      high = Math.max(0.1, ...sketch, ...reference);
+    const sketchY = (value) => (68 - ((value - low) / (high - low)) * 58).toFixed(2);
+    const path = (values) => values.map((value, i) => (i ? "L" : "M") + (10 + (200 * i) / 64).toFixed(2) + "," + sketchY(value)).join(" ");
+    get("peek-axis").setAttribute("d", "M10 " + sketchY(0) + "H210M110 8V70");
+    get("peek-signal").setAttribute("cy", sketchY(activationValue(0, center, positive, negative)));
+    get("peek-curve").setAttribute("d", path(sketch));
+    get("peek-relu").setAttribute("d", path(reference));
+    get("peek-response").setAttribute("aria-label", "Activation sketch: AcTTA and original ReLU, " + description);
   }
   function drawHistory() {
     if (!trace) return;
@@ -331,7 +349,11 @@ async function initializeTta() {
     get("original").src = f.original[sample];
     get("shifted").src = f.images[sample];
     get("domain").textContent = domains[f.domain] + (f.severity ? " · severity " + f.severity : "");
-    get("label").textContent = "Ground truth: " + manifest.classes[f.labels[sample]] + " · evaluation only";
+    get("label").textContent = "Actual label: " + manifest.classes[f.labels[sample]] + " · for scoring only";
+    get("noise-wrap").hidden = stream || !["clean", "gaussian_noise"].includes(f.domain);
+    get("noise").disabled = stream;
+    get("noise").value = f.domain === "clean" ? 0 : [0, 1, 3, 5].indexOf(f.severity);
+    get("noise").setAttribute("aria-valuetext", f.domain === "clean" ? "Clean images" : "Gaussian noise, severity " + f.severity);
     get("position").textContent = stream ? "Incoming batch " + (position + 1) + " / 16 · one update per batch" : "Update " + position + " / 8";
     get("scrub").max = trace.frames.length - 1;
     get("scrub").value = position;
@@ -352,6 +374,16 @@ async function initializeTta() {
       get(method + "-prediction").textContent = manifest.classes[top[0][1]];
       get(method + "-confidence").textContent = percent(top[0][0]) + " confidence";
       get(method + "-match").textContent = top[0][1] === f.labels[sample] ? "Correct for this image" : "Incorrect for this image";
+      get(method + "-peek-accuracy").textContent = percent(state.metrics.accuracy);
+      if (method !== "source") {
+        get(method + "-peek-guess").textContent = manifest.classes[top[0][1]];
+        get(method + "-peek-confidence").textContent = percent(top[0][0]) + " sure · " + (top[0][1] === f.labels[sample] ? "correct" : "incorrect");
+        get(method + "-peek-confidence").dataset.correct = String(top[0][1] === f.labels[sample]);
+        const count = document.createElement("small");
+        count.className = "tta-score-count";
+        count.textContent = Math.round(state.metrics.accuracy * trace.batch) + " / " + trace.batch + " correct";
+        get(method + "-peek-accuracy").append(count);
+      }
       const bars = get(method + "-bars");
       bars.replaceChildren();
       top.forEach(([v, id]) => {
@@ -378,6 +410,33 @@ async function initializeTta() {
     });
     get("sample-resolution").textContent = trace.batch + " images · One image = " + (100 / trace.batch).toFixed(2) + " percentage points.";
     const baseline = stream ? f.online : trace.frames[0].methods;
+    const reading = adaptationReading({
+      frame: f,
+      baseline,
+      classes: manifest.classes,
+      sample,
+      batch: trace.batch,
+      position,
+      stream,
+      reset: get("policy").checked,
+    });
+    get("source-says").textContent = "“" + reading.sourceGuess + "”";
+    get("source-verdict").textContent = reading.sourceVerdict;
+    get("source-verdict").dataset.correct = String(reading.sourceCorrect);
+    get("story-headline").textContent = reading.headline;
+    get("story-body").textContent = reading.body;
+    for (const { method, delta } of reading.changes) {
+      const element = get(method + "-peek-change");
+      element.textContent =
+        !stream && position === 0
+          ? "Starting point"
+          : delta === 0
+            ? "Same correct count"
+            : delta > 0
+              ? "+" + delta + " correct"
+              : -delta + " fewer correct";
+      element.setAttribute("aria-label", element.textContent + (stream ? " compared with before this batch’s update" : " compared with step 0"));
+    }
     const changes = methods.slice(1).map((m) => {
       const delta = (f.methods[m].metrics.accuracy - baseline[m].metrics.accuracy) * 100;
       return names[m] + " " + (delta < 0 ? "−" : "+") + Math.abs(delta).toFixed(1) + " pp";
@@ -429,7 +488,7 @@ async function initializeTta() {
       position = Math.min(start, trace.frames.length - 1);
       enableFrame(true);
       render();
-      get("status").textContent = manifest.conditions + " experiments · " + manifest.frames + " measured states";
+      get("status").textContent = "Recorded in PyTorch · real outputs";
     } catch (error) {
       if (token === request) {
         get("status").textContent = error.message;
@@ -507,6 +566,12 @@ async function initializeTta() {
     }
   }
   for (const id of ["mode", "corruption", "severity", "batch", "policy"]) get(id).addEventListener("change", () => selectTrace());
+  get("noise").addEventListener("change", () => {
+    const severity = [0, 1, 3, 5][Number(get("noise").value)];
+    get("corruption").value = severity === 0 ? "clean" : "gaussian_noise";
+    if (severity) get("severity").value = String(severity);
+    selectTrace();
+  });
   for (const id of ["sample", "layer", "channel", "metric", "slope", "difference"]) get(id).addEventListener("change", render);
   get("step").addEventListener("click", () => {
     stop();
@@ -527,6 +592,7 @@ async function initializeTta() {
     if (timer) return stop();
     if (position === trace.frames.length - 1) position = 0;
     get("play").textContent = "Pause";
+    root.dataset.playing = "true";
     render();
     timer = setInterval(() => {
       position = Math.min(position + 1, trace.frames.length - 1);
@@ -558,9 +624,10 @@ async function initializeTta() {
     drawInternals();
     drawHistory();
   };
-  get("history").addEventListener("toggle", () => {
-    if (get("history").open) refreshPlots();
-  });
+  for (const id of ["hood", "history"])
+    get(id).addEventListener("toggle", () => {
+      if (get(id).open) refreshPlots();
+    });
   if (typeof ResizeObserver !== "undefined") {
     const plotObserver = new ResizeObserver(refreshPlots);
     for (const id of ["affine-plot", "activation-plot", "history-plot"]) plotObserver.observe(get(id));
