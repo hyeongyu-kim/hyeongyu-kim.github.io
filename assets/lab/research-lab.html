@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Same model. Three fixes. · Hyeongyu Kim</title>
+    <title>TTA, one update at a time. · Hyeongyu Kim</title>
     <style>
       :root {
         --global-bg-color: #f8f7f3;
@@ -1530,16 +1530,14 @@
         font-size: 0.68rem;
         color: var(--global-text-color-light);
       }
-      .tta-probability-details {
-        font-size: 0.7rem;
+      .tta-probability-expanded {
+        margin-top: 0.7rem;
       }
-      .tta-probability-details > summary {
-        cursor: pointer;
-        color: var(--tta-method-color);
-        min-height: 30px;
-      }
-      .tta-probability-details[open] > summary {
+      .tta-probability-expanded .tta-cell-label {
+        display: block;
         margin-bottom: 0.4rem;
+        font-size: 0.7rem;
+        color: var(--tta-method-color);
       }
       .tta-probabilities > div {
         position: relative;
@@ -1918,6 +1916,30 @@
         margin-left: auto;
         font-size: 0.75rem;
       }
+      .tta-update-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.7rem 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .tta-update-heading h2 {
+        margin: 0;
+        font-size: 1rem;
+      }
+      .tta-update-heading .lab-caption {
+        margin: 0.4rem 0 0;
+        font-size: 0.73rem;
+      }
+      .tta-update-phase {
+        flex-shrink: 0;
+        padding: 0.4rem 0.65rem;
+        border-radius: 6px;
+        background: var(--tta-soft);
+        color: var(--global-text-color);
+        font-size: 0.73rem;
+        font-variant-numeric: tabular-nums;
+      }
       .tta-repairs {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1935,7 +1957,8 @@
       }
       .tta-repair > header,
       .tta-repair .tta-repair-sketch,
-      .tta-repair .tta-repair-target {
+      .tta-repair .tta-repair-target,
+      .tta-repair .tta-update-readout {
         grid-column: 1/-1;
       }
       .tta-repair > header {
@@ -1954,9 +1977,27 @@
         color: var(--tta-method-color);
       }
       .tta-repair .tta-repair-target {
-        margin: 0 0 0.65rem;
+        margin: 0 0 0.45rem;
         font-size: 0.75rem;
         color: var(--global-text-color-light);
+      }
+      .tta-update-readout {
+        margin-bottom: 0.65rem;
+      }
+      .tta-update-readout .tta-update-values {
+        min-height: 2.6em;
+        margin: 0;
+        color: var(--tta-method-color);
+        font-size: 0.79rem;
+        font-weight: 550;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.5;
+      }
+      .tta-update-readout > span {
+        display: block;
+        margin-top: 0.25rem;
+        color: var(--global-text-color-light);
+        font-size: 0.7rem;
       }
       .tta-repair-sketch {
         display: block;
@@ -2096,6 +2137,59 @@
         line-height: 1.6;
         color: var(--global-text-color-light);
       }
+      .tta-outcomes {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 1.6rem;
+        margin: 1.8rem 0 0;
+      }
+      .tta-outcome-panel {
+        min-width: 0;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--global-divider-color);
+      }
+      .tta-outcome-panel .tta-section-heading {
+        min-height: 68px;
+        margin: 0 0 0.8rem;
+      }
+      .tta-outcome-panel .tta-section-heading h2 {
+        margin: 0;
+        font-size: 1rem;
+      }
+      .tta-outcome-panel .tta-section-heading > label {
+        width: 155px;
+        font-size: 0.72rem;
+        flex-shrink: 0;
+      }
+      .tta-outcome-panel .tta-section-heading select {
+        padding: 0.45rem 0.4rem;
+        font-size: 0.74rem;
+      }
+      .tta-outcome-panel .tta-results {
+        margin-top: 0;
+      }
+      .tta-outcome-panel .tta-results table {
+        font-size: 0.8rem;
+      }
+      .tta-outcome-panel .tta-results caption {
+        font-size: 0.72rem;
+      }
+      .tta-outcome-panel .tta-results thead th {
+        font-size: 0.82rem;
+      }
+      .tta-outcome-panel .tta-results tbody tr:first-child td {
+        font-size: 1.15rem;
+      }
+      .tta-outcome-panel .tta-results .tta-score-count {
+        font-size: 0.67rem;
+      }
+      .tta-outcome-panel #tta-history-plot {
+        height: 230px;
+      }
+      .tta-map-explainer {
+        margin-top: 0.75rem;
+        font-size: 0.73rem;
+      }
       .tta-hood-body {
         padding: 0.4rem 0 1rem;
       }
@@ -2114,6 +2208,16 @@
         color: #f4c29d;
       }
       @media (max-width: 850px) {
+        .tta-update-heading {
+          flex-wrap: wrap;
+        }
+        .tta-outcomes {
+          grid-template-columns: 1fr;
+          gap: 1.3rem;
+        }
+        .tta-outcome-panel .tta-section-heading {
+          min-height: 0;
+        }
         .tta-scene {
           gap: 1.5rem;
         }
@@ -2169,7 +2273,8 @@
         }
         .tta-repair > header,
         .tta-repair .tta-repair-sketch,
-        .tta-repair .tta-repair-target {
+        .tta-repair .tta-repair-target,
+        .tta-repair .tta-update-readout {
           grid-column: 1/-1;
         }
         .tta-repair .tta-repair-sketch {
@@ -2411,8 +2516,8 @@
       <main class="editorial-content">
         <header class="editorial-page-heading">
           <p class="editorial-eyebrow">Test-time adaptation</p>
-          <h1>Same model. Three fixes.</h1>
-          <p>Change the input. Watch the fixes. Question the confidence.</p>
+          <h1>TTA, one update at a time.</h1>
+          <p>Watch Tent, Buffer, and AcTTA update their trainable parts on an unlabeled batch.</p>
         </header>
         <section
           id="tta-lab"
@@ -2424,7 +2529,7 @@
           data-offline-shell="https://hyeongyu-kim.github.io/assets/lab/research-lab.html"
         >
           <div class="tta-meta">
-            <p>Real inputs. Real model updates.</p>
+            <p>Unlabeled inputs. Real TTA updates.</p>
             <p id="tta-status" class="lab-status" role="status">Loading the recorded experiments…</p>
           </div>
           <div class="tta-preset-bar">
@@ -2524,14 +2629,21 @@
           </section>
           <div class="tta-playback" aria-label="Replay controls">
             <div class="lab-actions tta-actions">
-              <button id="tta-step" type="button" disabled>Next update</button
-              ><button id="tta-play" type="button" class="quiet-button" disabled>Replay</button
+              <button id="tta-step" type="button" disabled>Next TTA update</button
+              ><button id="tta-play" type="button" class="quiet-button" disabled>Replay updates</button
               ><button id="tta-reset" type="button" class="quiet-button" disabled>Start over</button
-              ><output id="tta-position" aria-live="polite">Update 0 / 8</output>
+              ><output id="tta-position" aria-live="polite">TTA update 0 / 8</output>
             </div>
-            <label class="tta-scrubber"><span>Recorded step</span><input id="tta-scrub" type="range" min="0" max="8" value="0" disabled /></label>
+            <label class="tta-scrubber"><span>TTA update step</span><input id="tta-scrub" type="range" min="0" max="8" value="0" disabled /></label>
           </div>
-          <section class="tta-repairs" aria-label="Three ways to adapt the same model">
+          <div class="tta-update-heading">
+            <div>
+              <h2>What each TTA update changes</h2>
+              <p id="tta-update-inspection" class="lab-caption">Recorded parameters at the selected layer and channel.</p>
+            </div>
+            <span id="tta-update-phase" class="tta-update-phase">Before the first learned update</span>
+          </div>
+          <section class="tta-repairs" aria-label="Trainable parts and outcomes of three TTA methods">
             <article class="tta-repair tta-tent">
               <header>
                 <h2>Tent</h2>
@@ -2548,7 +2660,11 @@
                 <text x="159" y="44">β</text>
                 <circle class="tta-repair-signal" cx="61" cy="14" r="3" />
               </svg>
-              <p class="tta-repair-target">BN scale &amp; shift</p>
+              <p class="tta-repair-target">Updates: BN scale &amp; shift</p>
+              <div class="tta-update-readout">
+                <p id="tta-tent-update" class="tta-update-values">—</p>
+                <span>Change from frozen Source</span>
+              </div>
               <div class="tta-peek-result">
                 <span>This image</span><strong id="tta-tent-peek-guess">—</strong>
                 <p id="tta-tent-peek-confidence" data-correct="true">—</p>
@@ -2576,7 +2692,11 @@
                 <text x="110" y="63" class="tta-branch-label">branch</text>
                 <circle class="tta-repair-signal" cx="29" cy="58" r="3" />
               </svg>
-              <p class="tta-repair-target">An added residual branch</p>
+              <p class="tta-repair-target">Updates: An added residual branch</p>
+              <div class="tta-update-readout">
+                <p id="tta-buffer-update" class="tta-update-values">—</p>
+                <span>Current branch parameters</span>
+              </div>
               <div class="tta-peek-result">
                 <span>This image</span><strong id="tta-buffer-peek-guess">—</strong>
                 <p id="tta-buffer-peek-confidence" data-correct="true">—</p>
@@ -2603,7 +2723,11 @@
                 <path id="tta-peek-curve" class="tta-sketch-active" d="M10 64H110L210 10" />
                 <circle id="tta-peek-signal" class="tta-repair-signal" cx="110" cy="64" r="3" />
               </svg>
-              <p class="tta-repair-target">Activation center &amp; slopes</p>
+              <p class="tta-repair-target">Updates: Activation center &amp; slopes</p>
+              <div class="tta-update-readout">
+                <p id="tta-actta-update" class="tta-update-values">—</p>
+                <span>Current activation parameters</span>
+              </div>
               <div class="tta-peek-result">
                 <span>This image</span><strong id="tta-actta-peek-guess">—</strong>
                 <p id="tta-actta-peek-confidence" data-correct="true">—</p>
@@ -2616,13 +2740,82 @@
           <aside class="tta-story-note" aria-live="polite" aria-atomic="true">
             <span aria-hidden="true">↳</span>
             <div>
-              <h2 id="tta-story-headline">A few pixels can change a confident guess.</h2>
-              <p id="tta-story-body">Replay an update to see what actually changes.</p>
+              <h2 id="tta-story-headline">A TTA update can change a confident guess.</h2>
+              <p id="tta-story-body">Replay a TTA update to follow the learned parameters and predictions.</p>
             </div>
           </aside>
+          <div class="tta-outcomes" aria-label="TTA update history and measured outcomes">
+            <section id="tta-history" class="tta-history tta-outcome-panel" aria-labelledby="tta-history-title">
+              <div class="tta-section-heading">
+                <div><h2 id="tta-history-title">Across TTA updates</h2></div>
+                <label
+                  >Metric<select id="tta-metric" disabled>
+                    <option value="accuracy">Accuracy ↑</option>
+                    <option value="ece">Calibration error ↓</option>
+                    <option value="entropy">Prediction entropy ↓</option>
+                  </select></label
+                >
+              </div>
+              <p id="tta-history-caption" class="lab-caption">The full batch, evaluated after each update.</p>
+              <div class="tta-legend">
+                <span class="tta-source">Source</span><span class="tta-tent">Tent</span><span class="tta-buffer">Buffer</span
+                ><span class="tta-actta">AcTTA</span>
+              </div>
+              <canvas id="tta-history-plot" width="1080" height="350" role="img" aria-label="Metric history for all four methods"></canvas>
+            </section>
+            <section id="tta-measurements" class="tta-outcome-panel" aria-labelledby="tta-score-title">
+              <div class="tta-section-heading"><h2 id="tta-score-title">Scores after the update</h2></div>
+              <div class="lab-results tta-results">
+                <table>
+                  <caption id="tta-table-caption">
+                    Current batch after the selected updates
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Metric</th>
+                      <th scope="col" class="tta-source"><span>Source</span><small>Stored BN</small></th>
+                      <th scope="col" class="tta-tent"><span>Tent</span><small>BN affine</small></th>
+                      <th scope="col" class="tta-buffer"><span>Buffer</span><small>Residual branch</small></th>
+                      <th scope="col" class="tta-actta"><span>AcTTA</span><small>Activation</small></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Accuracy ↑<small>correct / images</small></th>
+                      <td id="tta-source-accuracy">—</td>
+                      <td id="tta-tent-accuracy">—</td>
+                      <td id="tta-buffer-accuracy">—</td>
+                      <td id="tta-actta-accuracy">—</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">ECE ↓</th>
+                      <td id="tta-source-ece">—</td>
+                      <td id="tta-tent-ece">—</td>
+                      <td id="tta-buffer-ece">—</td>
+                      <td id="tta-actta-ece">—</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Entropy ↓</th>
+                      <td id="tta-source-entropy">—</td>
+                      <td id="tta-tent-entropy">—</td>
+                      <td id="tta-buffer-entropy">—</td>
+                      <td id="tta-actta-entropy">—</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tta-result-notes">
+                <p id="tta-reading" class="lab-caption"></p>
+                <p id="tta-sample-resolution" class="lab-caption"></p>
+                <p class="lab-caption tta-bn-note">At step 0, adaptive methods already use target-batch BN. Source uses stored statistics.</p>
+              </div>
+            </section>
+          </div>
           <div class="tta-explore">
             <details id="tta-hood" class="tta-disclosure tta-hood">
-              <summary><span>Open the hood</span><span class="tta-disclosure-note">Maps, parameters &amp; response curves</span></summary>
+              <summary>
+                <span>Inspect parameters &amp; feature maps</span><span class="tta-disclosure-note">Layers, channels &amp; full curves</span>
+              </summary>
               <div class="tta-hood-body">
                 <section id="tta-internals" class="tta-comparison" aria-labelledby="tta-inspection-title">
                   <div class="tta-section-heading">
@@ -2667,10 +2860,10 @@
                       <p id="tta-source-prediction" class="tta-prediction">—</p>
                       <p id="tta-source-confidence" class="lab-caption">—</p>
                       <p id="tta-source-match" class="tta-prediction-match"></p>
-                      <details class="tta-probability-details">
-                        <summary>Top 3 classes<span class="sr-only"> for Source</span></summary>
+                      <div class="tta-probability-expanded">
+                        <p class="tta-cell-label">Top 3 classes</p>
                         <div id="tta-source-bars" class="tta-probabilities"></div>
-                      </details>
+                      </div>
                     </div>
                   </section>
                   <section class="tta-method tta-method-row tta-tent" aria-labelledby="tta-tent-title">
@@ -2700,10 +2893,10 @@
                       <p id="tta-tent-prediction" class="tta-prediction">—</p>
                       <p id="tta-tent-confidence" class="lab-caption">—</p>
                       <p id="tta-tent-match" class="tta-prediction-match"></p>
-                      <details class="tta-probability-details">
-                        <summary>Top 3 classes<span class="sr-only"> for Tent</span></summary>
+                      <div class="tta-probability-expanded">
+                        <p class="tta-cell-label">Top 3 classes</p>
                         <div id="tta-tent-bars" class="tta-probabilities"></div>
-                      </details>
+                      </div>
                     </div>
                   </section>
                   <section class="tta-method tta-method-row tta-buffer" aria-labelledby="tta-buffer-title">
@@ -2738,10 +2931,10 @@
                       <p id="tta-buffer-prediction" class="tta-prediction">—</p>
                       <p id="tta-buffer-confidence" class="lab-caption">—</p>
                       <p id="tta-buffer-match" class="tta-prediction-match"></p>
-                      <details class="tta-probability-details">
-                        <summary>Top 3 classes<span class="sr-only"> for Buffer</span></summary>
+                      <div class="tta-probability-expanded">
+                        <p class="tta-cell-label">Top 3 classes</p>
                         <div id="tta-buffer-bars" class="tta-probabilities"></div>
-                      </details>
+                      </div>
                     </div>
                   </section>
                   <section class="tta-method tta-method-row tta-actta" aria-labelledby="tta-actta-title">
@@ -2781,95 +2974,20 @@
                       <p id="tta-actta-prediction" class="tta-prediction">—</p>
                       <p id="tta-actta-confidence" class="lab-caption">—</p>
                       <p id="tta-actta-match" class="tta-prediction-match"></p>
-                      <details class="tta-probability-details">
-                        <summary>Top 3 classes<span class="sr-only"> for AcTTA</span></summary>
+                      <div class="tta-probability-expanded">
+                        <p class="tta-cell-label">Top 3 classes</p>
                         <div id="tta-actta-bars" class="tta-probabilities"></div>
-                      </details>
+                      </div>
                     </div>
                   </section>
                   <div class="tta-scale-key">
                     <span aria-hidden="true"></span>
                     <p id="tta-map-scale" class="lab-caption"></p>
                   </div>
-                  <details class="tta-map-notes">
-                    <summary>About these maps</summary>
-                    <p class="lab-caption">
-                      Feature maps are pooled to 8×8 and share one signed scale across methods and updates. Buffer's smaller residual uses its own
-                      scale. Inspect channels 0–15; the second site has 160 channels.
-                    </p>
-                  </details>
-                </section>
-              </div>
-            </details>
-            <details id="tta-measurements" class="tta-disclosure">
-              <summary><span>Show the numbers</span><span class="tta-disclosure-note">Accuracy, calibration &amp; entropy</span></summary>
-              <div class="tta-disclosure-body">
-                <div class="lab-results tta-results">
-                  <table>
-                    <caption id="tta-table-caption">
-                      Current batch after the selected updates
-                    </caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">Metric</th>
-                        <th scope="col" class="tta-source"><span>Source</span><small>Stored BN</small></th>
-                        <th scope="col" class="tta-tent"><span>Tent</span><small>BN affine</small></th>
-                        <th scope="col" class="tta-buffer"><span>Buffer</span><small>Residual branch</small></th>
-                        <th scope="col" class="tta-actta"><span>AcTTA</span><small>Activation</small></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Accuracy ↑<small>correct / images</small></th>
-                        <td id="tta-source-accuracy">—</td>
-                        <td id="tta-tent-accuracy">—</td>
-                        <td id="tta-buffer-accuracy">—</td>
-                        <td id="tta-actta-accuracy">—</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">ECE ↓</th>
-                        <td id="tta-source-ece">—</td>
-                        <td id="tta-tent-ece">—</td>
-                        <td id="tta-buffer-ece">—</td>
-                        <td id="tta-actta-ece">—</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Entropy ↓</th>
-                        <td id="tta-source-entropy">—</td>
-                        <td id="tta-tent-entropy">—</td>
-                        <td id="tta-buffer-entropy">—</td>
-                        <td id="tta-actta-entropy">—</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="tta-result-notes">
-                  <p id="tta-reading" class="lab-caption"></p>
-                  <p id="tta-sample-resolution" class="lab-caption"></p>
-                  <p class="lab-caption tta-bn-note">At step 0, adaptive methods already use target-batch BN. Source uses stored statistics.</p>
-                </div>
-              </div>
-            </details>
-            <details id="tta-history" class="tta-disclosure">
-              <summary><span>Across updates</span><span class="tta-disclosure-note">Accuracy, calibration &amp; entropy</span></summary>
-              <div class="tta-disclosure-body">
-                <section class="tta-history" aria-labelledby="tta-history-title">
-                  <div class="tta-section-heading">
-                    <div><h2 id="tta-history-title">Update history</h2></div>
-                    <label
-                      >Metric<select id="tta-metric" disabled>
-                        <option value="accuracy">Accuracy ↑</option>
-                        <option value="ece">Calibration error ↓</option>
-                        <option value="entropy">Prediction entropy ↓</option>
-                      </select></label
-                    >
-                  </div>
-                  <p id="tta-history-caption" class="lab-caption">The full batch, evaluated after each update.</p>
-                  <div class="tta-legend">
-                    <span class="tta-source">Source</span><span class="tta-tent">Tent</span><span class="tta-buffer">Buffer</span
-                    ><span class="tta-actta">AcTTA</span>
-                  </div>
-                  <canvas id="tta-history-plot" width="1080" height="350" role="img" aria-label="Metric history for all four methods"></canvas>
+                  <p class="lab-caption tta-map-explainer">
+                    Feature maps are pooled to 8×8 and share one signed scale across methods and updates. Buffer's smaller residual uses its own
+                    scale. Inspect channels 0–15; the second site has 160 channels.
+                  </p>
                 </section>
               </div>
             </details>
@@ -3015,7 +3133,8 @@
         if (!stream && position === 0) {
           kind = "starting";
           headline = "Batch statistics get a head start.";
-          body = "The adapters start with this batch’s BN statistics. Source keeps its stored statistics. No learned update yet; try Next update.";
+          body =
+            "The adapters start with this batch’s BN statistics. Source keeps its stored statistics. No learned update yet; try Next TTA update to change the trainable parameters without labels.";
         } else if (stream && frame.domain === "clean" && position >= 12 && !reset) {
           kind = "return";
           headline = "Back home. The updates came along.";
@@ -3028,7 +3147,7 @@
         } else if (predictions.every((prediction) => prediction.label !== truth)) {
           kind = "miss";
           const unanimous = predictions.every((prediction) => prediction.label === predictions[0].label && prediction.confidence >= 0.95);
-          headline = unanimous ? "Unanimous. Confident. Wrong." : "Three fixes. This one still fools them.";
+          headline = unanimous ? "Unanimous. Confident. Wrong." : "Adapted. Still fooled.";
           body = unanimous
             ? "All three adapters say “" +
               classes[predictions[0].label] +
@@ -3054,7 +3173,7 @@
             kind = "gain";
             const losses = changes.filter(({ delta }) => delta < 0);
             headline = losses.length
-              ? "Three fixes. Mixed fortunes."
+              ? "TTA updates. Mixed fortunes."
               : "Small tweaks. " + gain.delta + " more " + (gain.delta === 1 ? "image" : "images") + " right.";
             body =
               names[gain.method] +
@@ -3104,7 +3223,7 @@
             kind = "steady";
             headline = "Small changes. Same score.";
             body =
-              "The adapters have updated, but their whole-batch correct-image counts are unchanged at this step. Open the hood to inspect the changes.";
+              "The adapters have updated, but their whole-batch correct-image counts are unchanged at this step. Check the parameter readouts above for the learned changes.";
           }
         }
         return {
@@ -3161,7 +3280,7 @@
         function stop() {
           clearInterval(timer);
           timer = null;
-          get("play").textContent = "Replay";
+          get("play").textContent = "Replay updates";
           root.dataset.playing = "false";
         }
         function enableFrame(value) {
@@ -3333,10 +3452,12 @@
           );
           get("affine-values").textContent =
             "Channel " + channel + " · Δγ " + signed(dg[channel]) + " (solid) · Δβ " + signed(db[channel]) + " (dashed)";
+          get("tent-update").textContent = "Δγ " + signed(dg[channel]) + " · Δβ " + signed(db[channel]);
           drawMap(get("residual-map"), mapBytes(states.buffer, null, true), trace.residualScales[layer], "Buffer signed correction, " + description);
           get("residual-scale").textContent = "Own scale: ±" + trace.residualScales[layer].toPrecision(3);
           get("buffer-values").textContent =
             "α " + states.buffer.alpha.toPrecision(4) + " · s₁ " + number(states.buffer.scale1) + " · s₃ " + number(states.buffer.scale2);
+          get("buffer-update").textContent = get("buffer-values").textContent;
           const a = states.actta,
             center = a.center[channel],
             positive = a.positive[channel],
@@ -3383,6 +3504,8 @@
               description
           );
           get("actta-values").textContent = "c " + signed(center) + " · λ+ " + signed(positive) + " · λ− " + signed(negative);
+          get("actta-update").textContent = get("actta-values").textContent;
+          get("update-inspection").textContent = "Parameter readouts: " + get("layer").selectedOptions[0].textContent + " · channel " + channel + ".";
           const sketch = [],
             reference = [];
           for (let i = 0; i <= 64; i++) {
@@ -3456,7 +3579,7 @@
           plot.ctx.stroke();
           plot.ctx.setLineDash([]);
           get("history-caption").textContent = stream
-            ? "Online predictions before each incoming batch's update. The table above is a post-update diagnostic."
+            ? "Online predictions before each incoming batch's update. The score table shows that batch after its update."
             : "The full, same batch evaluated after each recorded update. This is not an unseen-data test.";
         }
         function render() {
@@ -3472,10 +3595,15 @@
           get("noise").disabled = stream;
           get("noise").value = f.domain === "clean" ? 0 : [0, 1, 3, 5].indexOf(f.severity);
           get("noise").setAttribute("aria-valuetext", f.domain === "clean" ? "Clean images" : "Gaussian noise, severity " + f.severity);
-          get("position").textContent = stream ? "Incoming batch " + (position + 1) + " / 16 · one update per batch" : "Update " + position + " / 8";
+          get("position").textContent = stream ? "Batch " + (position + 1) + " / 16 · TTA update applied" : "TTA update " + position + " / 8";
+          get("update-phase").textContent = stream
+            ? "After this batch’s TTA update"
+            : position === 0
+              ? "Before the first learned update"
+              : "After TTA update " + position;
           get("scrub").max = trace.frames.length - 1;
           get("scrub").value = position;
-          get("step").textContent = stream ? "Next batch" : "Next update";
+          get("step").textContent = stream ? "Next batch + update" : "Next TTA update";
           get("step").disabled = position === trace.frames.length - 1;
           get("table-caption").textContent =
             "Current batch (" +
@@ -3746,10 +3874,9 @@
           drawInternals();
           drawHistory();
         };
-        for (const id of ["hood", "history"])
-          get(id).addEventListener("toggle", () => {
-            if (get(id).open) refreshPlots();
-          });
+        get("hood").addEventListener("toggle", () => {
+          if (get("hood").open) refreshPlots();
+        });
         if (typeof ResizeObserver !== "undefined") {
           const plotObserver = new ResizeObserver(refreshPlots);
           for (const id of ["affine-plot", "activation-plot", "history-plot"]) plotObserver.observe(get(id));
