@@ -1004,7 +1004,7 @@ html[data-theme="dark"] .tta-lab {
 }
 .tta-method-row {
   align-items: center;
-  padding: 1.4rem 0;
+  padding: 0.8rem 0;
   border-bottom: 1px solid var(--global-divider-color);
   > * {
     min-width: 0;
@@ -1137,16 +1137,27 @@ html[data-theme="dark"] .tta-lab {
 }
 .tta-mechanism {
   h4 {
-    margin: 0 0 0.45rem;
+    margin: 0;
     font-family: inherit;
     font-weight: 500;
-    font-size: 0.84rem;
+    font-size: 0.78rem;
     color: var(--global-text-color);
   }
   > canvas:not(#tta-residual-map) {
     display: block;
     width: 100%;
-    height: 176px;
+    height: 160px;
+  }
+}
+.tta-mechanism-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.8rem;
+  margin-bottom: 0.4rem;
+  .tta-path {
+    margin: 0;
   }
 }
 .tta-path {
@@ -1172,15 +1183,12 @@ html[data-theme="dark"] .tta-lab {
     font-weight: 600;
   }
 }
-.tta-frozen .tta-path {
-  margin: 0.6rem 0;
-}
 .tta-residual-view {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  min-height: 176px;
+  min-height: 160px;
 }
 #tta-residual-map {
   display: block;
@@ -1192,7 +1200,7 @@ html[data-theme="dark"] .tta-lab {
 .tta-values {
   font-size: 0.72rem;
   color: var(--global-text-color-light);
-  margin: 0.5rem 0 0;
+  margin: 0.4rem 0 0;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
@@ -1209,6 +1217,25 @@ html[data-theme="dark"] .tta-lab {
   }
   input {
     accent-color: var(--tta-actta);
+  }
+}
+.tta-method-heading .tta-curve-controls {
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.8rem 0 0;
+  label {
+    font-size: 0.68rem;
+  }
+}
+.tta-mechanism-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.8rem;
+  margin-top: 0.4rem;
+  .tta-values,
+  .tta-curve-legend {
+    margin: 0;
   }
 }
 .tta-map-notes {
@@ -1338,6 +1365,15 @@ html[data-theme="dark"] .tta-lab {
       grid-column: 1 / -1;
       margin-top: 0.3rem;
     }
+    .tta-curve-controls {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      gap: 0.5rem 1rem;
+      margin-top: 0.6rem;
+    }
+  }
+  .tta-mechanism > canvas:not(#tta-residual-map) {
+    height: 200px;
   }
   .tta-row-map {
     figcaption {

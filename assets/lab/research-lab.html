@@ -1473,7 +1473,7 @@
       }
       .tta-method-row {
         align-items: center;
-        padding: 1.4rem 0;
+        padding: 0.8rem 0;
         border-bottom: 1px solid var(--global-divider-color);
       }
       .tta-method-row > * {
@@ -1597,16 +1597,27 @@
         image-rendering: pixelated;
       }
       .tta-mechanism h4 {
-        margin: 0 0 0.45rem;
+        margin: 0;
         font-family: inherit;
         font-weight: 500;
-        font-size: 0.84rem;
+        font-size: 0.78rem;
         color: var(--global-text-color);
       }
       .tta-mechanism > canvas:not(#tta-residual-map) {
         display: block;
         width: 100%;
-        height: 176px;
+        height: 160px;
+      }
+      .tta-mechanism-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.8rem;
+        margin-bottom: 0.4rem;
+      }
+      .tta-mechanism-heading .tta-path {
+        margin: 0;
       }
       .tta-path {
         display: flex;
@@ -1631,15 +1642,12 @@
         border-color: var(--tta-method-color);
         font-weight: 600;
       }
-      .tta-frozen .tta-path {
-        margin: 0.6rem 0;
-      }
       .tta-residual-view {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 1rem;
-        min-height: 176px;
+        min-height: 160px;
       }
       #tta-residual-map {
         display: block;
@@ -1651,7 +1659,7 @@
       .tta-values {
         font-size: 0.72rem;
         color: var(--global-text-color-light);
-        margin: 0.5rem 0 0;
+        margin: 0.4rem 0 0;
         font-variant-numeric: tabular-nums;
         overflow-wrap: anywhere;
       }
@@ -1669,6 +1677,25 @@
       }
       .tta-curve-controls input {
         accent-color: var(--tta-actta);
+      }
+      .tta-method-heading .tta-curve-controls {
+        flex-direction: column;
+        gap: 0.35rem;
+        margin: 0.8rem 0 0;
+      }
+      .tta-method-heading .tta-curve-controls label {
+        font-size: 0.68rem;
+      }
+      .tta-mechanism-footer {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.25rem 0.8rem;
+        margin-top: 0.4rem;
+      }
+      .tta-mechanism-footer .tta-values,
+      .tta-mechanism-footer .tta-curve-legend {
+        margin: 0;
       }
       .tta-map-notes {
         padding: 0 0 0.85rem;
@@ -1797,6 +1824,15 @@
         .tta-method-heading .tta-target {
           grid-column: 1/-1;
           margin-top: 0.3rem;
+        }
+        .tta-method-heading .tta-curve-controls {
+          grid-column: 1/-1;
+          flex-direction: row;
+          gap: 0.5rem 1rem;
+          margin-top: 0.6rem;
+        }
+        .tta-mechanism > canvas:not(#tta-residual-map) {
+          height: 200px;
         }
         .tta-row-map figcaption {
           display: block;
@@ -2134,9 +2170,11 @@
                 <p class="tta-parameter-count"><strong id="tta-source-count">0</strong> trainable parameters</p>
               </div>
               <div class="tta-mechanism tta-frozen">
-                <h4>No test-time update</h4>
-                <div class="tta-path" aria-label="Frozen convolution, stored-statistics batch normalization, and ReLU">
-                  <span>Conv</span><i aria-hidden="true">→</i><span>BN</span><i aria-hidden="true">→</i><span>ReLU</span>
+                <div class="tta-mechanism-heading">
+                  <h4>No test-time update</h4>
+                  <div class="tta-path" aria-label="Frozen convolution, stored-statistics batch normalization, and ReLU">
+                    <span>Conv</span><i aria-hidden="true">→</i><span>BN</span><i aria-hidden="true">→</i><span>ReLU</span>
+                  </div>
                 </div>
                 <p class="lab-caption">Stored BN statistics · all weights frozen.</p>
               </div>
@@ -2163,9 +2201,11 @@
                 <p class="tta-target">Convolutions frozen</p>
               </div>
               <div class="tta-mechanism">
-                <h4>BN scale γ &amp; shift β</h4>
-                <div class="tta-path" aria-label="Frozen convolution, adaptive BN affine parameters, and frozen ReLU">
-                  <span>Conv</span><i aria-hidden="true">→</i><span class="tta-path-active">BN</span><i aria-hidden="true">→</i><span>ReLU</span>
+                <div class="tta-mechanism-heading">
+                  <h4>BN scale γ &amp; shift β</h4>
+                  <div class="tta-path" aria-label="Frozen convolution, adaptive BN affine parameters, and frozen ReLU">
+                    <span>Conv</span><i aria-hidden="true">→</i><span class="tta-path-active">BN</span><i aria-hidden="true">→</i><span>ReLU</span>
+                  </div>
                 </div>
                 <canvas id="tta-affine-plot" width="480" height="280" role="img" aria-label="Changes to BN gamma and beta"></canvas>
                 <p id="tta-affine-values" class="tta-values"></p>
@@ -2193,9 +2233,11 @@
                 <p class="tta-target">Backbone weights frozen</p>
               </div>
               <div class="tta-mechanism">
-                <h4>An added residual branch</h4>
-                <div class="tta-path" aria-label="Frozen path plus an adaptive residual branch">
-                  <span>Frozen path</span><i aria-hidden="true">+</i><span class="tta-path-active">α · branch</span>
+                <div class="tta-mechanism-heading">
+                  <h4>An added residual branch</h4>
+                  <div class="tta-path" aria-label="Frozen path plus an adaptive residual branch">
+                    <span>Frozen path</span><i aria-hidden="true">+</i><span class="tta-path-active">α · branch</span>
+                  </div>
                 </div>
                 <div class="tta-residual-view">
                   <canvas id="tta-residual-map" width="176" height="176" role="img" aria-label="Buffer residual correction map"></canvas>
@@ -2227,20 +2269,24 @@
                 <h3 id="tta-actta-title">AcTTA</h3>
                 <p class="tta-parameter-count"><strong id="tta-actta-count">—</strong> trainable parameters</p>
                 <p class="tta-target">Backbone weights frozen</p>
-              </div>
-              <div class="tta-mechanism">
-                <h4>Center c &amp; slopes λ+, λ−</h4>
-                <div class="tta-path" aria-label="Frozen convolution, batch normalization with frozen affine parameters, and adaptive activation">
-                  <span>Conv</span><i aria-hidden="true">→</i><span>BN</span><i aria-hidden="true">→</i
-                  ><span class="tta-path-active">Activation</span>
-                </div>
-                <canvas id="tta-activation-plot" width="480" height="280" role="img" aria-label="AcTTA activation compared with ReLU"></canvas>
-                <p class="lab-caption tta-curve-legend">Dashed: original ReLU</p>
                 <div class="tta-curve-controls">
                   <label><input id="tta-slope" type="checkbox" disabled /> Local slope</label
                   ><label><input id="tta-difference" type="checkbox" disabled /> Change from ReLU</label>
                 </div>
-                <p id="tta-actta-values" class="tta-values"></p>
+              </div>
+              <div class="tta-mechanism">
+                <div class="tta-mechanism-heading">
+                  <h4>Center c &amp; slopes λ+, λ−</h4>
+                  <div class="tta-path" aria-label="Frozen convolution, batch normalization with frozen affine parameters, and adaptive activation">
+                    <span>Conv</span><i aria-hidden="true">→</i><span>BN</span><i aria-hidden="true">→</i
+                    ><span class="tta-path-active">Activation</span>
+                  </div>
+                </div>
+                <canvas id="tta-activation-plot" width="480" height="280" role="img" aria-label="AcTTA activation compared with ReLU"></canvas>
+                <div class="tta-mechanism-footer">
+                  <p class="lab-caption tta-curve-legend">Dashed: original ReLU</p>
+                  <p id="tta-actta-values" class="tta-values"></p>
+                </div>
               </div>
               <figure class="tta-row-map">
                 <figcaption>Feature map</figcaption>
