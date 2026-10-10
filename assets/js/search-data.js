@@ -30,8 +30,8 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/notes/";
           },
-        },{id: "nav-what-changes-at-test-time",
-          title: "What changes at test time?",
+        },{id: "nav-same-model-three-fixes",
+          title: "Same model. Three fixes.",
           description: "Inspect real Tent, Buffer, and AcTTA updates on the same CIFAR-10-C inputs.",
           section: "Navigation",
           handler: () => {
