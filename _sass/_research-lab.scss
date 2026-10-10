@@ -1079,6 +1079,7 @@ html[data-theme="dark"] .tta-lab {
   > canvas:not(#tta-residual-map) {
     display: block;
     width: 100%;
+    height: 220px;
   }
 }
 #tta-residual-map {
@@ -1130,6 +1131,7 @@ html[data-theme="dark"] .tta-lab {
 #tta-history-plot {
   display: block;
   width: 100%;
+  height: 260px;
 }
 .tta-downloads {
   display: flex;
@@ -1239,7 +1241,7 @@ html[data-theme="dark"] .tta-lab {
   .lab-results.tta-results {
     font-size: 0.75rem;
     table {
-      font-size: 0.72rem;
+      font-size: 0.76rem;
     }
     th,
     td {
@@ -1250,13 +1252,13 @@ html[data-theme="dark"] .tta-lab {
     }
     thead small,
     th small {
-      font-size: 0.56rem;
+      font-size: 0.69rem;
     }
     tbody tr:first-child td {
-      font-size: clamp(1rem, 4.3vw, 1.25rem);
+      font-size: clamp(0.9rem, 4.2vw, 1.1rem);
     }
     .tta-score-count {
-      font-size: 0.61rem;
+      font-size: 0.67rem;
     }
   }
   .tta-result-notes #tta-reading {

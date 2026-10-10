@@ -1547,6 +1547,7 @@
       .tta-detail > canvas:not(#tta-residual-map) {
         display: block;
         width: 100%;
+        height: 220px;
       }
       #tta-residual-map {
         display: block;
@@ -1597,6 +1598,7 @@
       #tta-history-plot {
         display: block;
         width: 100%;
+        height: 260px;
       }
       .tta-downloads {
         display: flex;
@@ -1705,7 +1707,7 @@
           font-size: 0.75rem;
         }
         .lab-results.tta-results table {
-          font-size: 0.72rem;
+          font-size: 0.76rem;
         }
         .lab-results.tta-results th,
         .lab-results.tta-results td {
@@ -1716,13 +1718,13 @@
         }
         .lab-results.tta-results thead small,
         .lab-results.tta-results th small {
-          font-size: 0.56rem;
+          font-size: 0.69rem;
         }
         .lab-results.tta-results tbody tr:first-child td {
-          font-size: clamp(1rem, 4.3vw, 1.25rem);
+          font-size: clamp(0.9rem, 4.2vw, 1.1rem);
         }
         .lab-results.tta-results .tta-score-count {
-          font-size: 0.61rem;
+          font-size: 0.67rem;
         }
         .tta-result-notes #tta-reading {
           font-size: 0.74rem;
@@ -2248,23 +2250,37 @@
           traces.set(meta.id, result);
           return result;
         }
-        function axes(canvas, min, max, xMax, yLabel, xLabel, xMin = 0) {
+        const plotDimensions = new WeakMap();
+        function axes(canvas, min, max, xMax, yLabel, xLabel, xMin = 0, xAxis = {}) {
+          // Draw in CSS pixels so labels remain readable at every display width.
+          // Closed details have no layout; retain their original size until opened.
+          if (!plotDimensions.has(canvas)) plotDimensions.set(canvas, { width: canvas.width, height: canvas.height });
+          const fallback = plotDimensions.get(canvas),
+            bounds = canvas.getBoundingClientRect(),
+            width = Math.round(bounds.width) || fallback.width,
+            height = Math.round(bounds.height) || fallback.height,
+            ratio = window.devicePixelRatio || 1;
+          if (canvas.width !== Math.round(width * ratio)) canvas.width = Math.round(width * ratio);
+          if (canvas.height !== Math.round(height * ratio)) canvas.height = Math.round(height * ratio);
           const ctx = canvas.getContext("2d"),
             p = palette();
-          const left = 64,
-            right = canvas.width - 20,
-            top = 30,
-            bottom = canvas.height - 48;
+          ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+          ctx.font = "12px system-ui, sans-serif";
           if (max === min) {
             min -= 0.01;
             max += 0.01;
           }
+          const precision = Math.min(6, Math.max(0, Math.ceil(-Math.log10((max - min) / 4)) + 1)),
+            ticks = Array.from({ length: 5 }, (_, i) => min + ((max - min) * i) / 4),
+            labels = ticks.map((v) => String(Number(v.toFixed(precision))).replace("-", "−"));
+          const left = Math.max(44, Math.ceil(Math.max(...labels.map((label) => ctx.measureText(label).width))) + 12),
+            right = width - 14,
+            top = 34,
+            bottom = height - 54;
           const x = (v) => left + ((v - xMin) / (xMax - xMin || 1)) * (right - left);
           const y = (v) => bottom - ((v - min) / (max - min)) * (bottom - top);
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.font = "17px system-ui, sans-serif";
-          for (let i = 0; i < 5; i++) {
-            const v = min + ((max - min) * i) / 4;
+          ctx.clearRect(0, 0, width, height);
+          ticks.forEach((v, i) => {
             ctx.strokeStyle = p.rule;
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -2273,16 +2289,21 @@
             ctx.stroke();
             ctx.fillStyle = p.muted;
             ctx.textAlign = "right";
-            ctx.fillText(Math.abs(v) < 1e-9 ? "0" : Math.abs(max - min) < 0.1 ? v.toFixed(3) : v.toFixed(1), left - 8, y(v) + 5);
+            ctx.fillText(labels[i], left - 8, y(v) + 4);
+          });
+          ctx.textAlign = "center";
+          for (const v of xAxis.ticks || [xMin, (xMin + xMax) / 2, xMax]) {
+            ctx.fillStyle = p.muted;
+            ctx.fillText(xAxis.format ? xAxis.format(v) : String(v).replace("-", "−"), x(v), bottom + 20);
           }
           ctx.fillStyle = p.muted;
           ctx.textAlign = "left";
-          ctx.fillText(yLabel, left, 19);
+          ctx.fillText(yLabel, left, 17);
           ctx.textAlign = "center";
-          ctx.fillText(xLabel, (left + right) / 2, canvas.height - 5);
+          ctx.fillText(xLabel, (left + right) / 2, height - 8);
           return { ctx, x, y, left, right, top, bottom, p };
         }
-        function line(plot, points, stroke, dash = [], width = 3) {
+        function line(plot, points, stroke, dash = [], width = 2) {
           const c = plot.ctx;
           c.strokeStyle = stroke;
           c.lineWidth = width;
@@ -2346,7 +2367,7 @@
           const dg = states.tent.gamma.map((v, i) => v - states.source.gamma[i]);
           const db = states.tent.beta.map((v, i) => v - states.source.beta[i]);
           const limit = Math.max(0.001, ...dg.map(Math.abs), ...db.map(Math.abs)) * 1.2;
-          const affine = axes(get("affine-plot"), -limit, limit, 15, "Change from Source", "BN channel");
+          const affine = axes(get("affine-plot"), -limit, limit, 15, "Change from Source", "BN channel", 0, { ticks: [0, 5, 10, 15] });
           const c = affine.ctx;
           c.strokeStyle = color("tent");
           c.setLineDash([3, 5]);
@@ -2398,7 +2419,8 @@
             3,
             difference ? "Change from ReLU" : slope ? "Local slope" : "Activation output",
             "Input x",
-            -3
+            -3,
+            { ticks: [-3, -1.5, 0, 1.5, 3] }
           );
           line(curve, base, curve.p.muted, [6, 5]);
           line(curve, values, color("actta"));
@@ -2419,7 +2441,9 @@
             max,
             trace.frames.length - 1,
             metric === "entropy" ? "Entropy (nats)" : "%",
-            stream ? "Incoming batch (1–16)" : "Gradient updates (0–8)"
+            stream ? "Incoming batch (1–16)" : "Gradient updates (0–8)",
+            0,
+            { ticks: stream ? [0, 3, 7, 11, 15] : [0, 2, 4, 6, 8], format: (v) => String(stream ? v + 1 : v) }
           );
           if (stream) {
             [3.5, 7.5, 11.5].forEach((v) => {
@@ -2687,6 +2711,19 @@
         new MutationObserver(() => {
           if (trace) render();
         }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+        const refreshPlots = () => {
+          if (!trace) return;
+          drawInternals();
+          drawHistory();
+        };
+        for (const id of ["internals", "history"])
+          get(id).addEventListener("toggle", () => {
+            if (get(id).open) refreshPlots();
+          });
+        if (typeof ResizeObserver !== "undefined") {
+          const plotObserver = new ResizeObserver(refreshPlots);
+          for (const id of ["affine-plot", "activation-plot", "history-plot"]) plotObserver.observe(get(id));
+        } else window.addEventListener("resize", refreshPlots);
         await boot();
       }
       initializeTta();
