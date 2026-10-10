@@ -334,6 +334,7 @@ async function initializeTta() {
         .slice(0, 3);
       get(method + "-prediction").textContent = manifest.classes[top[0][1]];
       get(method + "-confidence").textContent = percent(top[0][0]) + " confidence";
+      get(method + "-match").textContent = top[0][1] === f.labels[sample] ? "Correct for this image" : "Incorrect for this image";
       const bars = get(method + "-bars");
       bars.replaceChildren();
       top.forEach(([v, id]) => {
@@ -540,10 +541,9 @@ async function initializeTta() {
     drawInternals();
     drawHistory();
   };
-  for (const id of ["internals", "history"])
-    get(id).addEventListener("toggle", () => {
-      if (get(id).open) refreshPlots();
-    });
+  get("history").addEventListener("toggle", () => {
+    if (get("history").open) refreshPlots();
+  });
   if (typeof ResizeObserver !== "undefined") {
     const plotObserver = new ResizeObserver(refreshPlots);
     for (const id of ["affine-plot", "activation-plot", "history-plot"]) plotObserver.observe(get(id));

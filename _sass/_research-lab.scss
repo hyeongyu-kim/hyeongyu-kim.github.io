@@ -492,7 +492,7 @@
   }
 }
 
-// The comparison stays visible; deeper inspection is disclosed on demand.
+// Keep each method's mechanism, feature, and prediction on one readable row.
 html:has(.tta-lab) {
   --global-bg-color: #f7f9fc;
   --global-text-color: #223247;
@@ -787,13 +787,19 @@ html[data-theme="dark"] .tta-lab {
   }
 }
 .tta-playback {
+  position: sticky;
+  top: 74px;
+  z-index: 10;
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   gap: 0.65rem 1.5rem;
   align-items: center;
-  padding: 1rem 0;
-  border-top: 1px solid var(--global-divider-color);
-  border-bottom: 1px solid var(--global-divider-color);
+  margin: 1.2rem 0 2rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 10px;
+  background: var(--tta-surface);
+  box-shadow: 0 4px 16px rgba(24, 46, 75, 0.06);
 }
 .lab-actions.tta-actions {
   display: flex;
@@ -960,36 +966,114 @@ html[data-theme="dark"] .tta-lab {
     }
   }
 }
-.tta-method-grid {
+.tta-comparison {
+  margin-top: 1.8rem;
+  > .tta-section-heading {
+    align-items: center;
+    margin-bottom: 1.5rem;
+    h2 {
+      font-size: clamp(1.2rem, 2.3vw, 1.55rem);
+    }
+    .lab-caption {
+      margin: 0.45rem 0 0;
+    }
+  }
+}
+.tta-section-kicker {
+  margin: 0 0 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--global-theme-color);
+}
+.tta-row-headings,
+.tta-method-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 140px minmax(0, 1fr) 104px 146px;
   gap: 1.4rem;
 }
+.tta-row-headings {
+  padding: 0.75rem 0;
+  font-size: 0.7rem;
+  color: var(--global-text-color-light);
+  border-bottom: 1px solid var(--global-divider-color);
+  > span:nth-last-child(2) {
+    text-align: center;
+  }
+}
+.tta-method-row {
+  align-items: center;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--global-divider-color);
+  > * {
+    min-width: 0;
+  }
+}
 .tta-method {
-  padding-top: 1rem;
-  border-top: 2px solid var(--tta-method-color);
-  h2 {
-    font-size: 1.15rem;
+  h3 {
+    color: var(--tta-method-color);
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
   }
   .tta-kicker {
-    color: var(--tta-method-color);
-    font-size: 0.7rem;
-    margin: 0 0 0.3rem;
+    color: var(--global-text-color-light);
+    font-size: 0.68rem;
+    margin: 0 0 0.4rem;
   }
   .tta-target {
     color: var(--global-text-color-light);
-    font-size: 0.76rem;
+    font-size: 0.71rem;
     line-height: 1.7;
-    margin: 0.5rem 0 1rem;
+    margin: 0.55rem 0 0;
   }
   .tta-prediction {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 0;
+    letter-spacing: -0.02em;
   }
   .lab-caption {
-    margin: 0.2rem 0 0.7rem;
+    margin: 0.3rem 0 0;
     font-size: 0.74rem;
+  }
+}
+.tta-method-heading {
+  align-self: start;
+  padding-top: 0.15rem;
+}
+.tta-parameter-count {
+  margin: 0.6rem 0 0;
+  font-size: 0.7rem;
+  color: var(--global-text-color-light);
+  strong {
+    display: block;
+    margin-bottom: 0.1rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--global-text-color);
+    font-variant-numeric: tabular-nums;
+  }
+}
+.tta-row-prediction {
+  .tta-cell-label {
+    display: none;
+  }
+}
+.tta-prediction-match {
+  margin: 0.4rem 0 0.6rem;
+  font-size: 0.68rem;
+  color: var(--global-text-color-light);
+}
+.tta-probability-details {
+  font-size: 0.7rem;
+  > summary {
+    cursor: pointer;
+    color: var(--tta-method-color);
+    min-height: 30px;
+  }
+  &[open] > summary {
+    margin-bottom: 0.4rem;
   }
 }
 .tta-probabilities {
@@ -1010,15 +1094,6 @@ html[data-theme="dark"] .tta-lab {
     }
   }
 }
-.tta-parameter-count {
-  margin: 0.8rem 0 0;
-  font-size: 0.7rem;
-  color: var(--global-text-color-light);
-  strong {
-    font-weight: 500;
-    color: var(--global-text-color);
-  }
-}
 .tta-section-heading {
   display: flex;
   align-items: flex-end;
@@ -1034,71 +1109,98 @@ html[data-theme="dark"] .tta-lab {
   }
 }
 .tta-inspection-controls {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
   align-items: flex-end;
   gap: 0.7rem;
+  width: 100%;
+  max-width: 360px;
+  flex-shrink: 0;
+  label {
+    min-width: 0;
+  }
   select {
     min-width: 60px;
   }
 }
-.tta-feature-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.2rem;
-  margin: 1.3rem 0;
-  figure {
-    text-align: center;
-  }
+.tta-row-map {
   figcaption {
-    color: var(--tta-method-color);
-    font-size: 0.82rem;
-    margin-bottom: 0.6rem;
-    font-weight: 500;
+    display: none;
   }
   canvas {
     display: block;
-    width: 100%;
-    max-width: 176px;
+    width: 104px;
     margin: auto;
-    border-radius: 5px;
+    border-radius: 4px;
+    image-rendering: pixelated;
   }
 }
-.tta-detail-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.4rem;
-  margin-top: 1.8rem;
-}
-.tta-detail {
-  padding-top: 1rem;
-  border-top: 2px solid var(--tta-method-color);
-  > .lab-caption {
-    min-height: 3.5rem;
-    margin: 0.6rem 0 1rem;
+.tta-mechanism {
+  h4 {
+    margin: 0 0 0.45rem;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.84rem;
+    color: var(--global-text-color);
   }
   > canvas:not(#tta-residual-map) {
     display: block;
     width: 100%;
-    height: 220px;
+    height: 176px;
   }
+}
+.tta-path {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.66rem;
+  line-height: 1.4;
+  color: var(--global-text-color-light);
+  > span {
+    padding: 0.25rem 0.45rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  > i {
+    font-style: normal;
+  }
+  .tta-path-active {
+    color: var(--tta-method-color);
+    border-color: var(--tta-method-color);
+    font-weight: 600;
+  }
+}
+.tta-frozen .tta-path {
+  margin: 0.6rem 0;
+}
+.tta-residual-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 176px;
 }
 #tta-residual-map {
   display: block;
-  width: 150px;
-  margin: 0 auto;
+  width: 128px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  image-rendering: pixelated;
 }
 .tta-values {
   font-size: 0.72rem;
   color: var(--global-text-color-light);
-  margin: 0.7rem 0;
+  margin: 0.5rem 0 0;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 .tta-curve-controls {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin: 0.7rem 0;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0.5rem 0;
   label {
     display: flex;
     align-items: center;
@@ -1107,6 +1209,37 @@ html[data-theme="dark"] .tta-lab {
   }
   input {
     accent-color: var(--tta-actta);
+  }
+}
+.tta-map-notes {
+  padding: 0 0 0.85rem;
+  font-size: 0.73rem;
+  color: var(--global-text-color-light);
+  > summary {
+    min-height: 30px;
+    cursor: pointer;
+  }
+  .lab-caption {
+    max-width: 680px;
+    margin: 0.4rem 0;
+    font-size: 0.72rem;
+  }
+}
+.tta-scale-key {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+  padding: 1rem 0 0.6rem;
+  > span {
+    width: 72px;
+    height: 7px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #b45838, #f2efe4 50%, #245d8b);
+  }
+  .lab-caption {
+    margin: 0;
+    font-size: 0.7rem;
   }
 }
 .tta-legend {
@@ -1151,6 +1284,20 @@ html[data-theme="dark"] .tta-lab {
   margin: 0 0 1rem;
   font-size: 0.75rem;
 }
+@media (max-width: 850px) {
+  .tta-row-headings,
+  .tta-method-row {
+    grid-template-columns: 112px minmax(0, 1fr) 88px 130px;
+    gap: 1rem;
+  }
+  .tta-row-map canvas {
+    width: 88px;
+  }
+  .tta-comparison > .tta-section-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 @media (max-width: 700px) {
   .tta-overview {
     padding: 1.1rem;
@@ -1161,15 +1308,58 @@ html[data-theme="dark"] .tta-lab {
   .tta-settings {
     margin-left: 0;
   }
-  .tta-method-grid,
-  .tta-feature-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .tta-row-headings {
+    display: none;
   }
-  .tta-detail-grid {
-    grid-template-columns: 1fr;
+  .tta-method-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem 1.5rem;
+    padding: 1.5rem 0;
   }
-  .tta-detail > .lab-caption {
-    min-height: 0;
+  .tta-method-heading,
+  .tta-mechanism {
+    grid-column: 1 / -1;
+  }
+  .tta-method-heading {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 0.7rem;
+    .tta-kicker,
+    h3 {
+      grid-column: 1;
+    }
+    .tta-parameter-count {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      margin: 0;
+      text-align: right;
+    }
+    .tta-target {
+      grid-column: 1 / -1;
+      margin-top: 0.3rem;
+    }
+  }
+  .tta-row-map {
+    figcaption {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--global-text-color-light);
+    }
+    canvas {
+      margin: 0;
+      width: 104px;
+    }
+  }
+  .tta-row-prediction .tta-cell-label {
+    display: block;
+    margin: 0 0 0.3rem;
+    font-size: 0.7rem;
+    color: var(--global-text-color-light);
+  }
+  .tta-playback {
+    top: 66px;
+    margin: 1rem 0 1.5rem;
   }
   .tta-section-heading {
     flex-direction: column;
@@ -1225,7 +1415,13 @@ html[data-theme="dark"] .tta-lab {
   .tta-playback {
     grid-template-columns: 1fr;
     gap: 0.4rem;
-    padding: 0.8rem 0;
+    padding: 0.6rem 0.7rem;
+  }
+  .tta-scrubber {
+    gap: 0;
+    > span {
+      display: none;
+    }
   }
   .lab-actions.tta-actions {
     output {
