@@ -19,7 +19,7 @@
         --global-divider-color: #3a443a;
         --global-theme-color: #a6c09a;
       }
-      :root {
+      ﻿:root {
         --global-bg-color: #fcfbf8;
         --global-text-color: #253342;
         --global-text-color-light: #66717d;
@@ -964,43 +964,124 @@
           display: none;
         }
       }
+      html:has(.tta-lab) {
+        --global-bg-color: #f7f9fc;
+        --global-text-color: #223247;
+        --global-text-color-light: #617084;
+        --global-divider-color: #dce3ed;
+        --global-theme-color: #244e80;
+        --global-hover-color: #153961;
+        --editorial-title-color: #182e4b;
+      }
+      html[data-theme="dark"]:has(.tta-lab) {
+        --global-bg-color: #111b29;
+        --global-text-color: #e7edf7;
+        --global-text-color-light: #a7b6ca;
+        --global-divider-color: #334359;
+        --global-theme-color: #a8caff;
+        --global-hover-color: #d5e5ff;
+        --editorial-title-color: #edf4ff;
+      }
+      .editorial-content:has(> .tta-lab) {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .editorial-content:has(> .tta-lab) .editorial-page-heading {
+        margin-bottom: 1.6rem;
+      }
+      .editorial-content:has(> .tta-lab) .editorial-page-heading h1 {
+        font-family: inherit;
+        font-size: clamp(2rem, 4.5vw, 2.85rem);
+        font-weight: 650;
+        letter-spacing: -0.04em;
+        line-height: 1.15;
+        margin: 0.5rem 0 0.8rem;
+      }
+      .editorial-content:has(> .tta-lab) .editorial-page-heading .editorial-eyebrow {
+        color: var(--global-theme-color);
+        font-weight: 600;
+        font-size: 0.74rem;
+        letter-spacing: 0.07em;
+      }
+      .editorial-content:has(> .tta-lab) .editorial-page-heading > p:not(.editorial-eyebrow) {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 0;
+      }
+      .editorial-content:has(> .tta-lab) h2,
+      .editorial-content:has(> .tta-lab) h3 {
+        font-family: inherit;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--global-text-color);
+      }
       .tta-lab {
-        --tta-source: #757a76;
-        --tta-tent: #b38238;
-        --tta-buffer: #806593;
-        --tta-actta: #358270;
+        --tta-surface: #fff;
+        --tta-soft: #f1f5fa;
+        --tta-source: #677589;
+        --tta-tent: #3865ad;
+        --tta-buffer: #795ca8;
+        --tta-actta: #167d80;
+        color: var(--global-text-color);
       }
       .tta-lab button,
       .tta-lab select,
       .tta-lab input {
         font: inherit;
       }
-      .tta-lab select {
-        padding: 0.4rem 0.5rem;
-        color: var(--global-text-color);
-        background: var(--global-bg-color);
-        border: 1px solid var(--global-divider-color);
-        border-radius: 4px;
-        width: 100%;
+      .tta-lab button:focus-visible,
+      .tta-lab select:focus-visible,
+      .tta-lab summary:focus-visible,
+      .tta-lab input:focus-visible {
+        outline: 2px solid var(--global-theme-color);
+        outline-offset: 4px;
+      }
+      .tta-lab button {
+        font-size: 0.82rem;
+        min-height: 44px;
+        border-radius: 7px;
+        padding: 0.5rem 0.85rem;
+        cursor: pointer;
       }
       .tta-lab button:disabled {
-        opacity: 0.5;
+        opacity: 0.45;
         cursor: default;
+      }
+      .tta-lab select {
+        width: 100%;
+        min-height: 44px;
+        padding: 0.45rem 0.65rem;
+        color: var(--global-text-color);
+        background: var(--tta-surface);
+        border: 1px solid var(--global-divider-color);
+        border-radius: 7px;
+        font-size: 0.84rem;
+      }
+      .tta-lab label {
+        font-size: 0.8rem;
+        color: var(--global-text-color-light);
+        margin: 0;
+      }
+      .tta-lab figure {
+        margin: 0;
       }
       .tta-lab canvas {
         max-width: 100%;
         height: auto;
       }
-      .tta-lab figure {
-        margin: 0;
-      }
-      .tta-lab label {
-        color: var(--global-text-color-light);
-        font-size: 0.8rem;
-      }
       .tta-lab h2,
       .tta-lab h3 {
         margin: 0;
+      }
+      .tta-lab h2 {
+        font-size: 1.2rem;
+      }
+      .tta-lab h3 {
+        font-size: 1.05rem;
+      }
+      .tta-lab .lab-caption {
+        font-size: 0.79rem;
+        line-height: 1.65;
+        color: var(--global-text-color-light);
       }
       .tta-lab [hidden] {
         display: none !important;
@@ -1018,226 +1099,411 @@
         --tta-method-color: var(--tta-actta);
       }
       html[data-theme="dark"] .tta-lab {
-        --tta-source: #a1aca5;
-        --tta-tent: #d8b06b;
-        --tta-buffer: #b59acb;
-        --tta-actta: #78bdaa;
+        --tta-surface: #192638;
+        --tta-soft: #223249;
+        --tta-source: #afbdd0;
+        --tta-tent: #9bbcff;
+        --tta-buffer: #c7aff0;
+        --tta-actta: #79d2cb;
       }
-      .tta-text-button {
-        display: inline;
-        color: var(--global-theme-color, #42624c);
-        background: none;
-        padding: 0;
-        border: 0;
-        cursor: pointer;
+      .tta-meta {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem 1.5rem;
+        flex-wrap: wrap;
+        font-size: 0.73rem;
+        color: var(--global-text-color-light);
+        margin-bottom: 0.8rem;
+      }
+      .tta-meta p {
+        margin: 0;
+      }
+      .tta-meta .lab-status {
+        font-size: inherit;
+        min-height: 1.2rem;
+      }
+      .tta-preset-bar {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-bottom: 1.3rem;
       }
       .tta-presets {
-        display: flex;
+        display: inline-flex;
         flex-wrap: wrap;
-        align-items: center;
-        gap: 0.5rem;
-        margin: 1.2rem 0;
-        font-size: 0.8rem;
-      }
-      .tta-presets > span {
-        color: var(--global-text-color-light);
-        margin-right: 0.25rem;
+        gap: 0.3rem;
+        padding: 0.3rem;
+        border-radius: 10px;
+        background: var(--tta-soft);
       }
       .tta-presets button {
-        padding: 0.4rem 0.7rem;
+        border: 0;
+        color: var(--global-text-color-light);
+        background: rgba(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+      .tta-presets button[aria-pressed="true"] {
+        background: var(--global-theme-color);
+        color: var(--tta-surface);
+      }
+      .tta-presets button:hover:not(:disabled) {
+        background: var(--global-divider-color);
+        filter: none;
+      }
+      .tta-presets button[aria-pressed="true"]:hover:not(:disabled) {
+        background: var(--global-theme-color);
+      }
+      .tta-settings {
+        margin-left: auto;
+      }
+      .tta-settings summary {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-height: 50px;
+        font-size: 0.8rem;
+        color: var(--global-theme-color);
+        cursor: pointer;
+        list-style: none;
+      }
+      .tta-settings summary::-webkit-details-marker {
+        display: none;
+      }
+      .tta-settings summary::after {
+        content: "+";
+        font-size: 1.1rem;
+      }
+      .tta-settings[open] {
+        flex-basis: 100%;
+        padding: 0 1.2rem 1.1rem;
+        border: 1px solid var(--global-divider-color);
+        border-radius: 10px;
+        background: var(--tta-surface);
+      }
+      .tta-settings[open] summary {
+        justify-content: space-between;
+      }
+      .tta-settings[open] summary::after {
+        content: "−";
       }
       .lab-controls.tta-controls {
         display: grid;
-        grid-template-columns: 1.55fr 1.25fr 0.65fr 0.65fr;
+        grid-template-columns: 1.5fr 1.2fr 0.7fr 0.7fr;
         gap: 1rem;
-        margin: 1.5rem 0 0.75rem;
+        margin: 0.3rem 0;
       }
       .lab-controls.tta-controls label {
         display: grid;
-        gap: 0.35rem;
-      }
-      .tta-reset-policy {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        margin-bottom: 1rem;
+        gap: 0.2rem;
       }
       .lab-controls.tta-controls.tta-stream-controls {
         grid-template-columns: 1fr 1fr;
       }
+      .tta-reset-policy {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.8rem !important;
+      }
+      .tta-overview {
+        padding: 1.5rem 1.7rem 1.1rem;
+        border: 1px solid var(--global-divider-color);
+        border-radius: 14px;
+        background: var(--tta-surface);
+      }
       .tta-input-strip {
         display: flex;
         align-items: center;
-        gap: 1.1rem;
-        margin: 1.8rem 0 1.3rem;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
       }
       .tta-input-strip img {
         display: block;
-        width: 116px;
-        height: 116px;
+        width: 76px;
+        height: 76px;
+        border-radius: 7px;
         image-rendering: pixelated;
-        border-radius: 3px;
       }
       .tta-input-strip figcaption {
-        margin-top: 0.5rem;
-        font-size: 0.8rem;
+        margin-top: 0.35rem;
+        font-size: 0.7rem;
         color: var(--global-text-color-light);
       }
       .tta-input-context {
-        max-width: 330px;
-        margin-left: 0.6rem;
+        margin-left: 0.5rem;
       }
       .tta-input-context > p:first-child {
-        margin: 0 0 0.5rem;
-        font-size: 0.9rem;
+        margin: 0 0 0.4rem;
+        font-size: 0.92rem;
+        font-weight: 600;
       }
       .tta-input-context label {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 0.7rem;
+        gap: 0.55rem;
       }
-      .tta-input-context label select {
+      .tta-input-context select {
         width: auto;
+        min-height: 36px;
+        padding: 0.25rem 0.55rem;
+        font-size: 0.75rem;
       }
       .tta-input-context .lab-caption {
-        margin: 0.6rem 0 0;
+        margin: 0.35rem 0 0;
+        font-size: 0.73rem;
+      }
+      .tta-playback {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        gap: 0.65rem 1.5rem;
+        align-items: center;
+        padding: 1rem 0;
+        border-top: 1px solid var(--global-divider-color);
+        border-bottom: 1px solid var(--global-divider-color);
       }
       .lab-actions.tta-actions {
+        display: flex;
         align-items: center;
+        gap: 0.4rem;
+        margin: 0;
       }
       .lab-actions.tta-actions output {
-        font-size: 0.8rem;
+        flex-basis: 100%;
+        font-size: 0.74rem;
         color: var(--global-text-color-light);
-        margin-left: auto;
+        margin: 0.25rem 0 0;
+        font-variant-numeric: tabular-nums;
       }
       .tta-scrubber {
         display: grid;
-        grid-template-columns: 175px 1fr;
-        gap: 1rem;
-        align-items: center;
-        margin: 0.8rem 0 2rem;
+        gap: 0.45rem;
+      }
+      .tta-scrubber > span {
+        font-size: 0.74rem;
       }
       .tta-scrubber input {
         width: 100%;
-        accent-color: var(--tta-actta);
+        min-height: 24px;
+        accent-color: var(--global-theme-color);
+        cursor: pointer;
+      }
+      .lab-results.tta-results {
+        margin: 1rem 0 0;
+        overflow-x: auto;
+      }
+      .lab-results.tta-results table {
+        width: 100%;
+        table-layout: fixed;
+        font-size: 0.87rem;
+        border-collapse: collapse;
+      }
+      .lab-results.tta-results caption {
+        caption-side: top;
+        text-align: left;
+        padding: 0 0 0.9rem;
+        font-size: 0.76rem;
+        color: var(--global-text-color-light);
+      }
+      .lab-results.tta-results th,
+      .lab-results.tta-results td {
+        text-align: center;
+        padding: 0.65rem 0.25rem;
+        border-bottom: 1px solid var(--global-divider-color);
+      }
+      .lab-results.tta-results th:first-child {
+        text-align: left;
+        width: 20%;
+        font-weight: 500;
+      }
+      .lab-results.tta-results thead th {
+        font-size: 0.97rem;
+        font-weight: 600;
+      }
+      .lab-results.tta-results thead th span {
+        color: var(--tta-method-color);
+      }
+      .lab-results.tta-results small {
+        display: block;
+        margin-top: 0.25rem;
+        color: var(--global-text-color-light);
+        font-size: 0.66rem;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+      .lab-results.tta-results tbody td {
+        color: var(--global-text-color);
+        font-variant-numeric: tabular-nums;
+      }
+      .lab-results.tta-results tbody tr:first-child {
+        background: var(--tta-soft);
+      }
+      .lab-results.tta-results tbody tr:first-child th,
+      .lab-results.tta-results tbody tr:first-child td {
+        padding-top: 0.85rem;
+        padding-bottom: 0.85rem;
+      }
+      .lab-results.tta-results tbody tr:first-child td {
+        font-size: 1.65rem;
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        white-space: nowrap;
+      }
+      .lab-results.tta-results .tta-score-count {
+        font-size: 0.73rem;
+        font-weight: 400;
+        letter-spacing: 0;
+      }
+      .lab-results.tta-results tbody tr:last-child th,
+      .lab-results.tta-results tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      .tta-result-notes {
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--global-divider-color);
+      }
+      .tta-result-notes p {
+        margin: 0.35rem 0 0;
+      }
+      .tta-result-notes #tta-reading {
+        color: var(--global-text-color);
+        font-size: 0.8rem;
+      }
+      .tta-result-notes .tta-bn-note {
+        font-size: 0.74rem;
+      }
+      .tta-explore {
+        margin-top: 1.6rem;
+      }
+      .tta-disclosure {
+        padding: 0;
+        border-top: 1px solid var(--global-divider-color);
+        font-size: 0.87rem;
+        line-height: 1.75;
+      }
+      .tta-disclosure > summary {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        min-height: 60px;
+        padding: 1rem 0.25rem;
+        list-style: none;
+        cursor: pointer;
+        color: var(--global-text-color);
+        font-size: 0.94rem;
+        font-weight: 550;
+      }
+      .tta-disclosure > summary::-webkit-details-marker {
+        display: none;
+      }
+      .tta-disclosure > summary::after {
+        content: "+";
+        margin-left: auto;
+        font-size: 1.15rem;
+        font-weight: 400;
+        color: var(--global-text-color-light);
+      }
+      .tta-disclosure > summary:hover {
+        color: var(--global-theme-color);
+      }
+      .tta-disclosure[open] > summary::after {
+        content: "−";
+      }
+      .tta-disclosure:last-child {
+        border-bottom: 1px solid var(--global-divider-color);
+      }
+      .tta-disclosure .tta-disclosure-note {
+        color: var(--global-text-color-light);
+        font-size: 0.75rem;
+        font-weight: 400;
+      }
+      .tta-disclosure .tta-disclosure-body {
+        padding: 0.8rem 1.5rem 1.5rem;
+        margin-bottom: 0.8rem;
+        background: var(--tta-surface);
+        border: 1px solid var(--global-divider-color);
+        border-radius: 10px;
+      }
+      .tta-disclosure .tta-disclosure-body p:first-child {
+        margin-top: 0.7rem;
       }
       .tta-method-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 1.5rem;
+        gap: 1.4rem;
       }
       .tta-method {
-        padding: 1rem 0 0.7rem;
-        border-top: 3px solid var(--tta-method-color);
+        padding-top: 1rem;
+        border-top: 2px solid var(--tta-method-color);
       }
       .tta-method h2 {
-        font-size: 1.4rem;
+        font-size: 1.15rem;
       }
       .tta-method .tta-kicker {
-        font-size: 0.7rem;
         color: var(--tta-method-color);
-        margin: 0 0 0.4rem;
-        letter-spacing: 0.03em;
+        font-size: 0.7rem;
+        margin: 0 0 0.3rem;
       }
       .tta-method .tta-target {
-        font-size: 0.77rem;
-        line-height: 1.7;
         color: var(--global-text-color-light);
-        margin: 0.7rem 0 1.1rem;
+        font-size: 0.76rem;
+        line-height: 1.7;
+        margin: 0.5rem 0 1rem;
       }
       .tta-method .tta-prediction {
-        font-size: 1.05rem;
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 1rem;
         margin: 0;
       }
       .tta-method .lab-caption {
-        margin: 0.15rem 0 0.8rem;
-      }
-      .tta-probabilities {
-        min-height: 88px;
+        margin: 0.2rem 0 0.7rem;
+        font-size: 0.74rem;
       }
       .tta-probabilities > div {
         position: relative;
         display: flex;
         justify-content: space-between;
         gap: 0.4rem;
-        font-size: 0.71rem;
-        padding: 3px 0 5px;
-        margin-bottom: 6px;
+        font-size: 0.72rem;
+        padding: 4px 0 8px;
+        margin-bottom: 5px;
       }
       .tta-probabilities > div > i {
         position: absolute;
-        bottom: 0;
         left: 0;
+        bottom: 0;
         height: 2px;
         background: var(--tta-method-color);
       }
       .tta-parameter-count {
-        font-size: 0.69rem;
-        color: var(--global-text-color-light);
         margin: 0.8rem 0 0;
-      }
-      .tta-parameter-count strong {
-        color: var(--global-text-color);
-        font-weight: 500;
-      }
-      .tta-bn-note {
-        margin: 0.8rem 0 1.1rem;
-        max-width: 800px;
-      }
-      .tta-results {
-        overflow-x: auto;
-      }
-      .tta-results table {
-        width: 100%;
-        min-width: 500px;
-        font-size: 0.82rem;
-      }
-      .tta-results th:not(:first-child),
-      .tta-results td {
-        text-align: right;
-      }
-      .tta-results caption {
-        font-size: 0.75rem;
-      }
-      .tta-results .tta-score-count {
-        display: block;
-        margin-top: 0.2rem;
         font-size: 0.7rem;
         color: var(--global-text-color-light);
-        white-space: nowrap;
       }
-      .tta-inspection,
-      .tta-history {
-        margin-top: 3rem;
-        padding-top: 2.2rem;
-        border-top: 1px solid var(--global-divider-color);
+      .tta-parameter-count strong {
+        font-weight: 500;
+        color: var(--global-text-color);
       }
       .tta-section-heading {
         display: flex;
-        justify-content: space-between;
         align-items: flex-end;
-        gap: 1.2rem;
-        margin-bottom: 1rem;
-      }
-      .tta-section-heading .editorial-eyebrow {
-        margin-bottom: 0.5rem;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 0.7rem 0 1rem;
       }
       .tta-section-heading > label {
-        width: 180px;
-        flex-shrink: 0;
+        width: 170px;
       }
-      .tta-section-heading > label select {
-        margin-top: 0.4rem;
+      .tta-section-heading label {
+        display: grid;
+        gap: 0.4rem;
       }
       .tta-inspection-controls {
         display: flex;
         align-items: flex-end;
-        gap: 0.75rem;
-      }
-      .tta-inspection-controls label {
-        display: grid;
-        gap: 0.4rem;
+        gap: 0.7rem;
       }
       .tta-inspection-controls select {
         min-width: 60px;
@@ -1245,45 +1511,42 @@
       .tta-feature-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 1.5rem;
+        gap: 1.2rem;
         margin: 1.3rem 0;
       }
       .tta-feature-grid figure {
         text-align: center;
       }
       .tta-feature-grid figcaption {
-        font-size: 0.84rem;
         color: var(--tta-method-color);
-        margin-bottom: 0.65rem;
+        font-size: 0.82rem;
+        margin-bottom: 0.6rem;
+        font-weight: 500;
       }
       .tta-feature-grid canvas {
         display: block;
         width: 100%;
         max-width: 176px;
         margin: auto;
+        border-radius: 5px;
       }
       .tta-detail-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1.5rem;
-        margin-top: 2rem;
+        gap: 1.4rem;
+        margin-top: 1.8rem;
       }
       .tta-detail {
         padding-top: 1rem;
         border-top: 2px solid var(--tta-method-color);
       }
-      .tta-detail h3 {
-        font-family: Georgia, serif;
-        font-weight: 400;
-        font-size: 1.22rem;
-      }
       .tta-detail > .lab-caption {
         min-height: 3.5rem;
-        margin: 0.55rem 0 1rem;
+        margin: 0.6rem 0 1rem;
       }
       .tta-detail > canvas:not(#tta-residual-map) {
-        width: 100%;
         display: block;
+        width: 100%;
       }
       #tta-residual-map {
         display: block;
@@ -1291,23 +1554,22 @@
         margin: 0 auto;
       }
       .tta-values {
-        font-size: 0.7rem;
-        line-height: 1.8;
+        font-size: 0.72rem;
         color: var(--global-text-color-light);
-        font-variant-numeric: tabular-nums;
         margin: 0.7rem 0;
+        font-variant-numeric: tabular-nums;
         overflow-wrap: anywhere;
       }
       .tta-curve-controls {
         display: flex;
         flex-direction: column;
         gap: 0.4rem;
-        margin: 0.65rem 0;
+        margin: 0.7rem 0;
       }
       .tta-curve-controls label {
         display: flex;
-        gap: 0.5rem;
         align-items: center;
+        gap: 0.5rem;
         font-size: 0.73rem;
       }
       .tta-curve-controls input {
@@ -1315,16 +1577,17 @@
       }
       .tta-legend {
         display: flex;
-        gap: 1.4rem;
-        font-size: 0.8rem;
-        margin: 0.7rem 0;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 0.8rem 0;
+        font-size: 0.78rem;
       }
       .tta-legend span {
         display: flex;
         align-items: center;
         gap: 0.4rem;
       }
-      .tta-legend span:before {
+      .tta-legend span::before {
         content: "";
         display: inline-block;
         width: 17px;
@@ -1334,22 +1597,38 @@
       #tta-history-plot {
         display: block;
         width: 100%;
-        margin-bottom: 0.8rem;
+      }
+      .tta-downloads {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 1.2rem;
+      }
+      .tta-scope-note {
+        font-size: 0.73rem;
+        color: var(--global-text-color-light);
+        margin: 1.5rem 0 0.7rem;
       }
       .tta-paper-links {
         display: flex;
         flex-wrap: wrap;
-        gap: 1rem;
-        margin: 2rem 0;
+        gap: 0.5rem 1.2rem;
+        margin: 0 0 1rem;
+        font-size: 0.75rem;
       }
       @media (max-width: 700px) {
-        .lab-controls.tta-controls {
-          grid-template-columns: 1fr 1fr;
-          gap: 0.7rem;
+        .tta-overview {
+          padding: 1.1rem;
         }
-        .tta-method-grid {
+        .tta-preset-bar {
+          gap: 0.4rem;
+        }
+        .tta-settings {
+          margin-left: 0;
+        }
+        .tta-method-grid,
+        .tta-feature-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 1.1rem;
         }
         .tta-detail-grid {
           grid-template-columns: 1fr;
@@ -1362,36 +1641,108 @@
           align-items: stretch;
         }
         .tta-inspection-controls {
-          justify-content: flex-start;
+          flex-wrap: wrap;
         }
-        .tta-feature-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 1rem;
+        .tta-disclosure .tta-disclosure-body {
+          padding: 0.7rem 1rem 1.2rem;
+        }
+        .lab-controls.tta-controls {
+          grid-template-columns: 1fr 1fr;
+          gap: 0.7rem;
+        }
+      }
+      @media (max-width: 520px) {
+        .tta-meta {
+          font-size: 0.68rem;
+          gap: 0.1rem;
+        }
+        .tta-presets {
+          width: 100%;
+          gap: 0.1rem;
+          justify-content: space-between;
+        }
+        .tta-presets button {
+          font-size: 0.71rem;
+          padding: 0.4rem 0.5rem;
+        }
+        .tta-settings summary {
+          min-height: 44px;
+        }
+        .tta-overview {
+          padding: 1rem 0.85rem;
         }
         .tta-input-strip {
           flex-wrap: wrap;
+          gap: 0.75rem;
         }
         .tta-input-strip img {
-          width: 100px;
-          height: 100px;
+          width: 64px;
+          height: 64px;
         }
         .tta-input-context {
+          flex: 1;
+          min-width: 135px;
           margin-left: 0;
         }
-        .lab-actions.tta-actions {
-          flex-wrap: wrap;
+        .tta-input-context > p:first-child {
+          font-size: 0.81rem;
+        }
+        .tta-playback {
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+          padding: 0.8rem 0;
         }
         .lab-actions.tta-actions output {
-          width: 100%;
-          margin: 0.3rem 0 0;
+          flex-basis: auto;
+          margin-left: auto;
+          font-size: 0.68rem;
         }
-        .tta-scrubber {
-          grid-template-columns: 1fr;
-          gap: 0.3rem;
+        .lab-actions.tta-actions button {
+          padding: 0.4rem 0.65rem;
+          font-size: 0.73rem;
         }
-        .tta-legend {
-          flex-wrap: wrap;
-          gap: 0.7rem 1rem;
+        .lab-results.tta-results {
+          font-size: 0.75rem;
+        }
+        .lab-results.tta-results table {
+          font-size: 0.72rem;
+        }
+        .lab-results.tta-results th,
+        .lab-results.tta-results td {
+          padding: 0.6rem 0.1rem;
+        }
+        .lab-results.tta-results thead th {
+          font-size: 0.75rem;
+        }
+        .lab-results.tta-results thead small,
+        .lab-results.tta-results th small {
+          font-size: 0.56rem;
+        }
+        .lab-results.tta-results tbody tr:first-child td {
+          font-size: clamp(1rem, 4.3vw, 1.25rem);
+        }
+        .lab-results.tta-results .tta-score-count {
+          font-size: 0.61rem;
+        }
+        .tta-result-notes #tta-reading {
+          font-size: 0.74rem;
+        }
+        .tta-disclosure > summary {
+          font-size: 0.85rem;
+          min-height: 56px;
+          gap: 0.5rem;
+        }
+        .tta-disclosure .tta-disclosure-note {
+          display: none;
+        }
+        .tta-scope-note {
+          font-size: 0.69rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tta-lab * {
+          scroll-behavior: auto;
+          transition: none;
         }
       }
       body {
@@ -1431,7 +1782,7 @@
         <header class="editorial-page-heading">
           <p class="editorial-eyebrow">Test-time adaptation</p>
           <h1>What changes at test time?</h1>
-          <p>The same images. Three different places to adapt.</p>
+          <p>One shared input. Three ways to adapt.</p>
         </header>
         <section
           id="tta-lab"
@@ -1441,304 +1792,328 @@
           data-trace-root="https://hyeongyu-kim.github.io/assets/lab/tta/"
           data-offline-shell="https://hyeongyu-kim.github.io/assets/lab/research-lab.html"
         >
-          <p class="editorial-small-note">
-            CIFAR-10-C · WRN-28-10 · Public AcTTA &amp; Buffer implementations.
-            <button id="tta-offline" type="button" class="tta-text-button" disabled>Save an offline copy ↗</button>
-          </p>
-          <p id="tta-status" class="lab-status" role="status">Loading the recorded experiments…</p>
-          <div class="tta-presets" aria-label="Experiment presets">
-            <span>Start with</span><button id="tta-preset-shift" type="button" class="quiet-button" disabled>Appearance shift</button
-            ><button id="tta-preset-small" type="button" class="quiet-button" disabled>Small batch</button
-            ><button id="tta-preset-return" type="button" class="quiet-button" disabled>Return to clean</button>
+          <div class="tta-meta">
+            <p>CIFAR-10-C · WRN-28-10</p>
+            <p id="tta-status" class="lab-status" role="status">Loading the recorded experiments…</p>
           </div>
-          <div class="lab-controls tta-controls">
-            <label
-              >Experiment<select id="tta-mode" disabled>
-                <option value="batch">One batch, repeated updates</option>
-                <option value="stream">A changing domain stream</option>
-              </select></label
-            >
-            <label
-              >Input<select id="tta-corruption" disabled>
-                <option value="gaussian_noise">Gaussian noise</option>
-                <option value="brightness">Brightness</option>
-                <option value="defocus_blur">Defocus blur</option>
-                <option value="jpeg_compression">JPEG compression</option>
-                <option value="clean">Clean images</option>
-              </select></label
-            >
-            <label
-              >Severity<select id="tta-severity" disabled>
-                <option>1</option>
-                <option selected>3</option>
-                <option>5</option>
-              </select></label
-            >
-            <label
-              >Batch size<select id="tta-batch" disabled>
-                <option>4</option>
-                <option>16</option>
-                <option selected>128</option>
-              </select></label
-            >
-          </div>
-          <label id="tta-policy-wrap" class="tta-reset-policy" hidden
-            ><input id="tta-policy" type="checkbox" disabled /> Reset before each incoming batch</label
-          >
-          <p id="tta-protocol-caption" class="lab-caption">
-            Same WRN checkpoint, inputs, and entropy objective. Method-specific learning rates follow the public configurations. Labels are used only
-            for evaluation.
-          </p>
-          <button id="tta-retry" type="button" class="quiet-button" hidden>Retry loading</button>
-          <div class="tta-input-strip">
-            <figure>
-              <img id="tta-original" width="128" height="128" alt="Original CIFAR-10 image" />
-              <figcaption>Original</figcaption>
-            </figure>
-            <figure>
-              <img id="tta-shifted" width="128" height="128" alt="Input shared by all four methods" />
-              <figcaption>Shared input</figcaption>
-            </figure>
-            <div class="tta-input-context">
-              <p id="tta-domain">Gaussian noise · severity 3</p>
-              <label
-                >Inspect<select id="tta-sample" disabled>
-                  <option value="0">Image 1</option>
-                  <option value="1">Image 2</option>
-                  <option value="2">Image 3</option>
-                  <option value="3">Image 4</option>
-                </select></label
-              >
-              <p id="tta-label" class="lab-caption">—</p>
-              <p class="lab-caption">Inspect four images. Scores use the full batch.</p>
+          <div class="tta-preset-bar">
+            <div class="tta-presets" aria-label="Experiment presets">
+              <button id="tta-preset-shift" type="button" class="quiet-button" aria-pressed="true" disabled>Appearance shift</button
+              ><button id="tta-preset-small" type="button" class="quiet-button" aria-pressed="false" disabled>Small batch</button
+              ><button id="tta-preset-return" type="button" class="quiet-button" aria-pressed="false" disabled>Return to clean</button>
             </div>
-          </div>
-          <div class="lab-actions tta-actions">
-            <button id="tta-step" type="button" disabled>Next update</button
-            ><button id="tta-play" type="button" class="quiet-button" disabled>Play</button
-            ><button id="tta-reset" type="button" class="quiet-button" disabled>Reset</button
-            ><output id="tta-position" aria-live="polite">Update 0 / 8</output>
-          </div>
-          <label class="tta-scrubber">Inspect a recorded step<input id="tta-scrub" type="range" min="0" max="8" value="0" disabled /></label>
-          <div class="tta-method-grid">
-            <section class="tta-method tta-source">
-              <p class="tta-kicker">Reference</p>
-              <h2>Source</h2>
-              <p class="tta-target">Stored BN statistics<br />All weights frozen</p>
-              <p id="tta-source-prediction" class="tta-prediction">—</p>
-              <p id="tta-source-confidence" class="lab-caption">—</p>
-              <div id="tta-source-bars" class="tta-probabilities"></div>
-              <p class="tta-parameter-count"><strong id="tta-source-count">0</strong> trainable parameters</p>
-            </section>
-            <section class="tta-method tta-tent">
-              <p class="tta-kicker">Normalization</p>
-              <h2>Tent</h2>
-              <p class="tta-target">BN scale γ &amp; shift β<br />Convolutions frozen</p>
-              <p id="tta-tent-prediction" class="tta-prediction">—</p>
-              <p id="tta-tent-confidence" class="lab-caption">—</p>
-              <div id="tta-tent-bars" class="tta-probabilities"></div>
-              <p class="tta-parameter-count"><strong id="tta-tent-count">—</strong> trainable parameters</p>
-            </section>
-            <section class="tta-method tta-buffer">
-              <p class="tta-kicker">Residual correction</p>
-              <h2>Buffer</h2>
-              <p class="tta-target">Added 1×1 &amp; 3×3 branch<br />Backbone weights frozen</p>
-              <p id="tta-buffer-prediction" class="tta-prediction">—</p>
-              <p id="tta-buffer-confidence" class="lab-caption">—</p>
-              <div id="tta-buffer-bars" class="tta-probabilities"></div>
-              <p class="tta-parameter-count"><strong id="tta-buffer-count">—</strong> trainable parameters</p>
-            </section>
-            <section class="tta-method tta-actta">
-              <p class="tta-kicker">Activation response</p>
-              <h2>AcTTA</h2>
-              <p class="tta-target">Center c &amp; slopes λ+, λ−<br />Backbone weights frozen</p>
-              <p id="tta-actta-prediction" class="tta-prediction">—</p>
-              <p id="tta-actta-confidence" class="lab-caption">—</p>
-              <div id="tta-actta-bars" class="tta-probabilities"></div>
-              <p class="tta-parameter-count"><strong id="tta-actta-count">—</strong> trainable parameters</p>
-            </section>
-          </div>
-          <p class="lab-caption tta-bn-note">
-            All three adaptive methods use current-batch BN statistics from update 0. Differences from Source at that point are not learned updates.
-          </p>
-          <div class="lab-results tta-results">
-            <table>
-              <caption id="tta-table-caption">
-                Current batch after the selected updates
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">Metric</th>
-                  <th scope="col">Source</th>
-                  <th scope="col">Tent</th>
-                  <th scope="col">Buffer</th>
-                  <th scope="col">AcTTA</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Accuracy ↑</th>
-                  <td id="tta-source-accuracy">—</td>
-                  <td id="tta-tent-accuracy">—</td>
-                  <td id="tta-buffer-accuracy">—</td>
-                  <td id="tta-actta-accuracy">—</td>
-                </tr>
-                <tr>
-                  <th scope="row">ECE ↓</th>
-                  <td id="tta-source-ece">—</td>
-                  <td id="tta-tent-ece">—</td>
-                  <td id="tta-buffer-ece">—</td>
-                  <td id="tta-actta-ece">—</td>
-                </tr>
-                <tr>
-                  <th scope="row">Entropy ↓</th>
-                  <td id="tta-source-entropy">—</td>
-                  <td id="tta-tent-entropy">—</td>
-                  <td id="tta-buffer-entropy">—</td>
-                  <td id="tta-actta-entropy">—</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p id="tta-sample-resolution" class="lab-caption"></p>
-          <section class="tta-inspection" aria-labelledby="tta-inspection-title">
-            <div class="tta-section-heading">
-              <div>
-                <p class="editorial-eyebrow">Inside the model</p>
-                <h2 id="tta-inspection-title">Follow the change, channel by channel</h2>
-              </div>
-              <div class="tta-inspection-controls">
-                <label
-                  >Layer<select id="tta-layer" disabled>
-                    <option value="stem">Stage 1 · first block, ReLU 1</option>
-                    <option value="early">Stage 1 · second block, ReLU 1</option>
-                  </select></label
-                ><label>Channel<select id="tta-channel" disabled></select></label>
-              </div>
-            </div>
-            <p class="lab-caption">
-              The same image and activation site, pooled to 8×8. Inspect channels 0–15; the second site has 160 channels. All methods use the same
-              signed color scale.
-            </p>
-            <div class="tta-feature-grid">
-              <figure class="tta-source">
-                <figcaption>Source</figcaption>
-                <canvas id="tta-source-map" width="176" height="176" role="img" aria-label="Source activation map"></canvas>
-              </figure>
-              <figure class="tta-tent">
-                <figcaption>Tent</figcaption>
-                <canvas id="tta-tent-map" width="176" height="176" role="img" aria-label="Tent activation map"></canvas>
-              </figure>
-              <figure class="tta-buffer">
-                <figcaption>Buffer</figcaption>
-                <canvas id="tta-buffer-map" width="176" height="176" role="img" aria-label="Buffer activation map"></canvas>
-              </figure>
-              <figure class="tta-actta">
-                <figcaption>AcTTA</figcaption>
-                <canvas id="tta-actta-map" width="176" height="176" role="img" aria-label="AcTTA activation map"></canvas>
-              </figure>
-            </div>
-            <p id="tta-map-scale" class="lab-caption"></p>
-            <div class="tta-detail-grid">
-              <section class="tta-detail tta-tent">
-                <h3>What Tent changes</h3>
-                <p class="lab-caption">BN scale and shift relative to Source. The selected channel is marked.</p>
-                <canvas id="tta-affine-plot" width="480" height="280" role="img" aria-label="Changes to BN gamma and beta"></canvas>
-                <p id="tta-affine-values" class="tta-values"></p>
-              </section>
-              <section class="tta-detail tta-buffer">
-                <h3>What Buffer adds</h3>
-                <p class="lab-caption">The learned branch's signed correction before it is added to the frozen path.</p>
-                <canvas id="tta-residual-map" width="176" height="176" role="img" aria-label="Buffer residual correction map"></canvas>
-                <p id="tta-residual-scale" class="lab-caption"></p>
-                <p id="tta-buffer-values" class="tta-values"></p>
-              </section>
-              <section class="tta-detail tta-actta">
-                <h3>How AcTTA responds</h3>
-                <p class="lab-caption">The channel's activation response. Dashed gray is the original ReLU.</p>
-                <canvas id="tta-activation-plot" width="480" height="280" role="img" aria-label="AcTTA activation compared with ReLU"></canvas>
-                <div class="tta-curve-controls">
-                  <label><input id="tta-slope" type="checkbox" disabled /> Show local slope</label
-                  ><label><input id="tta-difference" type="checkbox" disabled /> Show change from ReLU</label>
+            <details id="tta-settings" class="tta-settings">
+              <summary>Customize experiment</summary>
+              <div class="tta-settings-body">
+                <div class="lab-controls tta-controls">
+                  <label
+                    >Experiment<select id="tta-mode" disabled>
+                      <option value="batch">One batch, repeated updates</option>
+                      <option value="stream">A changing domain stream</option>
+                    </select></label
+                  >
+                  <label
+                    >Input<select id="tta-corruption" disabled>
+                      <option value="gaussian_noise">Gaussian noise</option>
+                      <option value="brightness">Brightness</option>
+                      <option value="defocus_blur">Defocus blur</option>
+                      <option value="jpeg_compression">JPEG compression</option>
+                      <option value="clean">Clean images</option>
+                    </select></label
+                  >
+                  <label
+                    >Severity<select id="tta-severity" disabled>
+                      <option>1</option>
+                      <option selected>3</option>
+                      <option>5</option>
+                    </select></label
+                  >
+                  <label
+                    >Batch size<select id="tta-batch" disabled>
+                      <option>4</option>
+                      <option>16</option>
+                      <option selected>128</option>
+                    </select></label
+                  >
                 </div>
-                <p id="tta-actta-values" class="tta-values"></p>
-              </section>
-            </div>
-          </section>
-          <section class="tta-history" aria-labelledby="tta-history-title">
-            <div class="tta-section-heading">
-              <div>
-                <p class="editorial-eyebrow">Across updates</p>
-                <h2 id="tta-history-title">Confidence is only part of the story</h2>
+                <label id="tta-policy-wrap" class="tta-reset-policy" hidden
+                  ><input id="tta-policy" type="checkbox" disabled /> Reset before each incoming batch</label
+                >
               </div>
-              <label
-                >Metric<select id="tta-metric" disabled>
-                  <option value="accuracy">Accuracy ↑</option>
-                  <option value="ece">Calibration error ↓</option>
-                  <option value="entropy">Prediction entropy ↓</option>
-                </select></label
-              >
+            </details>
+          </div>
+          <button id="tta-retry" type="button" class="quiet-button" hidden>Retry loading</button>
+          <div class="tta-overview">
+            <div class="tta-input-strip">
+              <figure>
+                <img id="tta-original" width="128" height="128" alt="Original CIFAR-10 image" />
+                <figcaption>Original</figcaption>
+              </figure>
+              <figure>
+                <img id="tta-shifted" width="128" height="128" alt="Input shared by all four methods" />
+                <figcaption>Shared input</figcaption>
+              </figure>
+              <div class="tta-input-context">
+                <p id="tta-domain">Gaussian noise · severity 3</p>
+                <label
+                  >Inspect<select id="tta-sample" disabled>
+                    <option value="0">Image 1</option>
+                    <option value="1">Image 2</option>
+                    <option value="2">Image 3</option>
+                    <option value="3">Image 4</option>
+                  </select></label
+                >
+                <p id="tta-label" class="lab-caption">—</p>
+              </div>
             </div>
-            <p id="tta-history-caption" class="lab-caption">The full batch, evaluated after each update.</p>
-            <div class="tta-legend">
-              <span class="tta-source">Source</span><span class="tta-tent">Tent</span><span class="tta-buffer">Buffer</span
-              ><span class="tta-actta">AcTTA</span>
+            <div class="tta-playback">
+              <div class="lab-actions tta-actions">
+                <button id="tta-step" type="button" disabled>Next update</button
+                ><button id="tta-play" type="button" class="quiet-button" disabled>Play</button
+                ><button id="tta-reset" type="button" class="quiet-button" disabled>Reset</button
+                ><output id="tta-position" aria-live="polite">Update 0 / 8</output>
+              </div>
+              <label class="tta-scrubber"><span>Recorded step</span><input id="tta-scrub" type="range" min="0" max="8" value="0" disabled /></label>
             </div>
-            <canvas id="tta-history-plot" width="1080" height="350" role="img" aria-label="Metric history for all four methods"></canvas>
-            <p id="tta-reading" class="lab-caption"></p>
-            <button id="tta-export" type="button" class="quiet-button" disabled>Download this experiment (CSV)</button>
-          </section>
-          <details class="lab-method">
-            <summary>Protocol, measurements, and reproducibility</summary>
-            <p>
-              45 recorded PyTorch experiments share the RobustBench Standard CIFAR-10 WRN-28-10 checkpoint, fixed image indices, and mean prediction
-              entropy. Adam: β=(0.9, 0.999), ε=10⁻⁸, no weight decay. Seed: 1. At batch 16/128, learning rates are 0.001 for Tent/Buffer and 0.01 for
-              AcTTA. At batch 4, they are 0.0001 for Tent, 0.001 for Buffer, and 0.001 for AcTTA. Batch 16 uses the public batch-128 learning rates as
-              an explicit demo override. Inputs are unnormalized [0,1] RGB from the first 512 original test images. All outcomes are retained. Labels
-              never enter the update.
-            </p>
-            <p>
-              Tent updates every BN affine parameter. Buffer uses its public WRN model: a branch after the initial convolution plus independent
-              branches after both ReLUs in each block of stages one and two. α starts at 10⁻⁵; trainable mixing coefficients start at 0.5. AcTTA uses
-              the released activation and entropy adapter, replacing the eight independent ReLUs in stage one with channel-wise c, λ+, λ− and fixed
-              β=1. It freezes BN affine parameters. No activation sites share adaptation parameters. All ineligible backbone weights are checked for
-              bitwise equality after every update.
-            </p>
-            <p>
-              The one-batch experiment records 0–8 repeated updates to the same unlabeled batch. The stream has four batches per phase: clean →
-              Gaussian noise (severity 3) → defocus blur (severity 5) → clean. The final clean phase reuses the original indices. Each incoming batch
-              gets one update. Predictions, internal states, and the table show the current batch <strong>after</strong> its update. Stream history
-              shows predictions <strong>before</strong> that batch's update. Reset restores both the parameters and optimizer.
-            </p>
-            <p>
-              Accuracy, entropy (nats), and ECE (ten equal-width confidence bins) use every image in the batch. Feature maps inspect channels 0–15 at
-              block1.layer.0.relu1 (16 channels) and block1.layer.1.relu1 (160 channels), pool them to 8×8, and quantize them for display with a
-              shared signed scale across methods and steps. Buffer maps include the correction at the matching site. Buffer's smaller residual has its
-              own scale. Probabilities and parameters keep decimal precision.
-            </p>
-            <p>
-              Public model, activation, placement, and optimizer configurations are used here. These fixed-order subsets and repeated updates remain a
-              mechanism demonstration, rather than a reproduction of the full shuffled paper benchmarks or a ranking of methods. Repeated-batch
-              results concern the adapted inputs, not unseen-data generalization. Entropy can fall while accuracy gets worse; small batches make
-              accuracy and calibration estimates noisy.
-            </p>
-            <p>
-              Code: <a href="https://github.com/hyeongyu-kim/actta">AcTTA release</a> ·
-              <a href="https://github.com/hyeongyu-kim/Buffer_TTA">Buffer release</a>. Model and checkpoint:
-              <a href="https://github.com/RobustBench/robustbench">RobustBench</a> (MIT).
-              <a href="https://github.com/hyeongyu-kim/actta/blob/main/docs/RESULTS.md">AcTTA full-benchmark results ↗</a>. Images:
-              <a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10, Alex Krizhevsky</a>. Corruptions:
-              <a href="https://zenodo.org/records/2535967">CIFAR-10-C, Dan Hendrycks and Thomas Dietterich</a>.
-              <a href="https://github.com/hyeongyu-kim/hyeongyu-kim.github.io/blob/main/_scripts/README_tta.md">Reproduction instructions ↗</a> ·
-              <a href="https://hyeongyu-kim.github.io/assets/lab/tta-manifest.json">Run manifest ↗</a>
-            </p>
-          </details>
+            <div class="lab-results tta-results">
+              <table>
+                <caption id="tta-table-caption">
+                  Current batch after the selected updates
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Metric</th>
+                    <th scope="col" class="tta-source"><span>Source</span><small>Stored BN</small></th>
+                    <th scope="col" class="tta-tent"><span>Tent</span><small>BN affine</small></th>
+                    <th scope="col" class="tta-buffer"><span>Buffer</span><small>Residual branch</small></th>
+                    <th scope="col" class="tta-actta"><span>AcTTA</span><small>Activation</small></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Accuracy ↑<small>correct / images</small></th>
+                    <td id="tta-source-accuracy">—</td>
+                    <td id="tta-tent-accuracy">—</td>
+                    <td id="tta-buffer-accuracy">—</td>
+                    <td id="tta-actta-accuracy">—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">ECE ↓</th>
+                    <td id="tta-source-ece">—</td>
+                    <td id="tta-tent-ece">—</td>
+                    <td id="tta-buffer-ece">—</td>
+                    <td id="tta-actta-ece">—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Entropy ↓</th>
+                    <td id="tta-source-entropy">—</td>
+                    <td id="tta-tent-entropy">—</td>
+                    <td id="tta-buffer-entropy">—</td>
+                    <td id="tta-actta-entropy">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tta-result-notes">
+              <p id="tta-reading" class="lab-caption"></p>
+              <p id="tta-sample-resolution" class="lab-caption"></p>
+              <p class="lab-caption tta-bn-note">At step 0, adaptive methods already use target-batch BN. Source uses stored statistics.</p>
+            </div>
+          </div>
+          <div class="tta-explore">
+            <details id="tta-predictions" class="tta-disclosure">
+              <summary><span>Image predictions</span><span class="tta-disclosure-note">One input, four outputs</span></summary>
+              <div class="tta-disclosure-body">
+                <div class="tta-method-grid">
+                  <section class="tta-method tta-source">
+                    <p class="tta-kicker">Reference</p>
+                    <h2>Source</h2>
+                    <p class="tta-target">Stored BN statistics<br />All weights frozen</p>
+                    <p id="tta-source-prediction" class="tta-prediction">—</p>
+                    <p id="tta-source-confidence" class="lab-caption">—</p>
+                    <div id="tta-source-bars" class="tta-probabilities"></div>
+                    <p class="tta-parameter-count"><strong id="tta-source-count">0</strong> trainable parameters</p>
+                  </section>
+                  <section class="tta-method tta-tent">
+                    <p class="tta-kicker">Normalization</p>
+                    <h2>Tent</h2>
+                    <p class="tta-target">BN scale γ &amp; shift β<br />Convolutions frozen</p>
+                    <p id="tta-tent-prediction" class="tta-prediction">—</p>
+                    <p id="tta-tent-confidence" class="lab-caption">—</p>
+                    <div id="tta-tent-bars" class="tta-probabilities"></div>
+                    <p class="tta-parameter-count"><strong id="tta-tent-count">—</strong> trainable parameters</p>
+                  </section>
+                  <section class="tta-method tta-buffer">
+                    <p class="tta-kicker">Residual correction</p>
+                    <h2>Buffer</h2>
+                    <p class="tta-target">Added 1×1 &amp; 3×3 branch<br />Backbone weights frozen</p>
+                    <p id="tta-buffer-prediction" class="tta-prediction">—</p>
+                    <p id="tta-buffer-confidence" class="lab-caption">—</p>
+                    <div id="tta-buffer-bars" class="tta-probabilities"></div>
+                    <p class="tta-parameter-count"><strong id="tta-buffer-count">—</strong> trainable parameters</p>
+                  </section>
+                  <section class="tta-method tta-actta">
+                    <p class="tta-kicker">Activation response</p>
+                    <h2>AcTTA</h2>
+                    <p class="tta-target">Center c &amp; slopes λ+, λ−<br />Backbone weights frozen</p>
+                    <p id="tta-actta-prediction" class="tta-prediction">—</p>
+                    <p id="tta-actta-confidence" class="lab-caption">—</p>
+                    <div id="tta-actta-bars" class="tta-probabilities"></div>
+                    <p class="tta-parameter-count"><strong id="tta-actta-count">—</strong> trainable parameters</p>
+                  </section>
+                </div>
+              </div>
+            </details>
+            <details id="tta-internals" class="tta-disclosure">
+              <summary><span>Inside the model</span><span class="tta-disclosure-note">See what each method changes</span></summary>
+              <div class="tta-disclosure-body">
+                <section class="tta-inspection" aria-labelledby="tta-inspection-title">
+                  <div class="tta-section-heading">
+                    <div><h2 id="tta-inspection-title">Activation maps</h2></div>
+                    <div class="tta-inspection-controls">
+                      <label
+                        >Layer<select id="tta-layer" disabled>
+                          <option value="stem">Stage 1 · first block, ReLU 1</option>
+                          <option value="early">Stage 1 · second block, ReLU 1</option>
+                        </select></label
+                      ><label>Channel<select id="tta-channel" disabled></select></label>
+                    </div>
+                  </div>
+                  <p class="lab-caption">
+                    The same image and activation site, pooled to 8×8. Inspect channels 0–15; the second site has 160 channels. All methods use the
+                    same signed color scale.
+                  </p>
+                  <div class="tta-feature-grid">
+                    <figure class="tta-source">
+                      <figcaption>Source</figcaption>
+                      <canvas id="tta-source-map" width="176" height="176" role="img" aria-label="Source activation map"></canvas>
+                    </figure>
+                    <figure class="tta-tent">
+                      <figcaption>Tent</figcaption>
+                      <canvas id="tta-tent-map" width="176" height="176" role="img" aria-label="Tent activation map"></canvas>
+                    </figure>
+                    <figure class="tta-buffer">
+                      <figcaption>Buffer</figcaption>
+                      <canvas id="tta-buffer-map" width="176" height="176" role="img" aria-label="Buffer activation map"></canvas>
+                    </figure>
+                    <figure class="tta-actta">
+                      <figcaption>AcTTA</figcaption>
+                      <canvas id="tta-actta-map" width="176" height="176" role="img" aria-label="AcTTA activation map"></canvas>
+                    </figure>
+                  </div>
+                  <p id="tta-map-scale" class="lab-caption"></p>
+                  <div class="tta-detail-grid">
+                    <section class="tta-detail tta-tent">
+                      <h3>What Tent changes</h3>
+                      <p class="lab-caption">BN scale and shift relative to Source. The selected channel is marked.</p>
+                      <canvas id="tta-affine-plot" width="480" height="280" role="img" aria-label="Changes to BN gamma and beta"></canvas>
+                      <p id="tta-affine-values" class="tta-values"></p>
+                    </section>
+                    <section class="tta-detail tta-buffer">
+                      <h3>What Buffer adds</h3>
+                      <p class="lab-caption">The learned branch's signed correction before it is added to the frozen path.</p>
+                      <canvas id="tta-residual-map" width="176" height="176" role="img" aria-label="Buffer residual correction map"></canvas>
+                      <p id="tta-residual-scale" class="lab-caption"></p>
+                      <p id="tta-buffer-values" class="tta-values"></p>
+                    </section>
+                    <section class="tta-detail tta-actta">
+                      <h3>How AcTTA responds</h3>
+                      <p class="lab-caption">The channel's activation response. Dashed gray is the original ReLU.</p>
+                      <canvas id="tta-activation-plot" width="480" height="280" role="img" aria-label="AcTTA activation compared with ReLU"></canvas>
+                      <div class="tta-curve-controls">
+                        <label><input id="tta-slope" type="checkbox" disabled /> Show local slope</label
+                        ><label><input id="tta-difference" type="checkbox" disabled /> Show change from ReLU</label>
+                      </div>
+                      <p id="tta-actta-values" class="tta-values"></p>
+                    </section>
+                  </div>
+                </section>
+              </div>
+            </details>
+            <details id="tta-history" class="tta-disclosure">
+              <summary><span>Across updates</span><span class="tta-disclosure-note">Accuracy, calibration &amp; entropy</span></summary>
+              <div class="tta-disclosure-body">
+                <section class="tta-history" aria-labelledby="tta-history-title">
+                  <div class="tta-section-heading">
+                    <div><h2 id="tta-history-title">Update history</h2></div>
+                    <label
+                      >Metric<select id="tta-metric" disabled>
+                        <option value="accuracy">Accuracy ↑</option>
+                        <option value="ece">Calibration error ↓</option>
+                        <option value="entropy">Prediction entropy ↓</option>
+                      </select></label
+                    >
+                  </div>
+                  <p id="tta-history-caption" class="lab-caption">The full batch, evaluated after each update.</p>
+                  <div class="tta-legend">
+                    <span class="tta-source">Source</span><span class="tta-tent">Tent</span><span class="tta-buffer">Buffer</span
+                    ><span class="tta-actta">AcTTA</span>
+                  </div>
+                  <canvas id="tta-history-plot" width="1080" height="350" role="img" aria-label="Metric history for all four methods"></canvas>
+                </section>
+              </div>
+            </details>
+            <details id="tta-protocol" class="tta-disclosure lab-method">
+              <summary><span>Protocol &amp; sources</span><span class="tta-disclosure-note">How this was measured</span></summary>
+              <div class="tta-disclosure-body">
+                <p id="tta-protocol-caption" class="lab-caption">Same checkpoint and entropy objective. Labels are used only for evaluation.</p>
+                <p>
+                  45 recorded PyTorch experiments share the RobustBench Standard CIFAR-10 WRN-28-10 checkpoint, fixed image indices, and mean
+                  prediction entropy. Adam: β=(0.9, 0.999), ε=10⁻⁸, no weight decay. Seed: 1. At batch 16/128, learning rates are 0.001 for
+                  Tent/Buffer and 0.01 for AcTTA. At batch 4, they are 0.0001 for Tent, 0.001 for Buffer, and 0.001 for AcTTA. Batch 16 uses the
+                  public batch-128 learning rates as an explicit demo override. Inputs are unnormalized [0,1] RGB from the first 512 original test
+                  images. All outcomes are retained. Labels never enter the update.
+                </p>
+                <p>
+                  Tent updates every BN affine parameter. Buffer uses its public WRN model: a branch after the initial convolution plus independent
+                  branches after both ReLUs in each block of stages one and two. α starts at 10⁻⁵; trainable mixing coefficients start at 0.5. AcTTA
+                  uses the released activation and entropy adapter, replacing the eight independent ReLUs in stage one with channel-wise c, λ+, λ− and
+                  fixed β=1. It freezes BN affine parameters. No activation sites share adaptation parameters. All ineligible backbone weights are
+                  checked for bitwise equality after every update.
+                </p>
+                <p>
+                  The one-batch experiment records 0–8 repeated updates to the same unlabeled batch. The stream has four batches per phase: clean →
+                  Gaussian noise (severity 3) → defocus blur (severity 5) → clean. The final clean phase reuses the original indices. Each incoming
+                  batch gets one update. Predictions, internal states, and the table show the current batch <strong>after</strong> its update. Stream
+                  history shows predictions <strong>before</strong> that batch's update. Reset restores both the parameters and optimizer.
+                </p>
+                <p>
+                  Accuracy, entropy (nats), and ECE (ten equal-width confidence bins) use every image in the batch. Feature maps inspect channels 0–15
+                  at block1.layer.0.relu1 (16 channels) and block1.layer.1.relu1 (160 channels), pool them to 8×8, and quantize them for display with
+                  a shared signed scale across methods and steps. Buffer maps include the correction at the matching site. Buffer's smaller residual
+                  has its own scale. Probabilities and parameters keep decimal precision.
+                </p>
+                <p>
+                  Public model, activation, placement, and optimizer configurations are used here. These fixed-order subsets and repeated updates
+                  remain a mechanism demonstration, rather than a reproduction of the full shuffled paper benchmarks or a ranking of methods.
+                  Repeated-batch results concern the adapted inputs, not unseen-data generalization. Entropy can fall while accuracy gets worse; small
+                  batches make accuracy and calibration estimates noisy.
+                </p>
+                <p>
+                  Code: <a href="https://github.com/hyeongyu-kim/actta">AcTTA release</a> ·
+                  <a href="https://github.com/hyeongyu-kim/Buffer_TTA">Buffer release</a>. Model and checkpoint:
+                  <a href="https://github.com/RobustBench/robustbench">RobustBench</a> (MIT).
+                  <a href="https://github.com/hyeongyu-kim/actta/blob/main/docs/RESULTS.md">AcTTA full-benchmark results ↗</a>. Images:
+                  <a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10, Alex Krizhevsky</a>. Corruptions:
+                  <a href="https://zenodo.org/records/2535967">CIFAR-10-C, Dan Hendrycks and Thomas Dietterich</a>.
+                  <a href="https://github.com/hyeongyu-kim/hyeongyu-kim.github.io/blob/main/_scripts/README_tta.md">Reproduction instructions ↗</a> ·
+                  <a href="https://hyeongyu-kim.github.io/assets/lab/tta-manifest.json">Run manifest ↗</a>
+                </p>
+
+                <div class="tta-downloads">
+                  <button id="tta-export" type="button" class="quiet-button" disabled>Download this experiment (CSV)</button
+                  ><button id="tta-offline" type="button" class="quiet-button" disabled>Save an offline copy ↗</button>
+                </div>
+              </div>
+            </details>
+          </div>
+          <p class="tta-scope-note">Scores describe these inputs. Repeated updates are a mechanism demonstration.</p>
           <p class="editorial-small-note tta-paper-links">
             <a href="https://openreview.net/forum?id=uXl3bZLkr3c">Tent · ICLR 2021 ↗</a
             ><a href="https://arxiv.org/abs/2510.21271">Buffer · NeurIPS 2025 ↗</a><a href="https://arxiv.org/abs/2603.26096">AcTTA · CVPR 2026 ↗</a
             ><a href="https://hyeongyu-kim.github.io/notes/test-time-adaptation/">Adaptation note ↗</a>
           </p>
-          <noscript><p>The comparison needs JavaScript. Reproduction code and measurements are available above.</p></noscript>
+          <noscript><p>The comparison needs JavaScript. Reproduction code and measurements are available in Protocol &amp; sources.</p></noscript>
         </section>
       </main>
     </div>
@@ -2130,21 +2505,18 @@
               if (metric === "accuracy") {
                 const count = document.createElement("small");
                 count.className = "tta-score-count";
-                count.textContent = Math.round(state.metrics.accuracy * trace.batch) + " / " + trace.batch + " correct";
+                count.textContent = Math.round(state.metrics.accuracy * trace.batch) + " / " + trace.batch;
                 cell.append(count);
               }
             }
           });
-          get("sample-resolution").textContent =
-            "One image changes accuracy by " + (100 / trace.batch).toFixed(2) + " percentage points. These scores describe this batch.";
+          get("sample-resolution").textContent = trace.batch + " images · One image = " + (100 / trace.batch).toFixed(2) + " percentage points.";
           const baseline = stream ? f.online : trace.frames[0].methods;
-          const changes = methods
-            .slice(1)
-            .map((m) => names[m] + " " + signed((f.methods[m].metrics.accuracy - baseline[m].metrics.accuracy) * 100) + " pp");
-          get("reading").textContent =
-            (stream ? "Accuracy change from this batch's one update: " : "Accuracy change from update 0 (with batch BN already active): ") +
-            changes.join(" · ") +
-            ". Lower entropy alone does not establish a better prediction.";
+          const changes = methods.slice(1).map((m) => {
+            const delta = (f.methods[m].metrics.accuracy - baseline[m].metrics.accuracy) * 100;
+            return names[m] + " " + (delta < 0 ? "−" : "+") + Math.abs(delta).toFixed(1) + " pp";
+          });
+          get("reading").textContent = (stream ? "This batch's update: " : "Learned change from step 0: ") + changes.join(" · ") + ".";
           drawInternals();
           drawHistory();
         }
@@ -2165,6 +2537,12 @@
           const id = stream
             ? "stream-" + b + "-" + (get("policy").checked ? "reset" : "continual")
             : "batch-" + b + "-" + domain + "-" + (domain === "clean" ? 0 : get("severity").value);
+          for (const [preset, selected] of [
+            ["shift", id === "batch-128-gaussian_noise-3"],
+            ["small", id === "batch-4-gaussian_noise-3"],
+            ["return", id === "stream-128-continual"],
+          ])
+            get("preset-" + preset).setAttribute("aria-pressed", String(selected));
           get("status").textContent = "Loading this recorded experiment…";
           get("retry").hidden = true;
           try {
@@ -2185,7 +2563,7 @@
             position = Math.min(start, trace.frames.length - 1);
             enableFrame(true);
             render();
-            get("status").textContent = "Measured updates · " + manifest.conditions + " conditions · " + manifest.frames + " recorded states";
+            get("status").textContent = manifest.conditions + " experiments · " + manifest.frames + " measured states";
           } catch (error) {
             if (token === request) {
               get("status").textContent = error.message;

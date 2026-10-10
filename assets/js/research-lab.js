@@ -331,21 +331,18 @@ async function initializeTta() {
         if (metric === "accuracy") {
           const count = document.createElement("small");
           count.className = "tta-score-count";
-          count.textContent = Math.round(state.metrics.accuracy * trace.batch) + " / " + trace.batch + " correct";
+          count.textContent = Math.round(state.metrics.accuracy * trace.batch) + " / " + trace.batch;
           cell.append(count);
         }
       }
     });
-    get("sample-resolution").textContent =
-      "One image changes accuracy by " + (100 / trace.batch).toFixed(2) + " percentage points. These scores describe this batch.";
+    get("sample-resolution").textContent = trace.batch + " images · One image = " + (100 / trace.batch).toFixed(2) + " percentage points.";
     const baseline = stream ? f.online : trace.frames[0].methods;
-    const changes = methods
-      .slice(1)
-      .map((m) => names[m] + " " + signed((f.methods[m].metrics.accuracy - baseline[m].metrics.accuracy) * 100) + " pp");
-    get("reading").textContent =
-      (stream ? "Accuracy change from this batch's one update: " : "Accuracy change from update 0 (with batch BN already active): ") +
-      changes.join(" · ") +
-      ". Lower entropy alone does not establish a better prediction.";
+    const changes = methods.slice(1).map((m) => {
+      const delta = (f.methods[m].metrics.accuracy - baseline[m].metrics.accuracy) * 100;
+      return names[m] + " " + (delta < 0 ? "−" : "+") + Math.abs(delta).toFixed(1) + " pp";
+    });
+    get("reading").textContent = (stream ? "This batch's update: " : "Learned change from step 0: ") + changes.join(" · ") + ".";
     drawInternals();
     drawHistory();
   }
@@ -366,6 +363,12 @@ async function initializeTta() {
     const id = stream
       ? "stream-" + b + "-" + (get("policy").checked ? "reset" : "continual")
       : "batch-" + b + "-" + domain + "-" + (domain === "clean" ? 0 : get("severity").value);
+    for (const [preset, selected] of [
+      ["shift", id === "batch-128-gaussian_noise-3"],
+      ["small", id === "batch-4-gaussian_noise-3"],
+      ["return", id === "stream-128-continual"],
+    ])
+      get("preset-" + preset).setAttribute("aria-pressed", String(selected));
     get("status").textContent = "Loading this recorded experiment…";
     get("retry").hidden = true;
     try {
@@ -386,7 +389,7 @@ async function initializeTta() {
       position = Math.min(start, trace.frames.length - 1);
       enableFrame(true);
       render();
-      get("status").textContent = "Measured updates · " + manifest.conditions + " conditions · " + manifest.frames + " recorded states";
+      get("status").textContent = manifest.conditions + " experiments · " + manifest.frames + " measured states";
     } catch (error) {
       if (token === request) {
         get("status").textContent = error.message;

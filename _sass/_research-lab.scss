@@ -492,42 +492,126 @@
   }
 }
 
+// The comparison stays visible; deeper inspection is disclosed on demand.
+html:has(.tta-lab) {
+  --global-bg-color: #f7f9fc;
+  --global-text-color: #223247;
+  --global-text-color-light: #617084;
+  --global-divider-color: #dce3ed;
+  --global-theme-color: #244e80;
+  --global-hover-color: #153961;
+  --editorial-title-color: #182e4b;
+}
+html[data-theme="dark"]:has(.tta-lab) {
+  --global-bg-color: #111b29;
+  --global-text-color: #e7edf7;
+  --global-text-color-light: #a7b6ca;
+  --global-divider-color: #334359;
+  --global-theme-color: #a8caff;
+  --global-hover-color: #d5e5ff;
+  --editorial-title-color: #edf4ff;
+}
+.editorial-content:has(> .tta-lab) {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  .editorial-page-heading {
+    margin-bottom: 1.6rem;
+    h1 {
+      font-family: inherit;
+      font-size: clamp(2rem, 4.5vw, 2.85rem);
+      font-weight: 650;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin: 0.5rem 0 0.8rem;
+    }
+    .editorial-eyebrow {
+      color: var(--global-theme-color);
+      font-weight: 600;
+      font-size: 0.74rem;
+      letter-spacing: 0.07em;
+    }
+    > p:not(.editorial-eyebrow) {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+  }
+  h2,
+  h3 {
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--global-text-color);
+  }
+}
 .tta-lab {
-  --tta-source: #757a76;
-  --tta-tent: #b38238;
-  --tta-buffer: #806593;
-  --tta-actta: #358270;
+  --tta-surface: #fff;
+  --tta-soft: #f1f5fa;
+  --tta-source: #677589;
+  --tta-tent: #3865ad;
+  --tta-buffer: #795ca8;
+  --tta-actta: #167d80;
+  color: var(--global-text-color);
   button,
   select,
   input {
     font: inherit;
   }
-  select {
-    padding: 0.4rem 0.5rem;
-    color: var(--global-text-color);
-    background: var(--global-bg-color);
-    border: 1px solid var(--global-divider-color);
-    border-radius: 4px;
-    width: 100%;
+  button,
+  select,
+  summary,
+  input {
+    &:focus-visible {
+      outline: 2px solid var(--global-theme-color);
+      outline-offset: 4px;
+    }
   }
-  button:disabled {
-    opacity: 0.5;
-    cursor: default;
+  button {
+    font-size: 0.82rem;
+    min-height: 44px;
+    border-radius: 7px;
+    padding: 0.5rem 0.85rem;
+    cursor: pointer;
+    &:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+  }
+  select {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.45rem 0.65rem;
+    color: var(--global-text-color);
+    background: var(--tta-surface);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 7px;
+    font-size: 0.84rem;
+  }
+  label {
+    font-size: 0.8rem;
+    color: var(--global-text-color-light);
+    margin: 0;
+  }
+  figure {
+    margin: 0;
   }
   canvas {
     max-width: 100%;
     height: auto;
   }
-  figure {
-    margin: 0;
-  }
-  label {
-    color: var(--global-text-color-light);
-    font-size: 0.8rem;
-  }
   h2,
   h3 {
     margin: 0;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  h3 {
+    font-size: 1.05rem;
+  }
+  .lab-caption {
+    font-size: 0.79rem;
+    line-height: 1.65;
+    color: var(--global-text-color-light);
   }
   [hidden] {
     display: none !important;
@@ -546,226 +630,413 @@
   }
 }
 html[data-theme="dark"] .tta-lab {
-  --tta-source: #a1aca5;
-  --tta-tent: #d8b06b;
-  --tta-buffer: #b59acb;
-  --tta-actta: #78bdaa;
+  --tta-surface: #192638;
+  --tta-soft: #223249;
+  --tta-source: #afbdd0;
+  --tta-tent: #9bbcff;
+  --tta-buffer: #c7aff0;
+  --tta-actta: #79d2cb;
 }
-.tta-text-button {
-  display: inline;
-  color: var(--global-theme-color, #42624c);
-  background: none;
-  padding: 0;
-  border: 0;
-  cursor: pointer;
+.tta-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  flex-wrap: wrap;
+  font-size: 0.73rem;
+  color: var(--global-text-color-light);
+  margin-bottom: 0.8rem;
+  p {
+    margin: 0;
+  }
+  .lab-status {
+    font-size: inherit;
+    min-height: 1.2rem;
+  }
+}
+.tta-preset-bar {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.3rem;
 }
 .tta-presets {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 1.2rem 0;
-  font-size: 0.8rem;
-  > span {
-    color: var(--global-text-color-light);
-    margin-right: 0.25rem;
-  }
+  gap: 0.3rem;
+  padding: 0.3rem;
+  border-radius: 10px;
+  background: var(--tta-soft);
   button {
-    padding: 0.4rem 0.7rem;
+    border: 0;
+    color: var(--global-text-color-light);
+    background: transparent;
+    white-space: nowrap;
+    &[aria-pressed="true"] {
+      background: var(--global-theme-color);
+      color: var(--tta-surface);
+    }
+    &:hover:not(:disabled) {
+      background: var(--global-divider-color);
+      filter: none;
+    }
+    &[aria-pressed="true"]:hover:not(:disabled) {
+      background: var(--global-theme-color);
+    }
+  }
+}
+.tta-settings {
+  margin-left: auto;
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 50px;
+    font-size: 0.8rem;
+    color: var(--global-theme-color);
+    cursor: pointer;
+    list-style: none;
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &::after {
+      content: "+";
+      font-size: 1.1rem;
+    }
+  }
+  &[open] {
+    flex-basis: 100%;
+    padding: 0 1.2rem 1.1rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 10px;
+    background: var(--tta-surface);
+    summary {
+      justify-content: space-between;
+    }
+    summary::after {
+      content: "−";
+    }
   }
 }
 .lab-controls.tta-controls {
   display: grid;
-  grid-template-columns: 1.55fr 1.25fr 0.65fr 0.65fr;
+  grid-template-columns: 1.5fr 1.2fr 0.7fr 0.7fr;
   gap: 1rem;
-  margin: 1.5rem 0 0.75rem;
+  margin: 0.3rem 0;
   label {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.2rem;
+  }
+  &.tta-stream-controls {
+    grid-template-columns: 1fr 1fr;
   }
 }
 .tta-reset-policy {
   display: flex;
-  gap: 0.5rem;
   align-items: center;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
+  margin-top: 0.8rem !important;
 }
-.lab-controls.tta-controls.tta-stream-controls {
-  grid-template-columns: 1fr 1fr;
+.tta-overview {
+  padding: 1.5rem 1.7rem 1.1rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 14px;
+  background: var(--tta-surface);
 }
 .tta-input-strip {
   display: flex;
   align-items: center;
-  gap: 1.1rem;
-  margin: 1.8rem 0 1.3rem;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
   img {
     display: block;
-    width: 116px;
-    height: 116px;
+    width: 76px;
+    height: 76px;
+    border-radius: 7px;
     image-rendering: pixelated;
-    border-radius: 3px;
   }
   figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
+    margin-top: 0.35rem;
+    font-size: 0.7rem;
     color: var(--global-text-color-light);
   }
 }
 .tta-input-context {
-  max-width: 330px;
-  margin-left: 0.6rem;
+  margin-left: 0.5rem;
   > p:first-child {
-    margin: 0 0 0.5rem;
-    font-size: 0.9rem;
+    margin: 0 0 0.4rem;
+    font-size: 0.92rem;
+    font-weight: 600;
   }
   label {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
-    select {
-      width: auto;
-    }
+    gap: 0.55rem;
+  }
+  select {
+    width: auto;
+    min-height: 36px;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.75rem;
   }
   .lab-caption {
-    margin: 0.6rem 0 0;
+    margin: 0.35rem 0 0;
+    font-size: 0.73rem;
   }
 }
-.lab-actions.tta-actions {
+.tta-playback {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.65rem 1.5rem;
   align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid var(--global-divider-color);
+  border-bottom: 1px solid var(--global-divider-color);
+}
+.lab-actions.tta-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
   output {
-    font-size: 0.8rem;
+    flex-basis: 100%;
+    font-size: 0.74rem;
     color: var(--global-text-color-light);
-    margin-left: auto;
+    margin: 0.25rem 0 0;
+    font-variant-numeric: tabular-nums;
   }
 }
 .tta-scrubber {
   display: grid;
-  grid-template-columns: 175px 1fr;
-  gap: 1rem;
-  align-items: center;
-  margin: 0.8rem 0 2rem;
+  gap: 0.45rem;
+  > span {
+    font-size: 0.74rem;
+  }
   input {
     width: 100%;
-    accent-color: var(--tta-actta);
+    min-height: 24px;
+    accent-color: var(--global-theme-color);
+    cursor: pointer;
+  }
+}
+.lab-results.tta-results {
+  margin: 1rem 0 0;
+  overflow-x: auto;
+  table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: 0.87rem;
+    border-collapse: collapse;
+  }
+  caption {
+    caption-side: top;
+    text-align: left;
+    padding: 0 0 0.9rem;
+    font-size: 0.76rem;
+    color: var(--global-text-color-light);
+  }
+  th,
+  td {
+    text-align: center;
+    padding: 0.65rem 0.25rem;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+  th:first-child {
+    text-align: left;
+    width: 20%;
+    font-weight: 500;
+  }
+  thead th {
+    font-size: 0.97rem;
+    font-weight: 600;
+    span {
+      color: var(--tta-method-color);
+    }
+  }
+  small {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--global-text-color-light);
+    font-size: 0.66rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  tbody td {
+    color: var(--global-text-color);
+    font-variant-numeric: tabular-nums;
+  }
+  tbody tr:first-child {
+    background: var(--tta-soft);
+    th,
+    td {
+      padding-top: 0.85rem;
+      padding-bottom: 0.85rem;
+    }
+    td {
+      font-size: 1.65rem;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      white-space: nowrap;
+    }
+  }
+  .tta-score-count {
+    font-size: 0.73rem;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+.tta-result-notes {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--global-divider-color);
+  p {
+    margin: 0.35rem 0 0;
+  }
+  #tta-reading {
+    color: var(--global-text-color);
+    font-size: 0.8rem;
+  }
+  .tta-bn-note {
+    font-size: 0.74rem;
+  }
+}
+.tta-explore {
+  margin-top: 1.6rem;
+}
+.tta-disclosure {
+  padding: 0;
+  border-top: 1px solid var(--global-divider-color);
+  font-size: 0.87rem;
+  line-height: 1.75;
+  > summary {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    min-height: 60px;
+    padding: 1rem 0.25rem;
+    list-style: none;
+    cursor: pointer;
+    color: var(--global-text-color);
+    font-size: 0.94rem;
+    font-weight: 550;
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &::after {
+      content: "+";
+      margin-left: auto;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--global-text-color-light);
+    }
+    &:hover {
+      color: var(--global-theme-color);
+    }
+  }
+  &[open] > summary::after {
+    content: "−";
+  }
+  &:last-child {
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+  .tta-disclosure-note {
+    color: var(--global-text-color-light);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+  .tta-disclosure-body {
+    padding: 0.8rem 1.5rem 1.5rem;
+    margin-bottom: 0.8rem;
+    background: var(--tta-surface);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 10px;
+    p:first-child {
+      margin-top: 0.7rem;
+    }
   }
 }
 .tta-method-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: 1.4rem;
 }
 .tta-method {
-  padding: 1rem 0 0.7rem;
-  border-top: 3px solid var(--tta-method-color);
+  padding-top: 1rem;
+  border-top: 2px solid var(--tta-method-color);
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.15rem;
   }
   .tta-kicker {
-    font-size: 0.7rem;
     color: var(--tta-method-color);
-    margin: 0 0 0.4rem;
-    letter-spacing: 0.03em;
+    font-size: 0.7rem;
+    margin: 0 0 0.3rem;
   }
   .tta-target {
-    font-size: 0.77rem;
-    line-height: 1.7;
     color: var(--global-text-color-light);
-    margin: 0.7rem 0 1.1rem;
+    font-size: 0.76rem;
+    line-height: 1.7;
+    margin: 0.5rem 0 1rem;
   }
   .tta-prediction {
-    font-size: 1.05rem;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1rem;
     margin: 0;
   }
   .lab-caption {
-    margin: 0.15rem 0 0.8rem;
+    margin: 0.2rem 0 0.7rem;
+    font-size: 0.74rem;
   }
 }
 .tta-probabilities {
-  min-height: 88px;
   > div {
     position: relative;
     display: flex;
     justify-content: space-between;
     gap: 0.4rem;
-    font-size: 0.71rem;
-    padding: 3px 0 5px;
-    margin-bottom: 6px;
+    font-size: 0.72rem;
+    padding: 4px 0 8px;
+    margin-bottom: 5px;
     > i {
       position: absolute;
-      bottom: 0;
       left: 0;
+      bottom: 0;
       height: 2px;
       background: var(--tta-method-color);
     }
   }
 }
 .tta-parameter-count {
-  font-size: 0.69rem;
-  color: var(--global-text-color-light);
   margin: 0.8rem 0 0;
+  font-size: 0.7rem;
+  color: var(--global-text-color-light);
   strong {
-    color: var(--global-text-color);
     font-weight: 500;
+    color: var(--global-text-color);
   }
-}
-.tta-bn-note {
-  margin: 0.8rem 0 1.1rem;
-  max-width: 800px;
-}
-.tta-results {
-  overflow-x: auto;
-  table {
-    width: 100%;
-    min-width: 500px;
-    font-size: 0.82rem;
-  }
-  th:not(:first-child),
-  td {
-    text-align: right;
-  }
-  caption {
-    font-size: 0.75rem;
-  }
-  .tta-score-count {
-    display: block;
-    margin-top: 0.2rem;
-    font-size: 0.7rem;
-    color: var(--global-text-color-light);
-    white-space: nowrap;
-  }
-}
-.tta-inspection,
-.tta-history {
-  margin-top: 3rem;
-  padding-top: 2.2rem;
-  border-top: 1px solid var(--global-divider-color);
 }
 .tta-section-heading {
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
-  gap: 1.2rem;
-  margin-bottom: 1rem;
-  .editorial-eyebrow {
-    margin-bottom: 0.5rem;
-  }
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.7rem 0 1rem;
   > label {
-    width: 180px;
-    flex-shrink: 0;
-    select {
-      margin-top: 0.4rem;
-    }
+    width: 170px;
+  }
+  label {
+    display: grid;
+    gap: 0.4rem;
   }
 }
 .tta-inspection-controls {
   display: flex;
   align-items: flex-end;
-  gap: 0.75rem;
-  label {
-    display: grid;
-    gap: 0.4rem;
-  }
+  gap: 0.7rem;
   select {
     min-width: 60px;
   }
@@ -773,44 +1044,41 @@ html[data-theme="dark"] .tta-lab {
 .tta-feature-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: 1.2rem;
   margin: 1.3rem 0;
   figure {
     text-align: center;
   }
   figcaption {
-    font-size: 0.84rem;
     color: var(--tta-method-color);
-    margin-bottom: 0.65rem;
+    font-size: 0.82rem;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
   }
   canvas {
     display: block;
     width: 100%;
     max-width: 176px;
     margin: auto;
+    border-radius: 5px;
   }
 }
 .tta-detail-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  gap: 1.4rem;
+  margin-top: 1.8rem;
 }
 .tta-detail {
   padding-top: 1rem;
   border-top: 2px solid var(--tta-method-color);
-  h3 {
-    font-family: Georgia, serif;
-    font-weight: 400;
-    font-size: 1.22rem;
-  }
   > .lab-caption {
     min-height: 3.5rem;
-    margin: 0.55rem 0 1rem;
+    margin: 0.6rem 0 1rem;
   }
   > canvas:not(#tta-residual-map) {
-    width: 100%;
     display: block;
+    width: 100%;
   }
 }
 #tta-residual-map {
@@ -819,22 +1087,21 @@ html[data-theme="dark"] .tta-lab {
   margin: 0 auto;
 }
 .tta-values {
-  font-size: 0.7rem;
-  line-height: 1.8;
+  font-size: 0.72rem;
   color: var(--global-text-color-light);
-  font-variant-numeric: tabular-nums;
   margin: 0.7rem 0;
+  font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 .tta-curve-controls {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  margin: 0.65rem 0;
+  margin: 0.7rem 0;
   label {
     display: flex;
-    gap: 0.5rem;
     align-items: center;
+    gap: 0.5rem;
     font-size: 0.73rem;
   }
   input {
@@ -843,15 +1110,16 @@ html[data-theme="dark"] .tta-lab {
 }
 .tta-legend {
   display: flex;
-  gap: 1.4rem;
-  font-size: 0.8rem;
-  margin: 0.7rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.8rem 0;
+  font-size: 0.78rem;
   span {
     display: flex;
     align-items: center;
     gap: 0.4rem;
   }
-  span:before {
+  span::before {
     content: "";
     display: inline-block;
     width: 17px;
@@ -862,22 +1130,38 @@ html[data-theme="dark"] .tta-lab {
 #tta-history-plot {
   display: block;
   width: 100%;
-  margin-bottom: 0.8rem;
+}
+.tta-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+}
+.tta-scope-note {
+  font-size: 0.73rem;
+  color: var(--global-text-color-light);
+  margin: 1.5rem 0 0.7rem;
 }
 .tta-paper-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin: 2rem 0;
+  gap: 0.5rem 1.2rem;
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
 }
 @media (max-width: 700px) {
-  .lab-controls.tta-controls {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.7rem;
+  .tta-overview {
+    padding: 1.1rem;
   }
-  .tta-method-grid {
+  .tta-preset-bar {
+    gap: 0.4rem;
+  }
+  .tta-settings {
+    margin-left: 0;
+  }
+  .tta-method-grid,
+  .tta-feature-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.1rem;
   }
   .tta-detail-grid {
     grid-template-columns: 1fr;
@@ -890,35 +1174,111 @@ html[data-theme="dark"] .tta-lab {
     align-items: stretch;
   }
   .tta-inspection-controls {
-    justify-content: flex-start;
+    flex-wrap: wrap;
   }
-  .tta-feature-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+  .tta-disclosure .tta-disclosure-body {
+    padding: 0.7rem 1rem 1.2rem;
+  }
+  .lab-controls.tta-controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+}
+@media (max-width: 520px) {
+  .tta-meta {
+    font-size: 0.68rem;
+    gap: 0.1rem;
+  }
+  .tta-presets {
+    width: 100%;
+    gap: 0.1rem;
+    justify-content: space-between;
+    button {
+      font-size: 0.71rem;
+      padding: 0.4rem 0.5rem;
+    }
+  }
+  .tta-settings summary {
+    min-height: 44px;
+  }
+  .tta-overview {
+    padding: 1rem 0.85rem;
   }
   .tta-input-strip {
     flex-wrap: wrap;
+    gap: 0.75rem;
     img {
-      width: 100px;
-      height: 100px;
+      width: 64px;
+      height: 64px;
     }
   }
   .tta-input-context {
+    flex: 1;
+    min-width: 135px;
     margin-left: 0;
-  }
-  .lab-actions.tta-actions {
-    flex-wrap: wrap;
-    output {
-      width: 100%;
-      margin: 0.3rem 0 0;
+    > p:first-child {
+      font-size: 0.81rem;
     }
   }
-  .tta-scrubber {
+  .tta-playback {
     grid-template-columns: 1fr;
-    gap: 0.3rem;
+    gap: 0.4rem;
+    padding: 0.8rem 0;
   }
-  .tta-legend {
-    flex-wrap: wrap;
-    gap: 0.7rem 1rem;
+  .lab-actions.tta-actions {
+    output {
+      flex-basis: auto;
+      margin-left: auto;
+      font-size: 0.68rem;
+    }
+    button {
+      padding: 0.4rem 0.65rem;
+      font-size: 0.73rem;
+    }
+  }
+  .lab-results.tta-results {
+    font-size: 0.75rem;
+    table {
+      font-size: 0.72rem;
+    }
+    th,
+    td {
+      padding: 0.6rem 0.1rem;
+    }
+    thead th {
+      font-size: 0.75rem;
+    }
+    thead small,
+    th small {
+      font-size: 0.56rem;
+    }
+    tbody tr:first-child td {
+      font-size: clamp(1rem, 4.3vw, 1.25rem);
+    }
+    .tta-score-count {
+      font-size: 0.61rem;
+    }
+  }
+  .tta-result-notes #tta-reading {
+    font-size: 0.74rem;
+  }
+  .tta-disclosure {
+    > summary {
+      font-size: 0.85rem;
+      min-height: 56px;
+      gap: 0.5rem;
+    }
+    .tta-disclosure-note {
+      display: none;
+    }
+  }
+  .tta-scope-note {
+    font-size: 0.69rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tta-lab * {
+    scroll-behavior: auto;
+    transition: none;
   }
 }
