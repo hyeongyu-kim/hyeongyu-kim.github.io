@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our papers **AcTTA** & **CD-Buffer** have been accepted at **CVPR 2026**!
+Our papers **[AcTTA](https://arxiv.org/abs/2603.26096)** & **[CD-Buffer](https://arxiv.org/abs/2603.26092)** have been accepted at **CVPR 2026**!

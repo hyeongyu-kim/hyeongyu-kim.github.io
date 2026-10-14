@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our paper **Buffer TTA** has been accepted at **NeurIPS 2025**!
+Our paper **[Buffer TTA](https://arxiv.org/abs/2510.21271)** has been accepted at **NeurIPS 2025**!
