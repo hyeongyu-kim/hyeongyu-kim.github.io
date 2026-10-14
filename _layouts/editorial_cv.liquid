@@ -92,6 +92,17 @@ layout: default
     <h2 id="cv-honors">Honors &amp; scholarships</h2>
     <div>
       <ul class="cv-dated-list">
+        {% for award in site.data.reviewer_service.recognitions %}
+          <li>
+            <span>{{ award.year }}</span>
+            <div>
+              <strong
+                ><a href="{{ award.url }}">{{ award.title }}</a></strong
+              ><br>
+              {{ award.venue }}
+            </div>
+          </li>
+        {% endfor %}
         {% for award in resume.awards %}
           <li>
             <span>{{ award.date | slice: 0, 4 }}</span>
@@ -146,5 +157,10 @@ layout: default
         </div>
       {% endfor %}
     </div>
+  </section>
+
+  <section class="editorial-cv-section" aria-labelledby="cv-service">
+    <h2 id="cv-service">Reviewer service</h2>
+    <div>{% include reviewer_service.liquid %}</div>
   </section>
 </article>

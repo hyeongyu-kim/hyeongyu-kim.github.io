@@ -1,0 +1,16 @@
+recognitions:
+  - title: Outstanding Reviewer
+    year: 2026
+    venue: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR 2026)
+    url: https://cvpr.thecvf.com/Conferences/2026/ProgramCommittee
+
+conferences:
+  - name: CVPR
+    years: [2026]
+    recognition: Outstanding Reviewer
+    url: https://cvpr.thecvf.com/Conferences/2026/ProgramCommittee
+  - name: ICPR
+    years: [2024]
+
+journals:
+  - name: IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)

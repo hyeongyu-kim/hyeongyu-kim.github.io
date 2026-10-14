@@ -1,0 +1,26 @@
+{% assign service = site.data.reviewer_service %}
+<dl class="cv-skills">
+  <dt>Conferences</dt>
+  <dd>
+    {% for venue in service.conferences %}
+      {% if venue.url %}
+        <a href="{{ venue.url }}">
+          {{- venue.name }}
+          {{ venue.years | join: ', ' -}}
+        </a>
+      {% else %}
+        {{ venue.name }}
+        {{ venue.years | join: ', ' }}
+      {% endif %}
+      {% if venue.recognition %} · {{ venue.recognition }}{% endif %}
+      {% unless forloop.last %}<br>{% endunless %}
+    {% endfor %}
+  </dd>
+  <dt>Journals</dt>
+  <dd>
+    {% for venue in service.journals %}
+      {{ venue.name }}
+      {% unless forloop.last %}<br>{% endunless %}
+    {% endfor %}
+  </dd>
+</dl>

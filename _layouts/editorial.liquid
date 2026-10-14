@@ -39,7 +39,7 @@ layout: default
     </div>
     <ol class="editorial-updates">
       {% assign recent_news = site.news | sort: 'date' | reverse %}
-      {% for item in recent_news limit: 4 %}
+      {% for item in recent_news limit: 5 %}
         <li>
           <time datetime="{{ item.date | date: '%Y-%m' }}">{{ item.date | date: '%b %Y' }}</time>
           <div>{{ item.content | markdownify }}</div>
@@ -76,5 +76,10 @@ layout: default
         <dd>Email, profile links, and a QR contact card.</dd>
       </div>
     </dl>
+  </section>
+
+  <section id="reviewer-service" class="editorial-section" aria-labelledby="reviewer-heading">
+    <div class="editorial-section-heading"><h2 id="reviewer-heading">Serving as a reviewer</h2></div>
+    {% include reviewer_service.liquid %}
   </section>
 </article>
