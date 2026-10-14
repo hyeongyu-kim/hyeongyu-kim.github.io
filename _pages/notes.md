@@ -2,7 +2,7 @@
 layout: editorial_page
 permalink: /notes/
 title: Research notes
-eyebrow: Working things out
+eyebrow: Work in progress
 subtitle: Short explanations of adaptation and efficient inference, with examples you can inspect.
 description: Notes on test-time adaptation, matrix tiling, and the Relax-to-TIR compiler pipeline.
 nav: true

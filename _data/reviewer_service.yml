@@ -6,11 +6,17 @@ recognitions:
 
 conferences:
   - name: CVPR
-    years: [2026]
-    recognition: Outstanding Reviewer
+    years: [2026, 2025]
+    recognition: Outstanding Reviewer (2026)
     url: https://cvpr.thecvf.com/Conferences/2026/ProgramCommittee
+  - name: NeurIPS
+    years: [2026]
+  - name: MICCAI
+    years: [2025]
   - name: ICPR
     years: [2024]
 
 journals:
   - name: IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)
+  - name: Medical Image Analysis
+  - name: Biomedical Engineering Letters (BMEL)

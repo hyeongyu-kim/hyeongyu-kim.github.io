@@ -2,7 +2,7 @@
 layout: editorial_page
 permalink: /lab/
 title: TTA, one update at a time.
-eyebrow: Test-time adaptation
+eyebrow: Test-time adaptation · Work in progress
 subtitle: Watch Tent, Buffer, and AcTTA update their trainable parts on an unlabeled batch.
 description: Inspect real Tent, Buffer, and AcTTA updates on the same CIFAR-10-C inputs.
 nav: true
