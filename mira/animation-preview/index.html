@@ -24,7 +24,7 @@ h1{font-size:clamp(22px,4vw,32px);margin:0 0 6px;color:#1c3425;letter-spacing:-.
 .figure-heading h2{font-size:22px;margin:0;color:#1e3b2a}
 .figure-heading p{font-size:14px;margin:0;color:#607062}
 .preview-body{padding:6px 20px 4px}
-.paper-stage{position:relative;width:100%;overflow:hidden;background:white;isolation:isolate}
+.paper-stage{position:relative;width:100%;overflow:hidden;background:white;isolation:isolate}.paper-stage svg{overflow:visible}
 .original-link{display:block;position:relative;width:100%;height:100%;cursor:zoom-in}
 .original-image{width:100%;height:auto;display:block}
 .motion-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
@@ -75,7 +75,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <header class="site-header"><div class="header-inner">
   <span class="tag">PREVIEW ONLY · NOT LINKED FROM THE PROJECT PAGE</span>
   <h1>MIRA — Figure motion preview</h1>
-  <p class="subtitle">Original camera-ready artwork with opt-in motion overlays. No data, labels, or paper figures are changed.</p>
+  <p class="subtitle">Original vector objects from the PowerPoint and paper PDFs. Arrows, curves and data markers move within the artwork.</p>
 </div></header>
 <main class="main">
 <section class="figure-card" aria-label="Animated MIRA paper figures">
@@ -93,299 +93,208 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
   <div id="time-label" class="time-label">Ready · Press Play</div>
   <div id="status" class="status" aria-live="off"></div>
 </section>
-<p class="explainer">On mobile, rotate to landscape for a larger figure, or open the original full-resolution image. Figure 2 sweeps across the existing plotted curves; it does not synthesize new experiment data.</p>
+<p class="explainer">These are the real SVG/PDF vector paths, not graphics drawn over a PNG. On mobile, rotate to landscape to inspect the moving objects.</p>
 <a class="back-link" href="../">← Back to the MIRA project page</a>
 </main>
 <script>
-(function miraPreview() {
+
+(function vectorMotionPreview(){
   "use strict";
-  const NS = "http://www.w3.org/2000/svg";
   const FIGURES = [
-    {
-      name: "Figure 1", title: "MIRA overview",
-      source: "../static/images/mira-overview-camera-ready.png?v=20261102-final",
-      alt: "MIRA camera-ready overview: feature caching, stochastic classifier probes, MI and agreement scale selection, and stochastic entropy adaptation.",
-      width: 3859, height: 1258, duration: 8200,
-      caption: "Cache backbone features, probe classifier perturbations, select the radius with MI and agreement, then update using reliability weights."
-    },
-    {
-      name: "Figure 2", title: "Online accuracy and confidence",
-      source: "../static/images/confidence-trajectories-camera-ready.png?v=20261102-final",
-      alt: "Online accuracy and confidence trajectories for ResNet-34 and EfficientNet-B0 under ImageNet-C fog, with TENT and MIRA gap hatching.",
-      width: 2376, height: 713, duration: 9000,
-      caption: "Reveal both original batch trajectories together; emphasize the final TENT and MIRA accuracy–confidence gaps."
-    },
-    {
-      name: "Figure 3", title: "Confidence–accuracy plane",
-      source: "../static/images/confidence-accuracy-plane-camera-ready.png?v=20261102-figure3",
-      alt: "MIRA confidence-accuracy plane: architectures, other base TTA methods, and entropy coefficient gamma.",
-      width: 2800, height: 1015, duration: 11500,
-      caption: "Animate actual points from the supplied Figure 3 script: Source to TENT and MIRA; base methods to MIRA; entropy coefficient variants."
-    }
+    {name:"Figure 1", title:"Method overview", path:"assets/figure1-source.svg", original:"../static/images/mira-overview-camera-ready.png?v=20261102-final", w:921, h:300, duration:11000,
+     caption:"Original PowerPoint SVG objects: cached features, stochastic Gaussian probes, MI–agreement scale selection, and reliability-weighted adaptation."},
+    {name:"Figure 2", title:"Online confidence and accuracy", path:"assets/figure2-source.svg", original:"../static/images/confidence-trajectories-camera-ready.png?v=20261102-final", w:792, h:237.6, duration:10500,
+     caption:"Original vector chart paths from the Figure 2 PDF: draw the measured trajectories and then reveal the original accuracy–confidence gap hatching."},
+    {name:"Figure 3", title:"Confidence–accuracy plane", path:"assets/figure3-source.svg", original:"../static/images/confidence-accuracy-plane-camera-ready.png?v=20261102-figure3", w:405, h:147, duration:11800,
+     caption:"Original camera-ready PDF vectors: the MIRA data stars travel from the corresponding source/base model markers along the paper's existing arrow paths."}
   ];
-  const $ = id => document.getElementById(id);
-  const stage = $("paper-stage"), tabs = $("figure-tabs");
-  const name = $("figure-name"), subtitle = $("figure-title"), caption = $("figure-caption");
-  const playButton = $("play"), replayButton = $("replay"), timeline = $("timeline");
-  const speedInput = $("speed"), timeLabel = $("time-label"), status = $("status"), openOriginal = $("open-original");
-  let current = 0, elapsed = 0, running = false, raf = 0, previousTimestamp = null, effect = null;
-  let originalImage = null;
-
-  function svg(tag, attrs) {
-    const e = document.createElementNS(NS, tag);
-    for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, String(v));
-    return e;
+  const $=id=>document.getElementById(id);
+  const stage=$("paper-stage"), tabs=$("figure-tabs"), name=$("figure-name"), heading=$("figure-title");
+  const caption=$("figure-caption"), playButton=$("play"), replayButton=$("replay"), timeline=$("timeline");
+  const speedInput=$("speed"), timeLabel=$("time-label"), status=$("status"), original=$("open-original");
+  let current=0, elapsed=0, running=false, frame=0, lastFrame=null, effect=null, ready=false, loadSerial=0;
+  function clamp(v){return Math.max(0,Math.min(1,v));}
+  function ease(v){v=clamp(v);return v*v*(3-2*v);}
+  function span(t,a,b){return ease((t-a)/(b-a));}
+  function wave(t,a,b){const p=span(t,a,b);return Math.sin(Math.PI*p);}
+  function bbox(e){try{const b=e.getBBox();return b.width>0||b.height>0?b:null;}catch(_){return null;}}
+  function colorChroma(c){
+    const x=(c||"").match(/rgb\(([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)%\)/);
+    if(!x)return 0;
+    return Math.max(+x[1],+x[2],+x[3])-Math.min(+x[1],+x[2],+x[3]);
   }
-  function setAttrs(node, attrs) {
-    for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v));
+  function dashReveal(e,originalStyle,length,t){
+    if(t>=.9999){e.style.strokeDasharray=originalStyle.dash;e.style.strokeDashoffset=originalStyle.offset;return;}
+    if(t<=.0001){e.style.strokeDasharray=String(length)+" "+String(length);e.style.strokeDashoffset=String(length);return;}
+    e.style.strokeDasharray=String(length)+" "+String(length);
+    e.style.strokeDashoffset=String((1-t)*length);
   }
-  function clamp(v) { return Math.max(0, Math.min(1, v)); }
-  function ease(v) { v = clamp(v); return v * v * (3 - 2 * v); }
-  function opacityInOut(value, from, to) {
-    const ramp = Math.min((to - from) * 0.23, 0.05);
-    return clamp(Math.min((value - from) / ramp, (to - value) / ramp));
+  function pathRecord(e){
+    let length=0;try{length=e.getTotalLength();}catch(_){}
+    return {el:e, len:Math.max(length,1), dash:e.style.strokeDasharray||"", offset:e.style.strokeDashoffset||""};
   }
-  function overlaySVG(viewBox) {
-    const element = svg("svg", { "class": "motion-svg", viewBox, preserveAspectRatio: "none", "aria-hidden": "true" });
-    stage.appendChild(element);
-    return element;
-  }
-  function pulseScene() {
-    const layer = overlaySVG("0 0 1000 326");
-    const steps = [
-      {x:8,y:78,w:204,h:191,px:118,py:177,label:"Target batch → cached backbone features"},
-      {x:216,y:27,w:476,h:241,px:458,py:145,label:"Stochastic Gaussian classifier probes"},
-      {x:695,y:20,w:298,h:252,px:817,py:141,label:"MI + agreement scale selection"},
-      {x:64,y:270,w:646,h:51,px:396,py:296,label:"Detached reliability weights + adaptation"}
-    ];
-    const focuses = steps.map(item => {
-      const rect = svg("rect", {x:item.x,y:item.y,width:item.w,height:item.h,rx:11,
-        fill:"rgba(53, 156, 84, .07)",stroke:"#2b9850","stroke-width":2.8,
-        "stroke-dasharray":"10 5",opacity:0});
-      layer.appendChild(rect); return rect;
-    });
-    const dot = svg("circle", {r:6.5,fill:"#fff",stroke:"#218b49","stroke-width":3,opacity:0});
-    layer.appendChild(dot);
-    return {
-      update: function(t) {
-        const p = Math.min(3.99999, t * 4), index = Math.floor(p), fraction = p - index;
-        focuses.forEach((rect, i) => rect.setAttribute("opacity", i === index ? (0.83 + Math.sin(Math.PI * fraction) * .17).toFixed(2) : "0"));
-        const a = steps[index], b = steps[Math.min(3, index + 1)], travel = ease(fraction);
-        setAttrs(dot, {cx:(a.px + (b.px - a.px) * travel).toFixed(2), cy:(a.py + (b.py - a.py) * travel).toFixed(2),
-          opacity:(0.65 + .25 * Math.sin(fraction * Math.PI)).toFixed(2)});
-        return String(index + 1) + " / 4 · " + steps[index].label;
-      }
-    };
-  }
-  function trajectoryScene() {
-    const originalSrc = originalImage.getAttribute("src");
-    const clones = [0,1].map(() => {
-      const e = document.createElement("img");
-      e.className = "motion-reveal";
-      e.src = originalSrc;
-      e.alt = "";
-      e.setAttribute("aria-hidden","true");
-      stage.appendChild(e); return e;
-    });
-    const lines = [0,1].map(() => {
-      const el = document.createElement("span");
-      el.className = "motion-scanner";
-      stage.appendChild(el); return el;
-    });
-    const gapRects = [
-      {x:31.3,y:60.4,w:11.6,h:3.4},
-      {x:31.3,y:67.8,w:3.5,h:3.4},
-      {x:78.3,y:60.4,w:12.2,h:3.4},
-      {x:78.3,y:67.8,w:10.4,h:3.4}
-    ].map(a => {
-      const el = document.createElement("span");
-      el.className = "motion-gap-highlight";
-      el.style.cssText = `left:${a.x}%;top:${a.y}%;width:${a.w}%;height:${a.h}%;opacity:0`;
-      stage.appendChild(el); return el;
-    });
-    return {
-      update: function(t) {
-        const active = t > 0 && t < 1;
-        originalImage.style.opacity = active ? ".31" : "1";
-        const cut = (t * 50).toFixed(3);
-        clones[0].style.clipPath = `polygon(0 0,${cut}% 0,${cut}% 100%,0 100%)`;
-        clones[1].style.clipPath = `polygon(50% 0,${(50+t*50).toFixed(3)}% 0,${(50+t*50).toFixed(3)}% 100%,50% 100%)`;
-        clones.forEach(e=>e.style.opacity = active ? "1" : "0");
-        lines[0].style.left = (5.2 + 41.1*t).toFixed(2) + "%";
-        lines[1].style.left = (55 + 41.2*t).toFixed(2) + "%";
-        lines.forEach(e=>e.style.opacity = active ? ".92" : "0");
-        const gapAlpha = ease((t - .81) / .19);
-        gapRects.forEach(e=>e.style.opacity = gapAlpha.toFixed(2));
-        return "Online batch " + Math.round(t * 800) + " / 800 · original TENT / MIRA curves";
-      }
-    };
-  }
-  function planeScene() {
-    const layer = overlaySVG("0 0 841.761 299.16");
-    const top=26,bottom=246;
-    const pa={x0:52,x1:52+220*68/59,minx:16,maxx:84,miny:13,maxy:72};
-    const spanB=19.4*220/244;
-    const pb={x0:340,x1:584,minx:35.3,maxx:54.7,miny:40.4-spanB/2,maxy:40.4+spanB/2};
-    const spanC=9.7*220/214;
-    const pc={x0:618,x1:832,minx:34.9,maxx:44.6,miny:38.7-spanC/2,maxy:38.7+spanC/2};
-    function point(panel,xy) {
-      return {x:panel.x0+(xy[0]-panel.minx)/(panel.maxx-panel.minx)*(panel.x1-panel.x0),
-        y:bottom-(xy[1]-panel.miny)/(panel.maxy-panel.miny)*(bottom-top)};
+  function buildFigure1(root){
+    const master=root.querySelector("#source-32");
+    const visible=root.querySelector('g[clip-path="url(#clip-0)"] > use');
+    let content=master;
+    if(master&&visible){
+      const live=master.cloneNode(true);
+      live.removeAttribute("id");
+      live.setAttribute("transform",visible.getAttribute("transform")||"");
+      visible.replaceWith(live);
+      content=live;
     }
-    const architectures=[
-      {s:[33.22,17.89],t:[40.89,36.62],m:[40.53,39.45]},
-      {s:[51.47,39.06],t:[51.78,42.03],m:[49.25,45.17]},
-      {s:[22.70,42.19],t:[43.36,50.36],m:[47.46,52.81]},
-      {s:[46.23,23.84],t:[45.07,28.22],m:[42.04,29.57]},
-      {s:[74.63,53.55],t:[74.61,67.84],m:[73.05,68.69]}
-    ];
-    const methods=[
-      {s:[40.89,36.62],m:[40.53,39.45]},
-      {s:[45.07,40.02],m:[48.02,43.18]},
-      {s:[39.35,36.72],m:[38.86,39.28]},
-      {s:[52.31,44.91],m:[48.47,45.37]}
-    ];
-    const gamma=[
-      {m:[37.19,37.23],c:"#cfe3d3"},
-      {m:[38.21,37.93],c:"#9cc8a8"},
-      {m:[39.09,38.52],c:"#6fa880"},
-      {m:[40.53,39.45],c:"#297c3d"},
-      {m:[42.56,40.67],c:"#1f5d2e"}
-    ];
-    const base=[40.89,36.62];
-    const phases=[
-      {from:0,to:.29,caption:"(a) Source → TENT across architectures",color:"#ca6b3d",
-        segments:architectures.map(p=>({a:point(pa,p.s),b:point(pa,p.t)}))},
-      {from:.27,to:.57,caption:"(a) Source → MIRA across architectures",color:"#297c3d",
-        segments:architectures.map(p=>({a:point(pa,p.s),b:point(pa,p.m)}))},
-      {from:.55,to:.81,caption:"(b) Base TTA → Base + MIRA",color:"#297c3d",
-        segments:methods.map(p=>({a:point(pb,p.s),b:point(pb,p.m)}))},
-      {from:.79,to:1,caption:"(c) Entropy coefficient γ variants",color:"#297c3d",
-        segments:gamma.map(p=>({a:point(pc,base),b:point(pc,p.m),color:p.c}))}
-    ];
-    const things=[];
-    phases.forEach(phase=>phase.segments.forEach(segment=>{
-      const color=segment.color||phase.color;
-      const trail=svg("line",{"class":"motion-trail",x1:segment.a.x,y1:segment.a.y,x2:segment.a.x,y2:segment.a.y,
-        stroke:color,opacity:0});
-      const halo=svg("circle",{cx:segment.a.x,cy:segment.a.y,r:10,fill:"none",stroke:color,"stroke-width":2,opacity:0});
-      const dot=svg("circle",{cx:segment.a.x,cy:segment.a.y,r:5.8,fill:color,stroke:"#fff","stroke-width":1.5,opacity:0});
-      layer.appendChild(trail);layer.appendChild(halo);layer.appendChild(dot);
-      things.push({phase,segment,trail,halo,dot});
-    }));
-    return {
-      update:function(t) {
-        things.forEach(item=>{
-          const phase=item.phase, seg=item.segment, z=(t-phase.from)/(phase.to-phase.from);
-          const alpha=z>=0&&z<=1?opacityInOut(t,phase.from,phase.to):0, u=ease(z);
-          const x=seg.a.x+(seg.b.x-seg.a.x)*u, y=seg.a.y+(seg.b.y-seg.a.y)*u;
-          setAttrs(item.trail,{x2:x.toFixed(2),y2:y.toFixed(2),opacity:(alpha*.64).toFixed(2)});
-          setAttrs(item.dot,{cx:x.toFixed(2),cy:y.toFixed(2),opacity:alpha.toFixed(2)});
-          setAttrs(item.halo,{cx:x.toFixed(2),cy:y.toFixed(2),opacity:(alpha*.65).toFixed(2)});
-        });
-        for(let i=phases.length-1;i>=0;i--) if(t>=phases[i].from)return phases[i].caption;
-        return phases[0].caption;
+    const direct=Array.from(content?content.children:[]);
+    const records=direct.map((e,i)=>({e:e,i:i,b:bbox(e)}));
+    const sample=records.filter(r=>r.e.tagName.toLowerCase()==="path"&&r.b&&r.b.x>=275&&r.b.x<=630&&r.b.y>=48&&r.b.y<=250&&r.b.width<=110&&r.b.height<=120&&colorChroma(r.e.getAttribute("fill"))>10);
+    const scale=records.filter(r=>r.e.tagName.toLowerCase()==="path"&&r.b&&r.b.x>=640&&r.b.x<=917&&r.b.y>=70&&r.b.y<=258&&r.b.width>15&&r.b.width<280&&colorChroma(r.e.getAttribute("stroke"))>8&&r.e.getAttribute("fill")==="none").map(r=>pathRecord(r.e));
+    const feedback=records.filter(r=>r.e.tagName.toLowerCase()==="path"&&r.b&&r.b.y>=248&&r.b.width>40&&colorChroma(r.e.getAttribute("stroke"))>8&&r.e.getAttribute("fill")==="none").map(r=>pathRecord(r.e));
+    const stamps=sample.map((r,i)=>({e:r.e,base:r.e.getAttribute("transform")||"",phase:i*.46}));
+    return {count:sample.length+scale.length+feedback.length, update:function(t){
+      const sampling=wave(t,.13,.63), choosing=span(t,.45,.77), updating=span(t,.72,.97);
+      for(const r of stamps){
+        const shift=sampling*2.7*Math.sin(16*t+r.phase);
+        r.e.setAttribute("transform",r.base+" translate(0 "+shift.toFixed(3)+")");
+        r.e.style.opacity=String(1-.22*sampling*(.5+.5*Math.sin(13*t+r.phase)));
       }
-    };
+      for(const r of scale){dashReveal(r.el,r,r.len,choosing);}
+      for(const r of feedback){dashReveal(r.el,r,r.len,updating);}
+    }};
   }
-
-  function draw(t) {
-    const result=effect.update(clamp(t));
-    timeline.value = String(Math.round(clamp(t)*1000));
-    timeLabel.textContent = result;
+  function buildFigure2(root){
+    const candidates=Array.from(root.querySelectorAll("path[stroke]"));
+    const curveColors=new Set(["#3e708c","#b17e60"]);
+    const hatchColors=new Set(["#ba7357","#478c66"]);
+    const lines=candidates.filter(e=>curveColors.has(e.getAttribute("stroke"))&&(e.getAttribute("d")||"").length>1000).map(pathRecord);
+    const hatch=candidates.filter(e=>hatchColors.has(e.getAttribute("stroke"))&&(e.getAttribute("d")||"").length>150);
+    return {count:lines.length+hatch.length,update:function(t){
+      const draw=span(t,.04,.83), gap=span(t,.70,.96);
+      lines.forEach((r,i)=>{
+        const local=clamp((draw-(i%4)*.027)/(.92-(i%4)*.027));
+        dashReveal(r.el,r,r.len,local);
+      });
+      hatch.forEach(e=>{e.style.opacity=String(gap);});
+    }};
   }
-  function pause() {
-    running=false;
-    window.cancelAnimationFrame(raf);
-    previousTimestamp=null;
-    playButton.textContent="▶ Resume";
-    playButton.setAttribute("aria-label","Resume animation");
+  function firstPoint(e){
+    const d=e.getAttribute("d")||"";
+    const m=d.match(/^M\s*([+-]?[\d.]+)[ ,]+([+-]?[\d.]+)/);
+    return m?[+m[1],+m[2]]:[0,0];
   }
-  function tick(now) {
+  function pointCenter(e,type){
+    const b=bbox(e);
+    if(b)return [b.x+b.width/2,b.y+b.height/2];
+    const p=firstPoint(e);
+    if(type==="square")return [p[0]+3.6,p[1]+3.6];
+    if(type==="circle")return [p[0]-3.8,p[1]];
+    if(type==="star")return [p[0],p[1]-5.6];
+    return p;
+  }
+  function buildFigure3(root){
+    const all=Array.from(root.querySelectorAll("path"));
+    const source=all.filter(e=>e.getAttribute("fill")==="#4881a8"&&(e.getAttribute("d")||"").includes("H")).slice(0,5);
+    const tent=all.filter(e=>e.getAttribute("fill")==="#ca6b3d"&&(e.getAttribute("d")||"").includes("C"));
+    const mira=all.filter(e=>e.getAttribute("fill")==="#297c3d"&&(e.getAttribute("d")||"").includes("H")&&(e.getAttribute("d")||"").includes("Z"));
+    const starts=source.concat(tent.slice(5,9),tent.slice(9,10));
+    const markers=mira.slice(0,10).map((e,i)=>{
+      const a=pointCenter(starts[i]||e,i<5?"square":"circle"), b=pointCenter(e,"star");
+      return {e:e,base:e.getAttribute("transform")||"",dx:a[0]-b[0],dy:a[1]-b[1],i:i};
+    });
+    const greenArrows=all.filter(e=>e.getAttribute("stroke")==="#297c3d"&&e.getAttribute("fill")==="none"&&(+e.getAttribute("stroke-width")||0)>=1.2).map(pathRecord);
+    const arrowHeads=all.filter(e=>e.getAttribute("fill")==="#297c3d"&&!(e.getAttribute("d")||"").includes("H")).slice(0,13);
+    const gamma=all.filter(e=>["#cfe3d3","#9cc8a8","#6fa880"].includes(e.getAttribute("fill")));
+    return {count:markers.length+greenArrows.length+arrowHeads.length+gamma.length,update:function(t){
+      markers.forEach(m=>{
+        const start=m.i<5?.11:(m.i<9?.37:.64);
+        const end=m.i<5?.48:(m.i<9?.77:.90);
+        const p=span(t,start+(m.i%5)*.016,end+(m.i%5)*.016);
+        m.e.setAttribute("transform",m.base+" translate("+(m.dx*(1-p)).toFixed(3)+","+(m.dy*(1-p)).toFixed(3)+")");
+        m.e.style.opacity=String(.10+.90*p);
+      });
+      greenArrows.forEach((r,i)=>{
+        const from=i<10?.12:(i<18?.40:.65);
+        const to=i<10?.52:(i<18?.79:.92);
+        dashReveal(r.el,r,r.len,span(t,from,to));
+      });
+      const reveal=span(t,.20,.91);
+      arrowHeads.forEach(e=>e.style.opacity=String(reveal));
+      gamma.forEach(e=>e.style.opacity=String(span(t,.63,.92)));
+    }};
+  }
+  const builder=[buildFigure1,buildFigure2,buildFigure3];
+  function render(){
+    const f=FIGURES[current],t=clamp(elapsed/f.duration);
+    if(effect)effect.update(t);
+    timeline.value=String(Math.round(t*1000));
+    const sec=(elapsed/1000).toFixed(1),whole=(f.duration/1000).toFixed(1);
+    timeLabel.textContent=sec+" / "+whole+" s";
+  }
+  function stop(){
+    running=false;lastFrame=null;
+    if(frame)cancelAnimationFrame(frame);
+    frame=0;playButton.textContent="▶ Play";
+  }
+  function tick(ts){
     if(!running)return;
-    if(previousTimestamp!==null)elapsed+=(now-previousTimestamp)*Number(speedInput.value);
-    previousTimestamp=now;
-    const fig=FIGURES[current], t=Math.min(1,elapsed/fig.duration);
-    draw(t);
-    if(t>=1){
-      running=false;previousTimestamp=null;
-      playButton.textContent="↻ Replay";
-      playButton.setAttribute("aria-label","Replay animation");
-      status.textContent="Complete · "+fig.name;
+    if(lastFrame!==null)elapsed+=(ts-lastFrame)*Number(speedInput.value);
+    lastFrame=ts;
+    if(elapsed>=FIGURES[current].duration){
+      elapsed=FIGURES[current].duration;stop();render();
+      status.textContent="Finished · Original SVG/PDF paths restored";
       return;
     }
-    raf=window.requestAnimationFrame(tick);
+    render();frame=requestAnimationFrame(tick);
   }
-  function play() {
-    if(running){pause();return;}
-    if(elapsed>=FIGURES[current].duration){elapsed=0;draw(0);}
-    running=true;previousTimestamp=null;
-    playButton.textContent="Ⅱ Pause";
-    playButton.setAttribute("aria-label","Pause animation");
-    status.textContent="Playing · "+FIGURES[current].name;
-    raf=window.requestAnimationFrame(tick);
+  function play(){
+    if(!ready)return;
+    if(running){stop();return;}
+    if(elapsed>=FIGURES[current].duration)elapsed=0;
+    running=true;lastFrame=null;playButton.textContent="Ⅱ Pause";
+    status.textContent="Animating original vector objects";
+    frame=requestAnimationFrame(tick);
   }
-  function loadFigure(index) {
-    if(running)pause();
-    current=index;
-    elapsed=0;
-    const data=FIGURES[index];
-    const link=document.createElement("a");
-    link.target="_blank";link.rel="noopener noreferrer";
-    link.href=data.source;link.className="original-link";
-    link.setAttribute("aria-label","Open original "+data.name+" at full resolution");
-    const img=document.createElement("img");
-    img.src=data.source;
-    img.alt=data.alt;
-    img.width=data.width;
-    img.height=data.height;
-    img.decoding="async";
-    img.className="original-image";
-    img.addEventListener("error",function(){
-      status.textContent="Image loading failed. Open the original figure to retry.";
-    });
-    link.appendChild(img);
-    stage.replaceChildren(link);
-    stage.style.aspectRatio = data.width+" / "+data.height;
-    originalImage=img;
-    effect=index===0?pulseScene():index===1?trajectoryScene():planeScene();
-    name.textContent=data.name;
-    subtitle.textContent=data.title;
-    caption.textContent=data.caption;
-    openOriginal.href=data.source;
-    tabs.querySelectorAll("button").forEach((button,i)=>{
-      const selected=i===index;
-      button.setAttribute("aria-selected",selected?"true":"false");
-      button.classList.toggle("selected",selected);
-    });
-    playButton.textContent="▶ Play";
-    playButton.setAttribute("aria-label","Play "+data.name+" animation");
-    status.textContent="Ready · "+data.name;
-    draw(0);
-    timeLabel.textContent="Ready · Press Play";
+  async function loadFigure(i){
+    stop();current=i;elapsed=0;ready=false;effect=null;
+    const serial=++loadSerial,f=FIGURES[i];
+    stage.replaceChildren();stage.style.aspectRatio=String(f.w)+" / "+String(f.h);
+    stage.style.minHeight="0";
+    name.textContent=f.name;heading.textContent=f.title;caption.textContent=f.caption;
+    original.href=f.original;
+    Array.from(tabs.children).forEach((b,j)=>{b.classList.toggle("selected",i===j);b.setAttribute("aria-selected",String(i===j));});
+    playButton.disabled=true;timeline.value="0";status.textContent="Loading original vector paths…";
+    try{
+      const response=await fetch(f.path+"?v=vector-20261104",{cache:"no-store"});
+      if(!response.ok)throw new Error("HTTP "+response.status);
+      const source=await response.text();
+      const parsed=new DOMParser().parseFromString(source,"image/svg+xml");
+      if(parsed.querySelector("parsererror"))throw new Error("SVG parser error");
+      if(serial!==loadSerial)return;
+      const vector=document.importNode(parsed.documentElement,true);
+      vector.removeAttribute("width");vector.removeAttribute("height");
+      vector.style.width="100%";vector.style.height="100%";vector.style.display="block";
+      vector.setAttribute("preserveAspectRatio","xMidYMid meet");
+      stage.appendChild(vector);
+      effect=builder[i](vector);ready=true;playButton.disabled=false;
+      render();status.textContent="Ready · "+effect.count+" source vector elements selected for motion";
+    }catch(error){
+      if(serial!==loadSerial)return;
+      status.textContent="Vector file unavailable: "+String(error.message||error)+". Please reload.";
+      const fallback=document.createElement("img");fallback.src=f.original;fallback.alt=f.title;
+      fallback.className="original-image";stage.appendChild(fallback);
+    }
   }
   FIGURES.forEach((f,i)=>{
     const button=document.createElement("button");
-    button.type="button";button.textContent=f.name;
-    button.setAttribute("role","tab");button.setAttribute("aria-selected",i===0?"true":"false");
-    button.addEventListener("click",()=>loadFigure(i));
-    tabs.appendChild(button);
+    button.type="button";button.textContent=f.name;button.setAttribute("role","tab");
+    button.addEventListener("click",()=>loadFigure(i));tabs.appendChild(button);
   });
   playButton.addEventListener("click",play);
-  replayButton.addEventListener("click",()=>{
-    if(running)pause();elapsed=0;draw(0);play();
-  });
-  timeline.addEventListener("input",()=>{
-    if(running)pause();
-    elapsed=Number(timeline.value)/1000*FIGURES[current].duration;
-    draw(Number(timeline.value)/1000);
-    status.textContent="Paused at "+Math.round(Number(timeline.value)/10)+"%";
-  });
-  document.addEventListener("visibilitychange",()=>{
-    if(document.hidden && running)pause();
-  });
+  replayButton.addEventListener("click",()=>{stop();elapsed=0;render();play();});
+  timeline.addEventListener("input",()=>{stop();elapsed=Number(timeline.value)/1000*FIGURES[current].duration;render();status.textContent="Paused · Original vector objects at "+Math.round(Number(timeline.value)/10)+"%";});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden&&running)stop();});
   loadFigure(0);
 })();
+
 </script>
 </body>
 </html>
